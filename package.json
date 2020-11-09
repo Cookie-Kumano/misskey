@@ -1,8 +1,8 @@
 {
 	"name": "misskey",
 	"author": "syuilo <i@syuilo.com>",
-	"version": "11.37.1",
-	"codename": "daybreak",
+	"version": "11.37.1-cookie-1.0",
+	"codename": "maikaze",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/syuilo/misskey.git"

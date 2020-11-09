@@ -1,0 +1,27 @@
+{
+	id: 'maikaze-light',
+
+    name: 'Maikaze-Light',
+	author: 'Cookie',
+    desc: '舞風カラーのライトテーマ',
+	
+	base: 'light',
+	
+    vars: {
+		primary: 'rgb(255, 214, 0)',
+		secondary: 'rgb(250, 250, 250)',
+		text: 'rgb(102, 86, 0)',
+	},
+
+    props: {
+		bg: '#f2f2f2',
+		scrollbarHandle: '#E0E0E0',
+		scrollbarHandleHover: '#EEEEEE',
+		deckAcrylicColumnBg: 'rgba(0, 0, 0, 0)',
+		primaryForeground: '$text',
+		renoteGradient: '#FFF59D',
+		renoteText: '$text',
+		quoteBorder: 'A1887F',
+		link: '$text',
+	},
+}

@@ -1,0 +1,24 @@
+{
+	id: 'maikaze-dark',
+
+	name: 'Maikaze-Dark',
+	author: 'Cookie',
+	desc: '舞風カラーのダークテーマ',
+
+	base: 'dark',
+
+	vars: {
+		primary: 'rgb(239, 200, 0)',
+		secondary: 'rgb(33, 33, 33)',
+		text: 'rgb(242, 242, 242)',
+	},
+
+	props: {
+		deckAcrylicColumnBg: 'rgba(0, 0, 0, 0)',
+		primaryForeground: '$primary',
+		renoteGradient: '$primary',
+		renoteText: '$primary',
+		quoteBorder: '$primary',
+		link: '$primary',
+	},
+}
