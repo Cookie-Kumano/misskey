@@ -11,7 +11,6 @@ export default Vue.extend({
 		keymap(): any {
 			return {
 				'h|slash': this.help,
-				'd': this.dark
 			};
 		}
 	},
@@ -20,7 +19,6 @@ export default Vue.extend({
 		help() {
 			window.open(`${url}/docs/${lang}/keyboard-shortcut`, '_blank');
 		},
-
 	}
 });
 </script>
