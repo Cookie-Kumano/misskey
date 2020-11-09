@@ -66,7 +66,7 @@ const defaultDeviceSettings = {
 	lang: null,
 	appTypeForce: 'auto',
 	debug: false,
-	lightmode: false,
+	lightmode: true,
 	loadRawImages: false,
 	alwaysShowNsfw: false,
 	postStyle: 'standard',
