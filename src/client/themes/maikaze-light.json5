@@ -14,9 +14,12 @@
 	},
 
     props: {
-		bg: '#f2f2f2',
+		bg: '#F2F2F2',
 		scrollbarHandle: '#E0E0E0',
 		scrollbarHandleHover: '#EEEEEE',
+		desktopPostFormBg: 'F2F2F2',
+		desktopPostFormTextareaFg: '$text',
+		desktopPostFormTransparentButtonFg: '$primary',
 		deckAcrylicColumnBg: 'rgba(0, 0, 0, 0)',
 		primaryForeground: '$text',
 		renoteGradient: '#FFF59D',

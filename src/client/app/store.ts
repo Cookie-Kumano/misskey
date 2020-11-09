@@ -52,7 +52,7 @@ const defaultDeviceSettings = {
 	deckColumnAlign: 'center',
 	deckColumnWidth: 'normal',
 	useShadow: false,
-	roundedCorners: false,
+	roundedCorners: true,
 	reduceMotion: false,
 	darkmode: false,
 	darkTheme: 'maikaze-dark',
