@@ -21,12 +21,6 @@ export default Vue.extend({
 			window.open(`${url}/docs/${lang}/keyboard-shortcut`, '_blank');
 		},
 
-		dark() {
-			this.$store.commit('device/set', {
-				key: 'darkmode',
-				value: !this.$store.state.device.darkmode
-			});
-		}
 	}
 });
 </script>
