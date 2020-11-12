@@ -56,7 +56,7 @@ const defaultDeviceSettings = {
 	reduceMotion: false,
 	darkmode: false,
 	darkTheme: 'maikaze-dark',
-	lightTheme: 'maikaze-light',
+	lightTheme: 'light',
 	lineWidth: 1,
 	fontSize: 0,
 	themes: [],
