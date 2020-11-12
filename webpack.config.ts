@@ -96,7 +96,10 @@ module.exports = {
 			}, postcss]
 		}, {
 			test: /\.(eot|woff|woff2|svg|ttf)([?]?.*)$/,
-			loader: 'url-loader'
+			loader: 'url-loader',
+			options: {
+				esModule: false
+			}
 		}, {
 			test: /\.json5$/,
 			loader: 'json5-loader'
