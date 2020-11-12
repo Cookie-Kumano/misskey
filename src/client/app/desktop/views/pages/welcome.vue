@@ -14,7 +14,7 @@
 			<div class="main block">
 				<div>
 					<h1 v-if="name != null && name != '' && name != 'mi.maikaze.moe'">{{ name }}</h1>
-					<h1 v-else-if="name == 'mi.maikaze.moe'"><img class="logo-png" src="/assets/mi-logo.png" alt="mi.maikaze.moe"></h1>
+					<h1 v-else-if="name == 'mi.maikaze.moe'"><img class="logo-png" src="require('/assets/mi-logo.svg').default" alt="mi.maikaze.moe"></h1>
 					<h1 v-else><img svg-inline src="../../../../assets/title.svg" alt="Misskey"></h1>
 
 					<div class="info">
