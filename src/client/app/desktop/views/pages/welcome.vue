@@ -424,7 +424,7 @@ export default Vue.extend({
 						right 16px
 						bottom 0
 						height 320px
-						opacity 0.7
+						opacity 0.9
 
 					> *:not(.char)
 						z-index 1
