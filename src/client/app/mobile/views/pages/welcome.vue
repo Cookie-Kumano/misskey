@@ -4,7 +4,7 @@
 
 	<div>
 		<div class="about">
-			<img v-if="name == 'mi.maikaze.moe'" class="logo-svg" src="/assets/mi-logo.svg" alt="mi.maikaze.moe">
+			<img v-if="name == 'mi.maikaze.moe'" class="logo-png" src="/assets/mi-logo.png" alt="mi.maikaze.moe">
 			<h2 v-else>{{ name || 'Misskey' }}</h2>
 			<small v-else>{{ host }}</small>
 			<p v-html="description || this.$t('@.about')"></p>
@@ -136,7 +136,7 @@ export default Vue.extend({
 		margin 0 auto
 		max-width 500px
 
-		> .logo-svg
+		> .logo-png
 			display block
 			width 200px
 			margin 0 auto

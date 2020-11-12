@@ -14,7 +14,7 @@
 			<div class="main block">
 				<div>
 					<h1 v-if="name != null && name != '' && name != 'mi.maikaze.moe'">{{ name }}</h1>
-					<h1 v-else-if="name == 'mi.maikaze.moe'"><img class="logo-svg" src="/assets/mi-logo.svg" alt="mi.maikaze.moe"></h1>
+					<h1 v-else-if="name == 'mi.maikaze.moe'"><img class="logo-png" src="/assets/mi-logo.png" alt="mi.maikaze.moe"></h1>
 					<h1 v-else><img svg-inline src="../../../../assets/title.svg" alt="Misskey"></h1>
 
 					<div class="info">
@@ -387,7 +387,7 @@ export default Vue.extend({
 							width 280px
 							height 100px
 							fill currentColor
-						> .logo-svg
+						> .logo-png
 							width 240px
 							margin 16px 0 16px 0
 
