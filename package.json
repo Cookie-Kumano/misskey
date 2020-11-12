@@ -1,11 +1,11 @@
 {
 	"name": "misskey",
 	"author": "syuilo <i@syuilo.com>",
-	"version": "11.37.1-cookie-1.0",
+	"version": "11.37.1-cookie-1.0.1",
 	"codename": "maikaze",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/syuilo/misskey.git"
+		"url": "https://github.com/Cookie-Kumano/misskey.git"
 	},
 	"main": "./index.js",
 	"private": true,

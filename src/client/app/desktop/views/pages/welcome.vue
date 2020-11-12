@@ -13,7 +13,8 @@
 		<div class="body">
 			<div class="main block">
 				<div>
-					<h1 v-if="name != null && name != ''">{{ name }}</h1>
+					<h1 v-if="name != null && name != '' && name != 'mi.maikaze.moe'">{{ name }}</h1>
+					<h1 v-else-if="name == 'mi.maikaze.moe'"></h1>
 					<h1 v-else><img svg-inline src="../../../../assets/title.svg" alt="Misskey"></h1>
 
 					<div class="info">
@@ -370,6 +371,7 @@ export default Vue.extend({
 			height 1150px
 
 			> .main
+				border-radius 6px
 				grid-row 1
 				grid-column 1 / 3
 
@@ -428,6 +430,7 @@ export default Vue.extend({
 						z-index 1
 
 			> .announcements
+				border-radius 6px
 				grid-row 2
 				grid-column 1
 
@@ -444,6 +447,7 @@ export default Vue.extend({
 							font-size 1.25em
 
 			> .photos
+				border-radius 6px
 				grid-row 2
 				grid-column 2
 
@@ -461,6 +465,7 @@ export default Vue.extend({
 						background-size cover
 
 			> .tag-cloud
+				border-radius 6px
 				grid-row 3
 				grid-column 1 / 3
 
@@ -469,6 +474,7 @@ export default Vue.extend({
 					padding 32px
 
 			> .nav
+				border-radius 6px
 				display flex
 				justify-content center
 				align-items center
@@ -485,16 +491,19 @@ export default Vue.extend({
 				gap 16px
 
 				> .tl
+					border-radius 6px
 					grid-row 1
 					grid-column 1
 					overflow auto
 
 				> .trends
+					border-radius 6px
 					grid-row 2
 					grid-column 1
 					padding 8px
 
 				> .info
+					border-radius 6px
 					grid-row 3
 					grid-column 1
 
