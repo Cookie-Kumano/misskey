@@ -4,9 +4,9 @@
 
 	<div>
 		<div class="about">
-			<img v-if="name == 'mi.maikaze.moe'" svg-inline src="../../../../assets/mi-logo.svg" alt="Misskey">
-			<h2 v-if="name != 'mi.maikaze.moe'">{{ name || 'Misskey' }}</h2>
-			<small v-if="name != 'mi.maikaze.moe'">{{ host }}</small>
+			<img v-if="name == 'mi.maikaze.moe'" class="logo-svg" src="../../../../assets/mi-logo.svg" alt="mi.maikaze.moe">
+			<h2 v-else>{{ name || 'Misskey' }}</h2>
+			<small v-else>{{ host }}</small>
 			<p v-html="description || this.$t('@.about')"></p>
 			<router-link class="signup" to="/signup">{{ $t('@.signup') }}</router-link>
 		</div>
@@ -136,10 +136,9 @@ export default Vue.extend({
 		margin 0 auto
 		max-width 500px
 
-		> svg
+		> .logo-svg
 			display block
 			width 200px
-			height 50px
 			margin 0 auto
 
 		> .about
