@@ -4,7 +4,7 @@
 
 	<div>
 		<div class="about">
-			<img v-if="name == 'mi.maikaze.moe'" class="logo-png" src="require('@/assets/mi-logo.svg').default" alt="mi.maikaze.moe"/>
+			<h2 v-if="name=='mi.maikaze.moe'"><img class="logo-png" src="/assets/mi-logo.svg" alt="mi.maikaze.moe"/></h2>
 			<h2 v-else>{{ name || 'Misskey' }}</h2>
 			<small v-else>{{ host }}</small>
 			<p v-html="description || this.$t('@.about')"></p>
