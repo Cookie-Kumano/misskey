@@ -388,7 +388,7 @@ export default Vue.extend({
 							height 100px
 							fill currentColor
 						> .logo-png
-							width 240px
+							width 300px
 							margin 16px 0 16px 0
 
 					> .info
