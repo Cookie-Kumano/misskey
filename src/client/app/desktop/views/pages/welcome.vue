@@ -27,7 +27,6 @@
 
 					<div class="desc">
 						<span class="desc" v-html="description || $t('@.about')"></span>
-						<a class="about" @click="about">{{ $t('about') }}</a>
 					</div>
 
 					<p class="sign">
