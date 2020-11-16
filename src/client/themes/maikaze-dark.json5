@@ -15,7 +15,7 @@
 
 	props: {
 		deckAcrylicColumnBg: 'rgba(0, 0, 0, 0)',
-		primaryForeground: '$primary',
+		primaryForeground: 'rgb(102, 86, 0)',
 		renoteGradient: '$primary',
 		renoteText: '$primary',
 		quoteBorder: '$primary',
