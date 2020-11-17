@@ -109,7 +109,7 @@ export default Vue.extend({
 			color var(--desktopPostFormTextareaFg)
 			background var(--desktopPostFormTextareaBg)
 			outline none
-			border solid 1px var(--primaryAlpha01)
+			border solid 1px var(--primaryAlpha03)
 			border-radius 4px
 			transition border-color .2s ease
 			padding-right 30px
@@ -126,7 +126,7 @@ export default Vue.extend({
 				opacity 0.5
 
 			&::-webkit-input-placeholder
-				color var(--primaryAlpha03)
+				color var(--desktopPostFormTransparentButtonFg)
 
 		> input
 			margin-bottom 8px
@@ -272,7 +272,7 @@ export default Vue.extend({
 		right 138px
 		margin 0
 		line-height 40px
-		color var(--primaryAlpha05)
+		color var(----desktopPostFormTransparentButtonFg)
 
 		&.over
 			color #ec3828

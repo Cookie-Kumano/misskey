@@ -3,8 +3,8 @@
 	"name": "Misskey",
 	"start_url": "/",
 	"display": "standalone",
-	"background_color": "#313a42",
-	"theme_color": "#fb4e4e",
+	"background_color": "#665600",
+	"theme_color": "#FFD600",
 	"icons": [
 		{
 			"src": "/assets/icons/16.png",

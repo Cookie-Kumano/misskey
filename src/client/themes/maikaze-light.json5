@@ -4,9 +4,9 @@
     name: 'Maikaze-Light',
 	author: 'Cookie',
     desc: '舞風カラーのライトテーマ',
-	
+
 	base: 'light',
-	
+
     vars: {
 		primary: 'rgb(255, 214, 0)',
 		secondary: 'rgb(250, 250, 250)',
@@ -17,9 +17,10 @@
 		bg: '#F2F2F2',
 		scrollbarHandle: '#E0E0E0',
 		scrollbarHandleHover: '#EEEEEE',
-		desktopPostFormBg: 'F2F2F2',
+		desktopPostFormBg: '#F2F2F2',
 		desktopPostFormTextareaFg: '$text',
 		desktopPostFormTransparentButtonFg: '$primary',
+		desktopPostFormTransparentButtonFg: '#FBC02D',
 		deckAcrylicColumnBg: 'rgba(0, 0, 0, 0)',
 		primaryForeground: '$text',
 		renoteGradient: '#FFF59D',
