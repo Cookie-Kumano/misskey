@@ -1,6 +1,6 @@
 <template>
 <div class="mk-ui" :class="{ deck: $store.state.device.inDeckMode }">
-	<x-header v-if="!$store.state.device.inDeckMode">
+	<x-header>
 		<template #func><slot name="func"></slot></template>
 		<slot name="header"></slot>
 	</x-header>

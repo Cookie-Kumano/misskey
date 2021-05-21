@@ -1,9 +1,5 @@
 <template>
 <mk-ui>
-	<template #func>
-		<button @click="fn"><fa icon="pencil-alt"/></button>
-	</template>
-
 	<main>
 		<header class="zahtxcqi">
 				<span :data-active="src == 'home'" @click="src = 'home'"><fa icon="home"/> </span>
@@ -19,6 +15,8 @@
 					<button @click="chooseList" :title="$t('list')" ref="listButton"><fa icon="list"/></button>
 				</div>
 		</header>
+
+		<x-nav :is-open="isDrawerOpening"/>
 
 		<div class="tl">
 			<x-tl v-if="src == 'home'" ref="tl" key="home" src="home"/>
