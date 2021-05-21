@@ -17,7 +17,6 @@
 <script lang="ts">
 import Vue from 'vue';
 import MkNotify from './notify.vue';
-import XHeader from './ui.header.vue';
 import XNav from './ui.nav.vue';
 
 export default Vue.extend({
@@ -115,6 +114,7 @@ export default Vue.extend({
 
 		&.nav
 			left 28px
+			bottom 48px
 			background var(--secondary)
 			color var(--text)
 
