@@ -1,51 +1,25 @@
 <template>
 <mk-ui>
-	<template #header>
-		<span @click="showNav = true">
-			<span :class="$style.title">
-				<span v-if="src == 'home'"><fa icon="home"/>{{ $t('home') }}</span>
-				<span v-if="src == 'local'"><fa :icon="['far', 'comments']"/>{{ $t('local') }}</span>
-				<span v-if="src == 'hybrid'"><fa icon="share-alt"/>{{ $t('hybrid') }}</span>
-				<span v-if="src == 'global'"><fa icon="globe"/>{{ $t('global') }}</span>
-				<span v-if="src == 'mentions'"><fa icon="at"/>{{ $t('mentions') }}</span>
-				<span v-if="src == 'messages'"><fa :icon="['far', 'envelope']"/>{{ $t('messages') }}</span>
-				<span v-if="src == 'list'"><fa icon="list"/>{{ list.name }}</span>
-				<span v-if="src == 'tag'"><fa icon="hashtag"/>{{ tagTl.title }}</span>
-			</span>
-			<span style="margin-left:8px">
-				<template v-if="!showNav"><fa icon="angle-down"/></template>
-				<template v-else><fa icon="angle-up"/></template>
-			</span>
-			<i :class="$style.badge" v-if="$store.state.i.hasUnreadMentions || $store.state.i.hasUnreadSpecifiedNotes"><fa icon="circle"/></i>
-		</span>
-	</template>
-
 	<template #func>
 		<button @click="fn"><fa icon="pencil-alt"/></button>
 	</template>
 
 	<main>
-		<div class="nav" v-if="showNav">
-			<div class="bg" @click="showNav = false"></div>
-			<div class="pointer"></div>
-			<div class="body">
-				<div>
-					<span :data-active="src == 'home'" @click="src = 'home'"><fa icon="home"/> {{ $t('home') }}</span>
-					<span :data-active="src == 'local'" @click="src = 'local'" v-if="enableLocalTimeline"><fa :icon="['far', 'comments']"/> {{ $t('local') }}</span>
-					<span :data-active="src == 'hybrid'" @click="src = 'hybrid'" v-if="enableLocalTimeline"><fa icon="share-alt"/> {{ $t('hybrid') }}</span>
-					<span :data-active="src == 'global'" @click="src = 'global'" v-if="enableGlobalTimeline"><fa icon="globe"/> {{ $t('global') }}</span>
-					<div class="hr"></div>
-					<span :data-active="src == 'mentions'" @click="src = 'mentions'"><fa icon="at"/> {{ $t('mentions') }}<i class="badge" v-if="$store.state.i.hasUnreadMentions"><fa icon="circle"/></i></span>
-					<span :data-active="src == 'messages'" @click="src = 'messages'"><fa :icon="['far', 'envelope']"/> {{ $t('messages') }}<i class="badge" v-if="$store.state.i.hasUnreadSpecifiedNotes"><fa icon="circle"/></i></span>
-					<template v-if="lists">
-						<div class="hr" v-if="lists.length > 0"></div>
-						<span v-for="l in lists" :data-active="src == 'list' && list == l" @click="src = 'list'; list = l" :key="l.id"><fa icon="list"/> {{ l.name }}</span>
-					</template>
-					<div class="hr" v-if="$store.state.settings.tagTimelines && $store.state.settings.tagTimelines.length > 0"></div>
-					<span v-for="tl in $store.state.settings.tagTimelines" :data-active="src == 'tag' && tagTl == tl" @click="src = 'tag'; tagTl = tl" :key="tl.id"><fa icon="hashtag"/> {{ tl.title }}</span>
+
+		<header class="zahtxcqi">
+				<div :data-active="src == 'home'" @click="src = 'home'"><fa icon="home"/> </div>
+				<div :data-active="src == 'local'" @click="src = 'local'" v-if="enableLocalTimeline"><fa :icon="['far', 'comments']"/> </div>
+				<div :data-active="src == 'hybrid'" @click="src = 'hybrid'" v-if="enableLocalTimeline"><fa icon="share-alt"/> </div>
+				<div :data-active="src == 'global'" @click="src = 'global'" v-if="enableGlobalTimeline"><fa icon="globe"/> </div>
+				<div :data-active="src == 'tag'" @click="src = 'tag'" v-if="tagTl"><fa icon="hashtag"/> {{ tagTl.title }}</div>
+				<div :data-active="src == 'list'" @click="src = 'list'" v-if="list"><fa icon="list"/> {{ list.name }}</div>
+				<div class="buttons">
+					<button :data-active="src == 'mentions'" @click="src = 'mentions'" :title="$t('mentions')"><fa icon="at"/><i class="indicator" v-if="$store.state.i.hasUnreadMentions"><fa icon="circle"/></i></button>
+					<button :data-active="src == 'messages'" @click="src = 'messages'" :title="$t('messages')"><fa :icon="['far', 'envelope']"/><i class="indicator" v-if="$store.state.i.hasUnreadSpecifiedNotes"><fa icon="circle"/></i></button>
+					<button @click="chooseTag" :title="$t('hashtag')" ref="tagButton"><fa icon="hashtag"/></button>
+					<button @click="chooseList" :title="$t('list')" ref="listButton"><fa icon="list"/></button>
 				</div>
-			</div>
-		</div>
+		</header>
 
 		<div class="tl">
 			<x-tl v-if="src == 'home'" ref="tl" key="home" src="home"/>
@@ -164,36 +138,83 @@ export default Vue.extend({
 
 <style lang="stylus" scoped>
 main
+	header.zahtxcqi
+		display flex
+		position fixed 
+		bottom 0
+		left 0
+		flex-wrap wrap
+		padding 0 8px
+		z-index 10
+		background var(--faceHeader)
+		box-shadow 0 var(--lineWidth) var(--desktopTimelineHeaderShadow)
+
+		> *
+			flex-shrink 0
+
+		> .buttons
+			margin-left auto
+
+			> button
+				padding 0 8px
+				font-size 0.9em
+				line-height 42px
+				color var(--faceTextButton)
+
+				> .indicator
+					position absolute
+					top -4px
+					right 4px
+					font-size 10px
+					color var(--notificationIndicator)
+					animation blink 1s infinite
+
+				&:hover
+					color var(--faceTextButtonHover)
+
+				&[data-active]
+					color var(--primary)
+					cursor default
+
+					&:before
+						content ""
+						display block
+						position absolute
+						bottom 0
+						left 0
+						width 100%
+						height 2px
+						background var(--primary)
+
+		> div:not(.buttons)
+			padding 0 10px
+			line-height 42px
+			font-size 12px
+			user-select none
+
+			&[data-active]
+				color var(--primary)
+				cursor default
+				font-weight bold
+
+				&:before
+					content ""
+					display block
+					position absolute
+					bottom 0
+					left -8px
+					width calc(100% + 16px)
+					height 2px
+					background var(--primary)
+
+			&:not([data-active])
+				color var(--desktopTimelineSrc)
+				cursor pointer
+
+				&:hover
+					color var(--desktopTimelineSrcHover)
+
 	> .nav
-		> .pointer
-			position fixed
-			z-index 10002
-			top 56px
-			left 0
-			right 0
-
-			$size = 16px
-
-			&:after
-				content ""
-				display block
-				position absolute
-				top -($size * 2)
-				left s('calc(50% - %s)', $size)
-				border-top solid $size transparent
-				border-left solid $size transparent
-				border-right solid $size transparent
-				border-bottom solid $size var(--popupBg)
-
-		> .bg
-			position fixed
-			z-index 10000
-			top 0
-			left 0
-			width 100%
-			height 100%
-			background rgba(#000, 0.5)
-
 		> .body
 			position fixed
 			z-index 10001

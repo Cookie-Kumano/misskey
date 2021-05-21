@@ -9,8 +9,8 @@
 		<slot></slot>
 	</div>
 	<mk-stream-indicator v-if="$store.getters.isSignedIn"/>
-	<button class="nav button" v-if="$store.state.device.inDeckMode" @click="isDrawerOpening = !isDrawerOpening"><fa icon="bars"/><i v-if="indicate"><fa icon="circle"/></i></button>
-	<button class="post button" v-if="$store.state.device.inDeckMode" @click="$post()"><fa icon="pencil-alt"/></button>
+	<button class="nav button" @click="isDrawerOpening = !isDrawerOpening"><fa icon="bars"/><i v-if="indicate"><fa icon="circle"/></i></button>
+	<button class="post button" @click="$post()"><fa icon="pencil-alt"/></button>
 </div>
 </template>
 
@@ -99,8 +99,6 @@ export default Vue.extend({
 
 <style lang="stylus" scoped>
 .mk-ui
-	&:not(.deck)
-		padding-top 48px
 
 	> .button
 		position fixed
