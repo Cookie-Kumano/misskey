@@ -63,7 +63,7 @@ export default defineComponent({
 				width: 100%;
 				box-sizing: border-box;
 				padding: 10px 16px 10px 8px;
-				border-radius: --radius;
+				border-radius: var(--radius);
 				font-size: 0.95em;
 
 				&:hover {
@@ -125,7 +125,7 @@ export default defineComponent({
 					flex-direction: column;
 					padding: 18px 16px 16px 16px;
 					background: var(--panel);
-					border-radius: --radius;
+					border-radius: var(--radius);
 					text-align: center;
 
 					> .icon {

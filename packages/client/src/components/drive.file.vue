@@ -186,7 +186,7 @@ async function deleteFile() {
 	position: relative;
 	padding: 8px 0 0 0;
 	min-height: 180px;
-	border-radius: --radius;
+	border-radius: var(--radius);
 
 	&, * {
 		cursor: pointer;
