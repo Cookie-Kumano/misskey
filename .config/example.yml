@@ -88,7 +88,9 @@ redis:
 #elasticsearch:
 #  host: localhost
 #  port: 9200
-#  pass: null
+#  ssl: false
+#  user: 
+#  pass: 
 
 #   ┌───────────────┐
 #───┘ ID generation └───────────────────────────────────────────
@@ -110,10 +112,6 @@ id: 'aid'
 
 #   ┌─────────────────────┐
 #───┘ Other configuration └─────────────────────────────────────
-
-# If enabled:
-#  The first account created is automatically marked as Admin.
-autoAdmin: true
 
 # Whether disable HSTS
 #disableHsts: true
@@ -144,6 +142,11 @@ autoAdmin: true
 # Proxy for HTTP/HTTPS
 #proxy: http://127.0.0.1:3128
 
+#proxyBypassHosts: [
+#  'example.com',
+#  '192.0.2.8'
+#]
+
 # Proxy for SMTP/SMTPS
 #proxySmtp: http://127.0.0.1:3128   # use HTTP/1.1 CONNECT
 #proxySmtp: socks4://127.0.0.1:1080 # use SOCKS4
@@ -151,3 +154,13 @@ autoAdmin: true
 
 # Media Proxy
 #mediaProxy: https://example.com/proxy
+
+# Sign to ActivityPub GET request (default: false)
+#signToActivityPubGet: true
+
+#allowedPrivateNetworks: [
+#  '127.0.0.1/32'
+#]
+
+# Upload or download file size limits (bytes)
+#maxFileSize: 262144000

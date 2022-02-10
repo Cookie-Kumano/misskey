@@ -14,17 +14,28 @@ const merge = (...args) => args.reduce((a, c) => ({
 }), {});
 
 const languages = [
+	'ar-SA',
 	'cs-CZ',
 	'da-DK',
 	'de-DE',
 	'en-US',
+	'eo-UY',
 	'es-ES',
 	'fr-FR',
+	'id-ID',
+	'it-IT',
 	'ja-JP',
 	'ja-KS',
+	'kab-KAB',
+	'kn-IN',
 	'ko-KR',
 	'nl-NL',
+	'no-NO',
 	'pl-PL',
+	'pt-PT',
+	'ru-RU',
+	'ug-CN',
+	'uk-UA',
 	'zh-CN',
 	'zh-TW',
 ];
@@ -35,7 +46,10 @@ const primaries = {
 	'zh': 'CN',
 };
 
-const locales = languages.reduce((a, c) => (a[c] = yaml.safeLoad(fs.readFileSync(`${__dirname}/${c}.yml`, 'utf-8')) || {}, a), {});
+// 何故か文字列にバックスペース文字が混入することがあり、YAMLが壊れるので取り除く
+const clean = (text) => text.replace(new RegExp(String.fromCodePoint(0x08), 'g'), '');
+
+const locales = languages.reduce((a, c) => (a[c] = yaml.load(clean(fs.readFileSync(`${__dirname}/${c}.yml`, 'utf-8'))) || {}, a), {});
 
 module.exports = Object.entries(locales)
 	.reduce((a, [k ,v]) => (a[k] = (() => {

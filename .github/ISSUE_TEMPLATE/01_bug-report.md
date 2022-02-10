@@ -7,15 +7,20 @@ assignees: ''
 
 ---
 
+<!--
+Thanks for reporting!
+First, in order to avoid duplicate Issues, please search to see if the problem you found has already been reported.
+-->
+
 ## 💡 Summary
 
 <!-- Tell us what the bug is -->
 
-## 🙂 Expected Behavior
+## 🥰 Expected Behavior
 
 <!--- Tell us what should happen -->
 
-## ☹️ Actual Behavior
+## 🤬 Actual Behavior
 
 <!--- Tell us what happens instead of the expected behavior -->
 
@@ -28,3 +33,7 @@ assignees: ''
 ## 📌 Environment
 
 <!-- Tell us where on the platform it happens -->
+
+Misskey version:
+Your OS:
+Your browser:
