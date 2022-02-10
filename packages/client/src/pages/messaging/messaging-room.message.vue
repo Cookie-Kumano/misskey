@@ -102,7 +102,7 @@ export default defineComponent({
 			align-items: center;
 			padding: 0;
 			min-height: 38px;
-			border-radius: 16px;
+			border-radius: 6px;
 			max-width: 100%;
 
 			&:before {
@@ -180,7 +180,7 @@ export default defineComponent({
 					> a {
 						display: block;
 						max-width: 100%;
-						border-radius: 16px;
+						border-radius: 6px;
 						overflow: hidden;
 						text-decoration: none;
 

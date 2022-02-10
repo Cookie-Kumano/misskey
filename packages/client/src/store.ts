@@ -152,7 +152,7 @@ export const defaultStore = markRaw(new Storage('base', {
 	},
 	useBlurEffectForModal: {
 		where: 'device',
-		default: true
+		default: false
 	},
 	useBlurEffect: {
 		where: 'device',
@@ -216,7 +216,7 @@ export const defaultStore = markRaw(new Storage('base', {
 	},
 	squareAvatars: {
 		where: 'device',
-		default: false
+		default: true
 	},
 	postFormWithHashtags: {
 		where: 'device',

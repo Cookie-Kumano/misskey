@@ -88,7 +88,7 @@ export default defineComponent({
 	box-sizing: border-box;
 	overflow: auto;
 	text-align: center;
-	border-radius: 16px;
+	border-radius: 6px;
 
 	@media (max-width: 500px) {
 		padding: 16px;
