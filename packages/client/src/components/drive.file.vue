@@ -182,7 +182,7 @@ async function deleteFile() {
 </script>
 
 <style lang="scss" scoped>
-. {
+.ncvczrfv {
 	position: relative;
 	padding: 8px 0 0 0;
 	min-height: 180px;
