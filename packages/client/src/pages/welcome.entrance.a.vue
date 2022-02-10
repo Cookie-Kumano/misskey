@@ -201,10 +201,10 @@ export default defineComponent({
 			position: absolute;
 			top: 42px;
 			left: 42px;
-			width: 160px;
+			width: 320px;
 
 			@media (max-width: 450px) {
-				width: 130px;
+				width: 160px;
 			}
 		}
 

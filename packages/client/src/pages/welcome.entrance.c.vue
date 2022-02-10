@@ -193,11 +193,11 @@ export default defineComponent({
 			margin: auto;
 
 			> .misskey {
-				width: 150px;
+				width: 320px;
 				margin-bottom: 16px;
 
 				@media (max-width: 450px) {
-					width: 130px;
+					width: 160px;
 				}
 			}
 

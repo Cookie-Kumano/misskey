@@ -168,7 +168,7 @@ export default defineComponent({
 			position: absolute;
 			bottom: 64px;
 			left: 64px;
-			width: 160px;
+			width: 320px;
 		}
 
 		> .main {
