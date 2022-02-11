@@ -218,6 +218,10 @@ export const defaultStore = markRaw(new Storage('base', {
 		where: 'device',
 		default: true
 	},
+	useSystemFont: {
+		where: 'device',
+		default: true
+	},
 	postFormWithHashtags: {
 		where: 'device',
 		default: false

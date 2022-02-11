@@ -82,7 +82,7 @@ html {
 	}
 
 	&.useSystemFont {
-		font-family: sans-serif;
+		font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", sans-serif;
 	}
 }
 
@@ -152,7 +152,7 @@ hr {
 }
 
 ._shadow {
-	box-shadow: 0 0 4px rgb(0, 0, 0, 0.1) !important;
+	box-shadow: 0 4px 6px var(--shadow) !important;
 }
 
 ._button {
