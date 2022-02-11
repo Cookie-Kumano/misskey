@@ -180,7 +180,7 @@ export const defaultStore = markRaw(new Storage('base', {
 	},
 	instanceTicker: {
 		where: 'device',
-		default: 'remote' as 'none' | 'remote' | 'always'
+		default: 'none' as 'none' | 'none' | 'none'
 	},
 	reactionPickerWidth: {
 		where: 'device',
@@ -255,7 +255,7 @@ export class ColdDeviceStorage {
 		syncDeviceDarkMode: true,
 		plugins: [] as Plugin[],
 		mediaVolume: 0.5,
-		sound_masterVolume: 0.3,
+		sound_masterVolume: 0,
 		sound_note: { type: 'syuilo/down', volume: 1 },
 		sound_noteMy: { type: 'syuilo/up', volume: 1 },
 		sound_notification: { type: 'syuilo/pope2', volume: 1 },

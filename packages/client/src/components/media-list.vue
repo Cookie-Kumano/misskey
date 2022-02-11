@@ -125,7 +125,7 @@ const previewable = (file: misskey.entities.DriveFile): boolean => {
 
 			> * {
 				overflow: hidden;
-				border-radius: 6px;
+				border-radius: 4px;
 			}
 
 			&[data-count="1"] {

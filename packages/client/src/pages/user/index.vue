@@ -350,7 +350,7 @@ export default defineComponent({
 						color: #fff;
 						background: rgba(0, 0, 0, 0.7);
 						font-size: 0.7em;
-						border-radius: 6px;
+						border-radius: var(--radius);
 					}
 
 					> .actions {
@@ -361,7 +361,7 @@ export default defineComponent({
 						backdrop-filter: var(--blur, blur(8px));
 						background: rgba(0, 0, 0, 0.2);
 						padding: 8px;
-						border-radius: 24px;
+						border-radius: var(--radius);
 
 						> .menu {
 							vertical-align: bottom;

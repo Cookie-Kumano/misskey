@@ -63,7 +63,7 @@ export default defineComponent({
 		box-sizing: border-box;
 		padding: 12px 14px 12px 14px;
 		background: var(--buttonBg);
-		border-radius: 4px;
+		border-radius: var(--radius);
 		font-size: 0.9em;
 
 		&:hover {

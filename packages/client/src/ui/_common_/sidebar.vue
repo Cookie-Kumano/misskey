@@ -187,7 +187,7 @@ export default defineComponent({
 					left: 0;
 					right: 0;
 					bottom: 0;
-					border-radius: 6px;
+					border-radius: var(--radius);
 					background: var(--accentedBg);
 				}
 			}
@@ -227,7 +227,7 @@ export default defineComponent({
 					left: 0;
 					right: 0;
 					bottom: 0;
-					border-radius: 6px;
+					border-radius: var(--radius);
 					background: linear-gradient(90deg, var(--buttonGradateA), var(--buttonGradateB));
 				}
 				
@@ -292,7 +292,7 @@ export default defineComponent({
 					width: min-content;
 					height: 100%;
 					aspect-ratio: 1/1;
-					border-radius: 8px;
+					border-radius: var(--radius);
 				}
 
 				&.post {
@@ -307,7 +307,7 @@ export default defineComponent({
 					width: calc(100% - 28px);
 					height: min-content;
 					aspect-ratio: 1/1;
-					border-radius: 100%;
+					border-radius: var(--radius);
 				}
 			}
 		}

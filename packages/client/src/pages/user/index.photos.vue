@@ -89,7 +89,7 @@ export default defineComponent({
 
 		> .img {
 			height: 128px;
-			border-radius: 6px;
+			border-radius: 4px;
 			overflow: clip;
 		}
 	}

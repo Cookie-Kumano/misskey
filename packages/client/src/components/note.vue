@@ -457,7 +457,7 @@ function readPromo() {
 								background: var(--panel);
 								padding: 6px 10px;
 								font-size: 0.8em;
-								border-radius: 999px;
+								border-radius: var(--radius);
 								box-shadow: 0 2px 6px rgb(0 0 0 / 20%);
 							}
 

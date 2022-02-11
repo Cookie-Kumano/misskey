@@ -77,7 +77,7 @@ defineExpose({
 		vertical-align: bottom;
 		height: 128px;
 		margin-bottom: 24px;
-		border-radius: 6px;
+		border-radius: 4px;
 	}
 
 	> .error {

@@ -67,7 +67,7 @@ export default defineComponent({
 	> .notification {
 		height: 100%;
 		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-		border-radius: 8px;
+		border-radius: 4px;
 		overflow: hidden;
 	}
 }
