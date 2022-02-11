@@ -89,7 +89,7 @@ watch(() => props.image, () => {
 	> .hide {
 		display: block;
 		position: absolute;
-		border-radius: 6px;
+		border-radius: 4px;
 		background-color: var(--accentedBg);
 		-webkit-backdrop-filter: var(--blur, blur(15px));
 		backdrop-filter: var(--blur, blur(15px));
@@ -117,7 +117,7 @@ watch(() => props.image, () => {
 
 		> .gif {
 			background-color: var(--fg);
-			border-radius: 6px;
+			border-radius: 4px;
 			color: var(--accentLighten);
 			display: inline-block;
 			font-size: 14px;
