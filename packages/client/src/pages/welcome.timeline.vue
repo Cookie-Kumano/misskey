@@ -87,7 +87,7 @@ export default defineComponent({
 				padding: 16px;
 				margin: 0 0 0 auto;
 				max-width: max-content;
-				border-radius: 6px;
+				border-radius: 4px;
 
 				> .richcontent {
 					min-width: 250px;

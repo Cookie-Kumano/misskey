@@ -29,7 +29,7 @@
 		panelBorder: '" solid 1px var(--divider)',
 		acrylicPanel: ':alpha<0.5<@panel',
 		popup: ':lighten<3<@panel',
-		shadow: 'rgba(0, 0, 0, 0.3)',
+		shadow: 'rgba(0, 0, 0, 0.4)',
 		header: ':alpha<0.7<@panel',
 		navBg: '@panel',
 		navFg: '@fg',

@@ -29,7 +29,7 @@ import MkButton from '@/components/ui/button.vue';
 		vertical-align: bottom;
 		height: 128px;
 		margin-bottom: 16px;
-		border-radius: 6px;
+		border-radius: 4px;
 	}
 }
 </style>

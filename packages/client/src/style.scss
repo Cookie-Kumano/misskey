@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 :root {
-	--radius: 6px;
+	--radius: 4px;
 	--marginFull: 16px;
 	--marginHalf: 10px;
 
@@ -152,7 +152,7 @@ hr {
 }
 
 ._shadow {
-	box-shadow: 0px 4px 32px var(--shadow) !important;
+	box-shadow: 0 0 4px rgb(0, 0, 0, 0.1) !important;
 }
 
 ._button {

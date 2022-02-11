@@ -227,7 +227,7 @@ defineExpose({
 			display: block;
 			width: 100px;
 			margin: 0 auto;
-			border-radius: 6px;
+			border-radius: var(--radius);
 		}
 
 		> .misskey {

@@ -115,7 +115,7 @@ defineExpose({
 <style lang="scss" scoped>
 .fwhjspax {
 	text-align: center;
-	border-radius: 6px;
+	border-radius: 4px;
 	overflow: clip;
 	background-size: cover;
 	background-position: center center;
@@ -127,7 +127,7 @@ defineExpose({
 			display: block;
 			margin: 16px auto 0 auto;
 			height: 64px;
-			border-radius: 6px;
+			border-radius: 4px;
 		}
 
 		> .name {

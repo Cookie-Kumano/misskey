@@ -423,7 +423,7 @@ export default Component;
 				padding: 0 12px 0 30px;
 				line-height: 32px;
 				font-size: 12px;
-				border-radius: 6px;
+				border-radius: var(--radius);
 
 				> i {
 					position: absolute;
