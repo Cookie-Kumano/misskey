@@ -151,7 +151,7 @@ export default defineComponent({
 		disablePagesScript: defaultStore.makeGetterSetter('disablePagesScript'),
 		showFixedPostForm: defaultStore.makeGetterSetter('showFixedPostForm'),
 		defaultSideView: defaultStore.makeGetterSetter('defaultSideView'),
-		: defaultStore.makeGetterSetter('instanceTicker'),
+		instanceTicker: defaultStore.makeGetterSetter('instanceTicker'),
 		enableInfiniteScroll: defaultStore.makeGetterSetter('enableInfiniteScroll'),
 		useReactionPickerForContextMenu: defaultStore.makeGetterSetter('useReactionPickerForContextMenu'),
 		squareAvatars: defaultStore.makeGetterSetter('squareAvatars'),
