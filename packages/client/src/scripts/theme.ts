@@ -18,9 +18,11 @@ export const themeProps = Object.keys(lightTheme.props).filter(key => !key.start
 export const builtinThemes = [
 	require('@/themes/l-maikaze.json5'),
 	require('@/themes/l-light.json5'),
+	require('@/themes/l-coffee.json5'),
 	require('@/themes/l-apricot.json5'),
 	require('@/themes/l-rainy.json5'),
 	require('@/themes/l-vivid.json5'),
+	require('@/themes/l-cherry.json5'),
 	require('@/themes/l-sushi.json5'),
 
 	require('@/themes/d-maikaze.json5')
@@ -29,6 +31,8 @@ export const builtinThemes = [
 	require('@/themes/d-astro.json5'),
 	require('@/themes/d-future.json5'),
 	require('@/themes/d-botanical.json5'),
+	require('@/themes/d-cherry.json5'),
+	require('@/themes/d-ice.json5'),
 	require('@/themes/d-pumpkin.json5'),
 	require('@/themes/d-black.json5'),
 ] as Theme[];
@@ -49,14 +53,14 @@ export function applyTheme(theme: Theme, persist = true) {
 
 	if (_theme.base) {
 		const base = [lightTheme, darkTheme].find(x => x.id === _theme.base);
-		_theme.props = Object.assign({}, base.props, _theme.props);
+		if (base) _theme.props = Object.assign({}, base.props, _theme.props);
 	}
 
 	const props = compile(_theme);
 
 	for (const tag of document.head.children) {
 		if (tag.tagName === 'META' && tag.getAttribute('name') === 'theme-color') {
-			tag.setAttribute('content', props['html']);
+			tag.setAttribute('content', props['htmlThemeColor']);
 			break;
 		}
 	}
