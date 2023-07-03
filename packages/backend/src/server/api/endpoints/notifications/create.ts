@@ -1,5 +1,6 @@
-import define from '../../define.js';
-import { createNotification } from '@/services/create-notification.js';
+import { Injectable } from '@nestjs/common';
+import { Endpoint } from '@/server/api/endpoint-base.js';
+import { NotificationService } from '@/core/NotificationService.js';
 
 export const meta = {
 	tags: ['notifications'],
@@ -23,11 +24,18 @@ export const paramDef = {
 } as const;
 
 // eslint-disable-next-line import/no-default-export
-export default define(meta, paramDef, async (ps, user, token) => {
-	createNotification(user.id, 'app', {
-		appAccessTokenId: token ? token.id : null,
-		customBody: ps.body,
-		customHeader: ps.header,
-		customIcon: ps.icon,
-	});
-});
+@Injectable()
+export default class extends Endpoint<typeof meta, typeof paramDef> {
+	constructor(
+		private notificationService: NotificationService,
+	) {
+		super(meta, paramDef, async (ps, user, token) => {
+			this.notificationService.createNotification(user.id, 'app', {
+				appAccessTokenId: token ? token.id : null,
+				customBody: ps.body,
+				customHeader: ps.header,
+				customIcon: ps.icon,
+			});
+		});
+	}
+}

@@ -1,14 +1,14 @@
+import type { Config } from '@/config.js';
 import endpoints from '../endpoints.js';
-import config from '@/config/index.js';
 import { errors as basicErrors } from './errors.js';
 import { schemas, convertSchemaToOpenApiSchema } from './schemas.js';
 
-export function genOpenapiSpec(lang = 'ja-JP') {
+export function genOpenapiSpec(config: Config) {
 	const spec = {
 		openapi: '3.0.0',
 
 		info: {
-			version: 'v1',
+			version: config.version,
 			title: 'Misskey API',
 			'x-logo': { url: '/static-assets/api-doc.png' },
 		},
@@ -59,6 +59,21 @@ export function genOpenapiSpec(lang = 'ja-JP') {
 			desc += ` / **Permission**: *${kind}*`;
 		}
 
+		const requestType = endpoint.meta.requireFile ? 'multipart/form-data' : 'application/json';
+		const schema = { ...endpoint.params };
+
+		if (endpoint.meta.requireFile) {
+			schema.properties = {
+				...schema.properties,
+				file: {
+					type: 'string',
+					format: 'binary',
+					description: 'The file contents.',
+				},
+			};
+			schema.required = [...schema.required ?? [], 'file'];
+		}
+
 		const info = {
 			operationId: endpoint.name,
 			summary: endpoint.name,
@@ -78,8 +93,8 @@ export function genOpenapiSpec(lang = 'ja-JP') {
 			requestBody: {
 				required: true,
 				content: {
-					'application/json': {
-						schema: endpoint.params,
+					[requestType]: {
+						schema,
 					},
 				},
 			},

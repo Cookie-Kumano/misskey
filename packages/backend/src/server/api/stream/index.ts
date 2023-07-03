@@ -1,124 +1,100 @@
-import * as websocket from 'websocket';
-import { readNotification } from '../common/read-notification.js';
-import call from '../call.js';
-import readNote from '@/services/note/read.js';
-import Channel from './channel.js';
-import channels from './channels/index.js';
-import { EventEmitter } from 'events';
-import { User } from '@/models/entities/user.js';
-import { Channel as ChannelModel } from '@/models/entities/channel.js';
-import { Users, Followings, Mutings, UserProfiles, ChannelFollowings, Blockings } from '@/models/index.js';
-import { ApiError } from '../error.js';
-import { AccessToken } from '@/models/entities/access-token.js';
-import { UserProfile } from '@/models/entities/user-profile.js';
-import { publishChannelStream, publishGroupMessagingStream, publishMessagingStream } from '@/services/stream.js';
-import { UserGroup } from '@/models/entities/user-group.js';
-import { StreamEventEmitter, StreamMessages } from './types.js';
-import { Packed } from '@/misc/schema.js';
+import * as WebSocket from 'ws';
+import type { User } from '@/models/entities/User.js';
+import type { AccessToken } from '@/models/entities/AccessToken.js';
+import type { Packed } from '@/misc/json-schema.js';
+import type { NoteReadService } from '@/core/NoteReadService.js';
+import type { NotificationService } from '@/core/NotificationService.js';
+import { bindThis } from '@/decorators.js';
+import { CacheService } from '@/core/CacheService.js';
+import { UserProfile } from '@/models/index.js';
+import type { ChannelsService } from './ChannelsService.js';
+import type { EventEmitter } from 'events';
+import type Channel from './channel.js';
+import type { StreamEventEmitter, StreamMessages } from './types.js';
 
 /**
  * Main stream connection
  */
 export default class Connection {
 	public user?: User;
-	public userProfile?: UserProfile;
-	public following: Set<User['id']> = new Set();
-	public muting: Set<User['id']> = new Set();
-	public blocking: Set<User['id']> = new Set(); // "被"blocking
-	public followingChannels: Set<ChannelModel['id']> = new Set();
 	public token?: AccessToken;
-	private wsConnection: websocket.connection;
+	private wsConnection: WebSocket.WebSocket;
 	public subscriber: StreamEventEmitter;
 	private channels: Channel[] = [];
 	private subscribingNotes: any = {};
 	private cachedNotes: Packed<'Note'>[] = [];
+	public userProfile: UserProfile | null = null;
+	public following: Set<string> = new Set();
+	public followingChannels: Set<string> = new Set();
+	public userIdsWhoMeMuting: Set<string> = new Set();
+	public userIdsWhoBlockingMe: Set<string> = new Set();
+	public userIdsWhoMeMutingRenotes: Set<string> = new Set();
+	private fetchIntervalId: NodeJS.Timer | null = null;
 
 	constructor(
-		wsConnection: websocket.connection,
-		subscriber: EventEmitter,
+		private channelsService: ChannelsService,
+		private noteReadService: NoteReadService,
+		private notificationService: NotificationService,
+		private cacheService: CacheService,
+
 		user: User | null | undefined,
 		token: AccessToken | null | undefined,
 	) {
-		this.wsConnection = wsConnection;
-		this.subscriber = subscriber;
 		if (user) this.user = user;
 		if (token) this.token = token;
+	}
 
-		this.onWsConnectionMessage = this.onWsConnectionMessage.bind(this);
-		this.onUserEvent = this.onUserEvent.bind(this);
-		this.onNoteStreamMessage = this.onNoteStreamMessage.bind(this);
-		this.onBroadcastMessage = this.onBroadcastMessage.bind(this);
+	@bindThis
+	public async fetch() {
+		if (this.user == null) return;
+		const [userProfile, following, followingChannels, userIdsWhoMeMuting, userIdsWhoBlockingMe, userIdsWhoMeMutingRenotes] = await Promise.all([
+			this.cacheService.userProfileCache.fetch(this.user.id),
+			this.cacheService.userFollowingsCache.fetch(this.user.id),
+			this.cacheService.userFollowingChannelsCache.fetch(this.user.id),
+			this.cacheService.userMutingsCache.fetch(this.user.id),
+			this.cacheService.userBlockedCache.fetch(this.user.id),
+			this.cacheService.renoteMutingsCache.fetch(this.user.id),
+		]);
+		this.userProfile = userProfile;
+		this.following = following;
+		this.followingChannels = followingChannels;
+		this.userIdsWhoMeMuting = userIdsWhoMeMuting;
+		this.userIdsWhoBlockingMe = userIdsWhoBlockingMe;
+		this.userIdsWhoMeMutingRenotes = userIdsWhoMeMutingRenotes;
+	}
 
+	@bindThis
+	public async init() {
+		if (this.user != null) {
+			await this.fetch();
+
+			if (!this.fetchIntervalId) {
+				this.fetchIntervalId = setInterval(this.fetch, 1000 * 10);
+			}
+		}
+	}
+
+	@bindThis
+	public async listen(subscriber: EventEmitter, wsConnection: WebSocket.WebSocket) {
+		this.subscriber = subscriber;
+
+		this.wsConnection = wsConnection;
 		this.wsConnection.on('message', this.onWsConnectionMessage);
 
 		this.subscriber.on('broadcast', data => {
 			this.onBroadcastMessage(data);
 		});
-
-		if (this.user) {
-			this.updateFollowing();
-			this.updateMuting();
-			this.updateBlocking();
-			this.updateFollowingChannels();
-			this.updateUserProfile();
-
-			this.subscriber.on(`user:${this.user.id}`, this.onUserEvent);
-		}
-	}
-
-	private onUserEvent(data: StreamMessages['user']['payload']) { // { type, body }と展開するとそれぞれ型が分離してしまう
-		switch (data.type) {
-			case 'follow':
-				this.following.add(data.body.id);
-				break;
-
-			case 'unfollow':
-				this.following.delete(data.body.id);
-				break;
-
-			case 'mute':
-				this.muting.add(data.body.id);
-				break;
-
-			case 'unmute':
-				this.muting.delete(data.body.id);
-				break;
-
-			// TODO: block events
-
-			case 'followChannel':
-				this.followingChannels.add(data.body.id);
-				break;
-
-			case 'unfollowChannel':
-				this.followingChannels.delete(data.body.id);
-				break;
-
-			case 'updateUserProfile':
-				this.userProfile = data.body;
-				break;
-
-			case 'terminate':
-				this.wsConnection.close();
-				this.dispose();
-				break;
-
-			default:
-				break;
-		}
 	}
 
 	/**
 	 * クライアントからメッセージ受信時
 	 */
-	private async onWsConnectionMessage(data: websocket.Message) {
-		if (data.type !== 'utf8') return;
-		if (data.utf8Data == null) return;
-
+	@bindThis
+	private async onWsConnectionMessage(data: WebSocket.RawData) {
 		let obj: Record<string, any>;
 
 		try {
-			obj = JSON.parse(data.utf8Data);
+			obj = JSON.parse(data.toString());
 		} catch (e) {
 			return;
 		}
@@ -126,7 +102,6 @@ export default class Connection {
 		const { type, body } = obj;
 
 		switch (type) {
-			case 'api': this.onApiRequest(body); break;
 			case 'readNotification': this.onReadNotification(body); break;
 			case 'subNote': this.onSubscribeNote(body); break;
 			case 's': this.onSubscribeNote(body); break; // alias
@@ -137,19 +112,15 @@ export default class Connection {
 			case 'disconnect': this.onChannelDisconnectRequested(body); break;
 			case 'channel': this.onChannelMessageRequested(body); break;
 			case 'ch': this.onChannelMessageRequested(body); break; // alias
-
-			// 個々のチャンネルではなくルートレベルでこれらのメッセージを受け取る理由は、
-			// クライアントの事情を考慮したとき、入力フォームはノートチャンネルやメッセージのメインコンポーネントとは別
-			// なこともあるため、それらのコンポーネントがそれぞれ各チャンネルに接続するようにするのは面倒なため。
-			case 'typingOnChannel': this.typingOnChannel(body.channel); break;
-			case 'typingOnMessaging': this.typingOnMessaging(body); break;
 		}
 	}
 
+	@bindThis
 	private onBroadcastMessage(data: StreamMessages['broadcast']['payload']) {
 		this.sendMessageToWs(data.type, data.body);
 	}
 
+	@bindThis
 	public cacheNote(note: Packed<'Note'>) {
 		const add = (note: Packed<'Note'>) => {
 			const existIndex = this.cachedNotes.findIndex(n => n.id === note.id);
@@ -169,6 +140,7 @@ export default class Connection {
 		if (note.renote) add(note.renote);
 	}
 
+	@bindThis
 	private readNote(body: any) {
 		const id = body.id;
 
@@ -176,46 +148,19 @@ export default class Connection {
 		if (note == null) return;
 
 		if (this.user && (note.userId !== this.user.id)) {
-			readNote(this.user.id, [note], {
-				following: this.following,
-				followingChannels: this.followingChannels,
-			});
+			this.noteReadService.read(this.user.id, [note]);
 		}
 	}
 
-	/**
-	 * APIリクエスト要求時
-	 */
-	private async onApiRequest(payload: any) {
-		// 新鮮なデータを利用するためにユーザーをフェッチ
-		const user = this.user ? await Users.findOneBy({ id: this.user.id }) : null;
-
-		const endpoint = payload.endpoint || payload.ep; // alias
-
-		// 呼び出し
-		call(endpoint, user, this.token, payload.data).then(res => {
-			this.sendMessageToWs(`api:${payload.id}`, { res });
-		}).catch((e: ApiError) => {
-			this.sendMessageToWs(`api:${payload.id}`, {
-				error: {
-					message: e.message,
-					code: e.code,
-					id: e.id,
-					kind: e.kind,
-					...(e.info ? { info: e.info } : {}),
-				},
-			});
-		});
-	}
-
+	@bindThis
 	private onReadNotification(payload: any) {
-		if (!payload.id) return;
-		readNotification(this.user!.id, [payload.id]);
+		this.notificationService.readAllNotification(this.user!.id);
 	}
 
 	/**
 	 * 投稿購読要求時
 	 */
+	@bindThis
 	private onSubscribeNote(payload: any) {
 		if (!payload.id) return;
 
@@ -233,6 +178,7 @@ export default class Connection {
 	/**
 	 * 投稿購読解除要求時
 	 */
+	@bindThis
 	private onUnsubscribeNote(payload: any) {
 		if (!payload.id) return;
 
@@ -243,6 +189,7 @@ export default class Connection {
 		}
 	}
 
+	@bindThis
 	private async onNoteStreamMessage(data: StreamMessages['note']['payload']) {
 		this.sendMessageToWs('noteUpdated', {
 			id: data.body.id,
@@ -254,6 +201,7 @@ export default class Connection {
 	/**
 	 * チャンネル接続要求時
 	 */
+	@bindThis
 	private onChannelConnectRequested(payload: any) {
 		const { channel, id, params, pong } = payload;
 		this.connectChannel(id, params, channel, pong);
@@ -262,6 +210,7 @@ export default class Connection {
 	/**
 	 * チャンネル切断要求時
 	 */
+	@bindThis
 	private onChannelDisconnectRequested(payload: any) {
 		const { id } = payload;
 		this.disconnectChannel(id);
@@ -270,6 +219,7 @@ export default class Connection {
 	/**
 	 * クライアントにメッセージ送信
 	 */
+	@bindThis
 	public sendMessageToWs(type: string, payload: any) {
 		this.wsConnection.send(JSON.stringify({
 			type: type,
@@ -280,19 +230,22 @@ export default class Connection {
 	/**
 	 * チャンネルに接続
 	 */
+	@bindThis
 	public connectChannel(id: string, params: any, channel: string, pong = false) {
-		if ((channels as any)[channel].requireCredential && this.user == null) {
+		const channelService = this.channelsService.getChannelService(channel);
+
+		if (channelService.requireCredential && this.user == null) {
 			return;
 		}
 
 		// 共有可能チャンネルに接続しようとしていて、かつそのチャンネルに既に接続していたら無意味なので無視
-		if ((channels as any)[channel].shouldShare && this.channels.some(c => c.chName === channel)) {
+		if (channelService.shouldShare && this.channels.some(c => c.chName === channel)) {
 			return;
 		}
 
-		const ch: Channel = new (channels as any)[channel](id, this);
+		const ch: Channel = channelService.create(id, this);
 		this.channels.push(ch);
-		ch.init(params);
+		ch.init(params ?? {});
 
 		if (pong) {
 			this.sendMessageToWs('connected', {
@@ -305,6 +258,7 @@ export default class Connection {
 	 * チャンネルから切断
 	 * @param id チャンネルコネクションID
 	 */
+	@bindThis
 	public disconnectChannel(id: string) {
 		const channel = this.channels.find(c => c.id === id);
 
@@ -318,6 +272,7 @@ export default class Connection {
 	 * チャンネルへメッセージ送信要求時
 	 * @param data メッセージ
 	 */
+	@bindThis
 	private onChannelMessageRequested(data: any) {
 		const channel = this.channels.find(c => c.id === data.id);
 		if (channel != null && channel.onMessage != null) {
@@ -325,76 +280,12 @@ export default class Connection {
 		}
 	}
 
-	private typingOnChannel(channel: ChannelModel['id']) {
-		if (this.user) {
-			publishChannelStream(channel, 'typing', this.user.id);
-		}
-	}
-
-	private typingOnMessaging(param: { partner?: User['id']; group?: UserGroup['id']; }) {
-		if (this.user) {
-			if (param.partner) {
-				publishMessagingStream(param.partner, this.user.id, 'typing', this.user.id);
-			} else if (param.group) {
-				publishGroupMessagingStream(param.group, 'typing', this.user.id);
-			}
-		}
-	}
-
-	private async updateFollowing() {
-		const followings = await Followings.find({
-			where: {
-				followerId: this.user!.id,
-			},
-			select: ['followeeId'],
-		});
-
-		this.following = new Set<string>(followings.map(x => x.followeeId));
-	}
-
-	private async updateMuting() {
-		const mutings = await Mutings.find({
-			where: {
-				muterId: this.user!.id,
-			},
-			select: ['muteeId'],
-		});
-
-		this.muting = new Set<string>(mutings.map(x => x.muteeId));
-	}
-
-	private async updateBlocking() { // ここでいうBlockingは被Blockingの意
-		const blockings = await Blockings.find({
-			where: {
-				blockeeId: this.user!.id,
-			},
-			select: ['blockerId'],
-		});
-
-		this.blocking = new Set<string>(blockings.map(x => x.blockerId));
-	}
-
-	private async updateFollowingChannels() {
-		const followings = await ChannelFollowings.find({
-			where: {
-				followerId: this.user!.id,
-			},
-			select: ['followeeId'],
-		});
-
-		this.followingChannels = new Set<string>(followings.map(x => x.followeeId));
-	}
-
-	private async updateUserProfile() {
-		this.userProfile = await UserProfiles.findOneBy({
-			userId: this.user!.id,
-		});
-	}
-
 	/**
 	 * ストリームが切れたとき
 	 */
+	@bindThis
 	public dispose() {
+		if (this.fetchIntervalId) clearInterval(this.fetchIntervalId);
 		for (const c of this.channels.filter(c => c.dispose)) {
 			if (c.dispose) c.dispose();
 		}

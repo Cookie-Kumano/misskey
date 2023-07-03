@@ -1,5 +1,7 @@
-import define from '../../../define.js';
-import { Announcements } from '@/models/index.js';
+import { Inject, Injectable } from '@nestjs/common';
+import { Endpoint } from '@/server/api/endpoint-base.js';
+import type { AnnouncementsRepository } from '@/models/index.js';
+import { DI } from '@/di-symbols.js';
 import { ApiError } from '../../../error.js';
 
 export const meta = {
@@ -23,21 +25,30 @@ export const paramDef = {
 		id: { type: 'string', format: 'misskey:id' },
 		title: { type: 'string', minLength: 1 },
 		text: { type: 'string', minLength: 1 },
-		imageUrl: { type: 'string', nullable: true, minLength: 1 },
+		imageUrl: { type: 'string', nullable: true, minLength: 0 },
 	},
 	required: ['id', 'title', 'text', 'imageUrl'],
 } as const;
 
 // eslint-disable-next-line import/no-default-export
-export default define(meta, paramDef, async (ps, me) => {
-	const announcement = await Announcements.findOneBy({ id: ps.id });
+@Injectable()
+export default class extends Endpoint<typeof meta, typeof paramDef> {
+	constructor(
+		@Inject(DI.announcementsRepository)
+		private announcementsRepository: AnnouncementsRepository,
+	) {
+		super(meta, paramDef, async (ps, me) => {
+			const announcement = await this.announcementsRepository.findOneBy({ id: ps.id });
 
-	if (announcement == null) throw new ApiError(meta.errors.noSuchAnnouncement);
+			if (announcement == null) throw new ApiError(meta.errors.noSuchAnnouncement);
 
-	await Announcements.update(announcement.id, {
-		updatedAt: new Date(),
-		title: ps.title,
-		text: ps.text,
-		imageUrl: ps.imageUrl,
-	});
-});
+			await this.announcementsRepository.update(announcement.id, {
+				updatedAt: new Date(),
+				title: ps.title,
+				text: ps.text,
+				/* eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing -- 空の文字列の場合、nullを渡すようにするため */
+				imageUrl: ps.imageUrl || null, 
+			});
+		});
+	}
+}

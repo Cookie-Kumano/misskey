@@ -1,6 +1,8 @@
-import define from '../../../define.js';
-import deleteFollowing from '@/services/following/delete.js';
-import { Followings, Users } from '@/models/index.js';
+import { Inject, Injectable } from '@nestjs/common';
+import { Endpoint } from '@/server/api/endpoint-base.js';
+import type { FollowingsRepository, UsersRepository } from '@/models/index.js';
+import { DI } from '@/di-symbols.js';
+import { QueueService } from '@/core/QueueService.js';
 
 export const meta = {
 	tags: ['admin'],
@@ -18,17 +20,28 @@ export const paramDef = {
 } as const;
 
 // eslint-disable-next-line import/no-default-export
-export default define(meta, paramDef, async (ps, me) => {
-	const followings = await Followings.findBy({
-		followerHost: ps.host,
-	});
+@Injectable()
+export default class extends Endpoint<typeof meta, typeof paramDef> {
+	constructor(
+		@Inject(DI.usersRepository)
+		private usersRepository: UsersRepository,
 
-	const pairs = await Promise.all(followings.map(f => Promise.all([
-		Users.findOneByOrFail({ id: f.followerId }),
-		Users.findOneByOrFail({ id: f.followeeId }),
-	])));
+		@Inject(DI.notesRepository)
+		private followingsRepository: FollowingsRepository,
 
-	for (const pair of pairs) {
-		deleteFollowing(pair[0], pair[1]);
+		private queueService: QueueService,
+	) {
+		super(meta, paramDef, async (ps, me) => {
+			const followings = await this.followingsRepository.findBy({
+				followerHost: ps.host,
+			});
+
+			const pairs = await Promise.all(followings.map(f => Promise.all([
+				this.usersRepository.findOneByOrFail({ id: f.followerId }),
+				this.usersRepository.findOneByOrFail({ id: f.followeeId }),
+			]).then(([from, to]) => [{ id: from.id }, { id: to.id }])));
+
+			this.queueService.createUnfollowJob(pairs.map(p => ({ from: p[0], to: p[1], silent: true })));
+		});
 	}
-});
+}

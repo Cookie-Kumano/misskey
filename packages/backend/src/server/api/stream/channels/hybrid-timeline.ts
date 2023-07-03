@@ -1,30 +1,44 @@
-import { isMutedUserRelated } from '@/misc/is-muted-user-related.js';
-import Channel from '../channel.js';
-import { fetchMeta } from '@/misc/fetch-meta.js';
-import { Notes } from '@/models/index.js';
+import { Injectable } from '@nestjs/common';
 import { checkWordMute } from '@/misc/check-word-mute.js';
-import { isBlockerUserRelated } from '@/misc/is-blocker-user-related.js';
+import { isUserRelated } from '@/misc/is-user-related.js';
 import { isInstanceMuted } from '@/misc/is-instance-muted.js';
-import { Packed } from '@/misc/schema.js';
+import type { Packed } from '@/misc/json-schema.js';
+import { MetaService } from '@/core/MetaService.js';
+import { NoteEntityService } from '@/core/entities/NoteEntityService.js';
+import { bindThis } from '@/decorators.js';
+import { RoleService } from '@/core/RoleService.js';
+import Channel from '../channel.js';
 
-export default class extends Channel {
+class HybridTimelineChannel extends Channel {
 	public readonly chName = 'hybridTimeline';
 	public static shouldShare = true;
 	public static requireCredential = true;
+	private withReplies: boolean;
 
-	constructor(id: string, connection: Channel['connection']) {
+	constructor(
+		private metaService: MetaService,
+		private roleService: RoleService,
+		private noteEntityService: NoteEntityService,
+
+		id: string,
+		connection: Channel['connection'],
+	) {
 		super(id, connection);
-		this.onNote = this.onNote.bind(this);
+		//this.onNote = this.onNote.bind(this);
 	}
 
-	public async init(params: any) {
-		const meta = await fetchMeta();
-		if (meta.disableLocalTimeline && !this.user!.isAdmin && !this.user!.isModerator) return;
+	@bindThis
+	public async init(params: any): Promise<void> {
+		const policies = await this.roleService.getUserPolicies(this.user ? this.user.id : null);
+		if (!policies.ltlAvailable) return;
+
+		this.withReplies = params.withReplies as boolean;
 
 		// Subscribe events
 		this.subscriber.on('notesStream', this.onNote);
 	}
 
+	@bindThis
 	private async onNote(note: Packed<'Note'>) {
 		// チャンネルの投稿ではなく、自分自身の投稿 または
 		// チャンネルの投稿ではなく、その投稿のユーザーをフォローしている または
@@ -38,7 +52,7 @@ export default class extends Channel {
 		)) return;
 
 		if (['followers', 'specified'].includes(note.visibility)) {
-			note = await Notes.pack(note.id, this.user!, {
+			note = await this.noteEntityService.pack(note.id, this.user!, {
 				detail: true,
 			});
 
@@ -48,32 +62,34 @@ export default class extends Channel {
 		} else {
 			// リプライなら再pack
 			if (note.replyId != null) {
-				note.reply = await Notes.pack(note.replyId, this.user!, {
+				note.reply = await this.noteEntityService.pack(note.replyId, this.user!, {
 					detail: true,
 				});
 			}
 			// Renoteなら再pack
 			if (note.renoteId != null) {
-				note.renote = await Notes.pack(note.renoteId, this.user!, {
+				note.renote = await this.noteEntityService.pack(note.renoteId, this.user!, {
 					detail: true,
 				});
 			}
 		}
 
 		// Ignore notes from instances the user has muted
-		if (isInstanceMuted(note, new Set<string>(this.userProfile?.mutedInstances ?? []))) return;
+		if (isInstanceMuted(note, new Set<string>(this.userProfile!.mutedInstances ?? []))) return;
 
 		// 関係ない返信は除外
-		if (note.reply && !this.user!.showTimelineReplies) {
+		if (note.reply && !this.withReplies) {
 			const reply = note.reply;
 			// 「チャンネル接続主への返信」でもなければ、「チャンネル接続主が行った返信」でもなければ、「投稿者の投稿者自身への返信」でもない場合
 			if (reply.userId !== this.user!.id && note.userId !== this.user!.id && reply.userId !== note.userId) return;
 		}
 
 		// 流れてきたNoteがミュートしているユーザーが関わるものだったら無視する
-		if (isMutedUserRelated(note, this.muting)) return;
+		if (isUserRelated(note, this.userIdsWhoMeMuting)) return;
 		// 流れてきたNoteがブロックされているユーザーが関わるものだったら無視する
-		if (isBlockerUserRelated(note, this.blocking)) return;
+		if (isUserRelated(note, this.userIdsWhoBlockingMe)) return;
+
+		if (note.renote && !note.text && isUserRelated(note, this.userIdsWhoMeMutingRenotes)) return;
 
 		// 流れてきたNoteがミュートすべきNoteだったら無視する
 		// TODO: 将来的には、単にMutedNoteテーブルにレコードがあるかどうかで判定したい(以下の理由により難しそうではある)
@@ -87,8 +103,33 @@ export default class extends Channel {
 		this.send('note', note);
 	}
 
-	public dispose() {
+	@bindThis
+	public dispose(): void {
 		// Unsubscribe events
 		this.subscriber.off('notesStream', this.onNote);
+	}
+}
+
+@Injectable()
+export class HybridTimelineChannelService {
+	public readonly shouldShare = HybridTimelineChannel.shouldShare;
+	public readonly requireCredential = HybridTimelineChannel.requireCredential;
+
+	constructor(
+		private metaService: MetaService,
+		private roleService: RoleService,
+		private noteEntityService: NoteEntityService,
+	) {
+	}
+
+	@bindThis
+	public create(id: string, connection: Channel['connection']): HybridTimelineChannel {
+		return new HybridTimelineChannel(
+			this.metaService,
+			this.roleService,
+			this.noteEntityService,
+			id,
+			connection,
+		);
 	}
 }

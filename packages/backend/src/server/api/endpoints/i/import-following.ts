@@ -1,12 +1,16 @@
-import define from '../../define.js';
-import { createImportFollowingJob } from '@/queue/index.js';
+import { Inject, Injectable } from '@nestjs/common';
 import ms from 'ms';
+import { Endpoint } from '@/server/api/endpoint-base.js';
+import { QueueService } from '@/core/QueueService.js';
+import { AccountMoveService } from '@/core/AccountMoveService.js';
+import type { DriveFilesRepository } from '@/models/index.js';
+import { DI } from '@/di-symbols.js';
 import { ApiError } from '../../error.js';
-import { DriveFiles } from '@/models/index.js';
 
 export const meta = {
 	secure: true,
 	requireCredential: true,
+	prohibitMoved: true,
 	limit: {
 		duration: ms('1hour'),
 		max: 1,
@@ -48,13 +52,30 @@ export const paramDef = {
 } as const;
 
 // eslint-disable-next-line import/no-default-export
-export default define(meta, paramDef, async (ps, user) => {
-	const file = await DriveFiles.findOneBy({ id: ps.fileId });
+@Injectable()
+export default class extends Endpoint<typeof meta, typeof paramDef> {
+	constructor(
+		@Inject(DI.driveFilesRepository)
+		private driveFilesRepository: DriveFilesRepository,
 
-	if (file == null) throw new ApiError(meta.errors.noSuchFile);
-	//if (!file.type.endsWith('/csv')) throw new ApiError(meta.errors.unexpectedFileType);
-	if (file.size > 50000) throw new ApiError(meta.errors.tooBigFile);
-	if (file.size === 0) throw new ApiError(meta.errors.emptyFile);
+		private queueService: QueueService,
+		private accountMoveService: AccountMoveService,
+	) {
+		super(meta, paramDef, async (ps, me) => {
+			const file = await this.driveFilesRepository.findOneBy({ id: ps.fileId });
 
-	createImportFollowingJob(user, file.id);
-});
+			if (file == null) throw new ApiError(meta.errors.noSuchFile);
+			//if (!file.type.endsWith('/csv')) throw new ApiError(meta.errors.unexpectedFileType);
+			if (file.size === 0) throw new ApiError(meta.errors.emptyFile);
+
+			const checkMoving = await this.accountMoveService.validateAlsoKnownAs(
+				me,
+				(old, src) => !!src.movedAt && src.movedAt.getTime() + 1000 * 60 * 60 * 2 > (new Date()).getTime(),
+				true,
+			);
+			if (checkMoving ? file.size > 32 * 1024 * 1024 : file.size > 64 * 1024) throw new ApiError(meta.errors.tooBigFile);
+
+			this.queueService.createImportFollowingJob(me, file.id);
+		});
+	}
+}
