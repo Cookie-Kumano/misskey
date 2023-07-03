@@ -54,7 +54,7 @@ defineProps<{
 				width: 100%;
 				box-sizing: border-box;
 				padding: 9px 16px 9px 8px;
-				border-radius: 9px;
+				border-radius: 6px;
 				font-size: 0.9em;
 
 				&:hover {
@@ -136,7 +136,7 @@ defineProps<{
 						height: 60px;
 						aspect-ratio: 1;
 						background: var(--panel);
-						border-radius: 100%;
+						border-radius: 6px;
 					}
 
 					> .text {

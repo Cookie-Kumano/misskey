@@ -136,10 +136,10 @@ watch(() => props.user.avatarBlurhash, () => {
 }
 
 .square {
-	border-radius: 20%;
+	border-radius: 6px;
 
 	> .inner {
-		border-radius: 20%;
+		border-radius: 6px;
 	}
 }
 
