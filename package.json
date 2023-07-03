@@ -1,12 +1,7 @@
 {
 	"name": "misskey",
-<<<<<<< HEAD
-	"version": "12.110.1-maikaze-0.1.1",
-	"codename": "maikaze",
-=======
 	"version": "13.13.2",
 	"codename": "nasubi",
->>>>>>> 84d3a066372bfed8bd1d4ac5a469a84075dea954
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/Cookie-Kumano/misskey.git"
