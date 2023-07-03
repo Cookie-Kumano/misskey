@@ -353,7 +353,7 @@ definePageMetadata({
 				display: block;
 				width: 80px;
 				margin: 0 auto;
-				border-radius: 16px;
+				border-radius: 6px;
 				position: relative;
 				z-index: 1;
 			}
