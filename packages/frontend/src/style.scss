@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 :root {
-	--radius: 12px;
+	--radius: 4px;
 	--marginFull: 16px;
 	--marginHalf: 10px;
 
@@ -27,7 +27,7 @@ html {
 	accent-color: var(--accent);
 	overflow: auto;
 	overflow-wrap: break-word;
-	font-family: 'Hiragino Maru Gothic Pro', "BIZ UDGothic", Roboto, HelveticaNeue, Arial, sans-serif;
+	font-family: 'Hiragino Kaku Gothic Pro', "BIZ UDGothic", Roboto, HelveticaNeue, Arial, sans-serif;
 	font-size: 14px;
 	line-height: 1.35;
 	text-size-adjust: 100%;
@@ -176,7 +176,7 @@ hr {
 }
 
 ._shadow {
-	box-shadow: 0px 4px 32px var(--shadow) !important;
+	box-shadow: 0 4px 6px var(--shadow) !important;
 }
 
 ._button {
@@ -374,7 +374,7 @@ hr {
 		vertical-align: bottom;
 		height: 128px;
 		margin-bottom: 16px;
-		border-radius: 16px;
+		border-radius: var(--radius);
 	}
 }
 

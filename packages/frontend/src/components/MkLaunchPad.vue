@@ -69,7 +69,7 @@ function close() {
 	overflow: auto;
 	overscroll-behavior: contain;
 	text-align: left;
-	border-radius: 16px;
+	border-radius: var(--radius);
 
 	&.asDrawer {
 		width: 100%;

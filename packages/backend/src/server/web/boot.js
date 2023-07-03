@@ -223,7 +223,7 @@
 		}
 
 		button {
-			border-radius: 999px;
+			border-radius: 6px;
 			padding: 0px 12px 0px 12px;
 			border: none;
 			cursor: pointer;

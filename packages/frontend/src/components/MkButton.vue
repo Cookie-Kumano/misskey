@@ -117,7 +117,7 @@ function onMousedown(evt: MouseEvent): void {
 	box-shadow: none;
 	text-decoration: none;
 	background: var(--buttonBg);
-	border-radius: 5px;
+	border-radius: var(--radius);
 	overflow: clip;
 	box-sizing: border-box;
 	transition: background 0.1s ease;
@@ -145,7 +145,7 @@ function onMousedown(evt: MouseEvent): void {
 	}
 
 	&.rounded {
-		border-radius: 999px;
+		border-radius: 6px;
 	}
 
 	&.primary {

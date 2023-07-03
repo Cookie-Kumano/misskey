@@ -20,6 +20,7 @@ export const themeProps = Object.keys(lightTheme.props).filter(key => !key.start
 
 export const getBuiltinThemes = () => Promise.all(
 	[
+		'l-maikaze',
 		'l-light',
 		'l-coffee',
 		'l-apricot',
@@ -30,6 +31,7 @@ export const getBuiltinThemes = () => Promise.all(
 		'l-sushi',
 		'l-u0',
 
+		'd-maikaze',
 		'd-dark',
 		'd-persimmon',
 		'd-astro',

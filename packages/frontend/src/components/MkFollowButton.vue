@@ -136,7 +136,7 @@ onBeforeUnmount(() => {
 	padding: 0;
 	height: 31px;
 	font-size: 16px;
-	border-radius: 32px;
+	border-radius: var(--radius);
 	background: #fff;
 
 	&.full {
@@ -164,7 +164,7 @@ onBeforeUnmount(() => {
 			bottom: -5px;
 			left: -5px;
 			border: 2px solid var(--focus);
-			border-radius: 32px;
+			border-radius: var(--radius);
 		}
 	}
 

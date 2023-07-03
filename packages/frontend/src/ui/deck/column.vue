@@ -249,7 +249,7 @@ function onDrop(ev) {
 	height: 100%;
 	overflow: clip;
 	contain: strict;
-	border-radius: 10px;
+  border-radius: var(--radius);
 
 	&.draghover {
 		&:after {

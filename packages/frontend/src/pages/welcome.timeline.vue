@@ -83,7 +83,7 @@ onUpdated(() => {
 	padding: 16px;
 	margin: 0 0 0 auto;
 	max-width: max-content;
-	border-radius: 16px;
+	border-radius: 6px;
 }
 
 .richcontent {
