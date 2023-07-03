@@ -8,7 +8,9 @@
 
 		<template v-if="metadata">
 			<div v-if="!hideTitle" :class="$style.titleContainer" @click="top">
-				<MkAvatar v-if="metadata.avatar" :class="$style.titleAvatar" :user="metadata.avatar" indicator/>
+				<div v-if="metadata.avatar" :class="$style.titleAvatarContainer">
+					<MkAvatar :class="$style.titleAvatar" :user="metadata.avatar" indicator/>
+				</div>
 				<i v-else-if="metadata.icon" :class="[$style.titleIcon, metadata.icon]"></i>
 
 				<div :class="$style.title">
@@ -19,7 +21,7 @@
 					</div>
 				</div>
 			</div>
-			<XTabs v-if="!narrow || hideTitle" :class="$style.tabs" :tab="tab" :tabs="tabs" :root-el="el" @update:tab="key => emit('update:tab', key)" @tab-click="onTabClick"/>
+			<XTabs v-if="!narrow || hideTitle" :class="$style.tabs" :tab="tab" :tabs="tabs" :rootEl="el" @update:tab="key => emit('update:tab', key)" @tabClick="onTabClick"/>
 		</template>
 		<div v-if="(!thin_ && narrow && !hideTitle) || (actions && actions.length > 0)" :class="$style.buttonsRight">
 			<template v-for="action in actions">
@@ -28,7 +30,7 @@
 		</div>
 	</div>
 	<div v-if="(narrow && !hideTitle) && hasTabs" :class="[$style.lower, { [$style.slim]: narrow, [$style.thin]: thin_ }]">
-		<XTabs :class="$style.tabs" :tab="tab" :tabs="tabs" :root-el="el" @update:tab="key => emit('update:tab', key)" @tab-click="onTabClick"/>
+		<XTabs :class="$style.tabs" :tab="tab" :tabs="tabs" :rootEl="el" @update:tab="key => emit('update:tab', key)" @tabClick="onTabClick"/>
 	</div>
 </div>
 </template>
@@ -96,7 +98,7 @@ function onTabClick(): void {
 }
 
 const calcBg = () => {
-	const rawBg = metadata?.bg ?? 'var(--bg)';
+	const rawBg = 'var(--bg)';
 	const tinyBg = tinycolor(rawBg.startsWith('var(') ? getComputedStyle(document.documentElement).getPropertyValue(rawBg.slice(4, -1)) : rawBg);
 	tinyBg.setAlpha(0.85);
 	bg.value = tinyBg.toRgbString();
@@ -147,17 +149,14 @@ onUnmounted(() => {
 
 	.tabs:first-child {
 		margin-left: auto;
-	}
-	.tabs:not(:first-child) {
-		padding-left: 16px;
-		mask-image: linear-gradient(90deg, rgba(0,0,0,0), rgb(0,0,0) 16px, rgb(0,0,0) 100%);
+		padding: 0 12px;
 	}
 	.tabs {
 		margin-right: auto;
 	}
 
 	&.thin {
-		--height: 42px;
+		--height: 40px;
 
 		> .buttons {
 			> .button {
@@ -244,7 +243,7 @@ onUnmounted(() => {
 	display: flex;
 	align-items: center;
 	max-width: min(30vw, 400px);
-	overflow: auto;
+	overflow: clip;
 	white-space: nowrap;
 	text-align: left;
 	font-weight: bold;
@@ -252,13 +251,19 @@ onUnmounted(() => {
 	margin-left: 24px;
 }
 
-.titleAvatar {
+.titleAvatarContainer {
 	$size: 32px;
-	display: inline-block;
+	contain: strict;
+	overflow: clip;
 	width: $size;
 	height: $size;
-	vertical-align: bottom;
-	margin: 0 8px;
+	padding: 8px;
+	flex-shrink: 0;
+}
+
+.titleAvatar {
+	width: 100%;
+	height: 100%;
 	pointer-events: none;
 }
 

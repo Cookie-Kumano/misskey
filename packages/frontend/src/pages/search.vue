@@ -1,63 +1,52 @@
 <template>
 <MkStickyContainer>
-	<template #header><MkPageHeader :actions="headerActions" :tabs="headerTabs"/></template>
-	<MkSpacer :content-max="800">
-		<MkNotes ref="notes" :pagination="pagination"/>
+	<template #header><MkPageHeader v-model:tab="tab" :actions="headerActions" :tabs="headerTabs"/></template>
+
+	<MkSpacer v-if="tab === 'note'" :contentMax="800">
+		<div v-if="notesSearchAvailable">
+			<XNote/>
+		</div>
+		<div v-else>
+			<MkInfo warn>{{ i18n.ts.notesSearchNotAvailable }}</MkInfo>
+		</div>
+	</MkSpacer>
+
+	<MkSpacer v-else-if="tab === 'user'" :contentMax="800">
+		<XUser/>
 	</MkSpacer>
 </MkStickyContainer>
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
-import MkNotes from '@/components/MkNotes.vue';
+import { computed, defineAsyncComponent, onMounted } from 'vue';
 import { i18n } from '@/i18n';
 import { definePageMetadata } from '@/scripts/page-metadata';
 import * as os from '@/os';
-import { useRouter } from '@/router';
 import { $i } from '@/account';
+import { instance } from '@/instance';
+import MkInfo from '@/components/MkInfo.vue';
 
-const router = useRouter();
+const XNote = defineAsyncComponent(() => import('./search.note.vue'));
+const XUser = defineAsyncComponent(() => import('./search.user.vue'));
 
-const props = defineProps<{
-	query: string;
-	channel?: string;
-}>();
+let tab = $ref('note');
 
-const query = props.query;
-
-if ($i != null) {
-	if (query.startsWith('https://') || (query.startsWith('@') && !query.includes(' '))) {
-		const promise = os.api('ap/show', {
-			uri: props.query,
-		});
-
-		os.promiseDialog(promise, null, null, i18n.ts.fetchingAsApObject);
-
-		const res = await promise;
-
-		if (res.type === 'User') {
-			router.replace(`/@${res.object.username}@${res.object.host}`);
-		} else if (res.type === 'Note') {
-			router.replace(`/notes/${res.object.id}`);
-		}
-	}
-}
-
-const pagination = {
-	endpoint: 'notes/search' as const,
-	limit: 10,
-	params: computed(() => ({
-		query: props.query,
-		channelId: props.channel,
-	})),
-};
+const notesSearchAvailable = (($i == null && instance.policies.canSearchNotes) || ($i != null && $i.policies.canSearchNotes));
 
 const headerActions = $computed(() => []);
 
-const headerTabs = $computed(() => []);
+const headerTabs = $computed(() => [{
+	key: 'note',
+	title: i18n.ts.notes,
+	icon: 'ti ti-pencil',
+}, {
+	key: 'user',
+	title: i18n.ts.users,
+	icon: 'ti ti-users',
+}]);
 
 definePageMetadata(computed(() => ({
-	title: i18n.t('searchWith', { q: props.query }),
+	title: i18n.ts.search,
 	icon: 'ti ti-search',
 })));
 </script>

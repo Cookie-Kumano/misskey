@@ -31,24 +31,15 @@ export const paramDef = {
 	properties: {
 		limit: { type: 'integer', minimum: 1, maximum: 100, default: 10 },
 		detail: { type: 'boolean', default: true },
+
+		username: { type: 'string', nullable: true },
+		host: { type: 'string', nullable: true },
 	},
 	anyOf: [
-		{
-			properties: {
-				username: { type: 'string', nullable: true },
-			},
-			required: ['username'],
-		},
-		{
-			properties: {
-				host: { type: 'string', nullable: true },
-			},
-			required: ['host'],
-		},
+		{ required: ['username'] },
+		{ required: ['host'] },
 	],
 } as const;
-
-// TODO: avatar,bannerをJOINしたいけどエラーになる
 
 // eslint-disable-next-line import/no-default-export
 @Injectable()
