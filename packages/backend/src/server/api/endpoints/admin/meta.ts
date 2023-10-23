@@ -1,5 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: syuilo and other misskey contributors
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
 import { Inject, Injectable } from '@nestjs/common';
-import { MAX_NOTE_TEXT_LENGTH } from '@/const.js';
 import { Endpoint } from '@/server/api/endpoint-base.js';
 import { MetaService } from '@/core/MetaService.js';
 import type { Config } from '@/config.js';
@@ -17,6 +21,10 @@ export const meta = {
 		optional: false, nullable: false,
 		properties: {
 			cacheRemoteFiles: {
+				type: 'boolean',
+				optional: false, nullable: false,
+			},
+			cacheRemoteSensitiveFiles: {
 				type: 'boolean',
 				optional: false, nullable: false,
 			},
@@ -77,6 +85,14 @@ export const meta = {
 				type: 'string',
 				optional: false, nullable: true,
 			},
+			app192IconUrl: {
+				type: 'string',
+				optional: false, nullable: true,
+			},
+			app512IconUrl: {
+				type: 'string',
+				optional: false, nullable: true,
+			},
 			enableEmail: {
 				type: 'boolean',
 				optional: false, nullable: false,
@@ -89,40 +105,42 @@ export const meta = {
 				type: 'boolean',
 				optional: false, nullable: false,
 			},
-			userStarForReactionFallback: {
-				type: 'boolean',
-				optional: true, nullable: false,
+			silencedHosts: {
+				type: "array",
+				optional: true,
+				nullable: false,
+				items: {
+					type: "string",
+					optional: false,
+					nullable: false,
+				},
 			},
 			pinnedUsers: {
 				type: 'array',
-				optional: true, nullable: false,
+				optional: false, nullable: false,
 				items: {
 					type: 'string',
-					optional: false, nullable: false,
 				},
 			},
 			hiddenTags: {
 				type: 'array',
-				optional: true, nullable: false,
+				optional: false, nullable: false,
 				items: {
 					type: 'string',
-					optional: false, nullable: false,
 				},
 			},
 			blockedHosts: {
 				type: 'array',
-				optional: true, nullable: false,
+				optional: false, nullable: false,
 				items: {
 					type: 'string',
-					optional: false, nullable: false,
 				},
 			},
 			sensitiveWords: {
 				type: 'array',
-				optional: true, nullable: false,
+				optional: false, nullable: false,
 				items: {
 					type: 'string',
-					optional: false, nullable: false,
 				},
 			},
 			preservedUsernames: {
@@ -130,129 +148,124 @@ export const meta = {
 				optional: false, nullable: false,
 				items: {
 					type: 'string',
-					optional: false, nullable: false,
 				},
 			},
 			hcaptchaSecretKey: {
 				type: 'string',
-				optional: true, nullable: true,
+				optional: false, nullable: true,
 			},
 			recaptchaSecretKey: {
 				type: 'string',
-				optional: true, nullable: true,
+				optional: false, nullable: true,
 			},
 			turnstileSecretKey: {
 				type: 'string',
-				optional: true, nullable: true,
+				optional: false, nullable: true,
 			},
 			sensitiveMediaDetection: {
 				type: 'string',
-				optional: true, nullable: false,
+				optional: false, nullable: false,
 			},
 			sensitiveMediaDetectionSensitivity: {
 				type: 'string',
-				optional: true, nullable: false,
+				optional: false, nullable: false,
 			},
 			setSensitiveFlagAutomatically: {
 				type: 'boolean',
-				optional: true, nullable: false,
+				optional: false, nullable: false,
 			},
 			enableSensitiveMediaDetectionForVideos: {
 				type: 'boolean',
-				optional: true, nullable: false,
+				optional: false, nullable: false,
 			},
 			proxyAccountId: {
 				type: 'string',
-				optional: true, nullable: true,
+				optional: false, nullable: true,
 				format: 'id',
-			},
-			summaryProxy: {
-				type: 'string',
-				optional: true, nullable: true,
 			},
 			email: {
 				type: 'string',
-				optional: true, nullable: true,
+				optional: false, nullable: true,
 			},
 			smtpSecure: {
 				type: 'boolean',
-				optional: true, nullable: false,
+				optional: false, nullable: false,
 			},
 			smtpHost: {
 				type: 'string',
-				optional: true, nullable: true,
+				optional: false, nullable: true,
 			},
 			smtpPort: {
 				type: 'number',
-				optional: true, nullable: true,
+				optional: false, nullable: true,
 			},
 			smtpUser: {
 				type: 'string',
-				optional: true, nullable: true,
+				optional: false, nullable: true,
 			},
 			smtpPass: {
 				type: 'string',
-				optional: true, nullable: true,
+				optional: false, nullable: true,
 			},
 			swPrivateKey: {
 				type: 'string',
-				optional: true, nullable: true,
+				optional: false, nullable: true,
 			},
 			useObjectStorage: {
 				type: 'boolean',
-				optional: true, nullable: false,
+				optional: false, nullable: false,
 			},
 			objectStorageBaseUrl: {
 				type: 'string',
-				optional: true, nullable: true,
+				optional: false, nullable: true,
 			},
 			objectStorageBucket: {
 				type: 'string',
-				optional: true, nullable: true,
+				optional: false, nullable: true,
 			},
 			objectStoragePrefix: {
 				type: 'string',
-				optional: true, nullable: true,
+				optional: false, nullable: true,
 			},
 			objectStorageEndpoint: {
 				type: 'string',
-				optional: true, nullable: true,
+				optional: false, nullable: true,
 			},
 			objectStorageRegion: {
 				type: 'string',
-				optional: true, nullable: true,
+				optional: false, nullable: true,
 			},
 			objectStoragePort: {
 				type: 'number',
-				optional: true, nullable: true,
+				optional: false, nullable: true,
 			},
 			objectStorageAccessKey: {
 				type: 'string',
-				optional: true, nullable: true,
+				optional: false, nullable: true,
 			},
 			objectStorageSecretKey: {
 				type: 'string',
-				optional: true, nullable: true,
+				optional: false, nullable: true,
 			},
 			objectStorageUseSSL: {
 				type: 'boolean',
-				optional: true, nullable: false,
+				optional: false, nullable: false,
 			},
 			objectStorageUseProxy: {
 				type: 'boolean',
-				optional: true, nullable: false,
+				optional: false, nullable: false,
 			},
 			objectStorageSetPublicRead: {
 				type: 'boolean',
-				optional: true, nullable: false,
+				optional: false, nullable: false,
 			},
 			enableIpLogging: {
 				type: 'boolean',
-				optional: true, nullable: false,
+				optional: false, nullable: false,
 			},
 			enableActiveEmailValidation: {
 				type: 'boolean',
-				optional: true, nullable: false,
+				optional: false, nullable: false,
 			},
 			enableChartsForRemoteUser: {
 				type: 'boolean',
@@ -262,8 +275,40 @@ export const meta = {
 				type: 'boolean',
 				optional: false, nullable: false,
 			},
+			enableServerMachineStats: {
+				type: 'boolean',
+				optional: false, nullable: false,
+			},
+			enableIdenticonGeneration: {
+				type: 'boolean',
+				optional: false, nullable: false,
+			},
+			manifestJsonOverride: {
+				type: 'string',
+				optional: false, nullable: false,
+			},
 			policies: {
 				type: 'object',
+				optional: false, nullable: false,
+			},
+			perLocalUserUserTimelineCacheMax: {
+				type: 'number',
+				optional: false, nullable: false,
+			},
+			perRemoteUserUserTimelineCacheMax: {
+				type: 'number',
+				optional: false, nullable: false,
+			},
+			perUserHomeTimelineCacheMax: {
+				type: 'number',
+				optional: false, nullable: false,
+			},
+			perUserListTimelineCacheMax: {
+				type: 'number',
+				optional: false, nullable: false,
+			},
+			notesPerOneAd: {
+				type: 'number',
 				optional: false, nullable: false,
 			},
 		},
@@ -277,16 +322,15 @@ export const paramDef = {
 	required: [],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 @Injectable()
-export default class extends Endpoint<typeof meta, typeof paramDef> {
+export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-disable-line import/no-default-export
 	constructor(
 		@Inject(DI.config)
 		private config: Config,
 
 		private metaService: MetaService,
 	) {
-		super(meta, paramDef, async (ps, me) => {
+		super(meta, paramDef, async () => {
 			const instance = await this.metaService.fetch(true);
 
 			return {
@@ -294,12 +338,15 @@ export default class extends Endpoint<typeof meta, typeof paramDef> {
 				maintainerEmail: instance.maintainerEmail,
 				version: this.config.version,
 				name: instance.name,
+				shortName: instance.shortName,
 				uri: this.config.url,
 				description: instance.description,
 				langs: instance.langs,
 				tosUrl: instance.termsOfServiceUrl,
 				repositoryUrl: instance.repositoryUrl,
 				feedbackUrl: instance.feedbackUrl,
+				impressumUrl: instance.impressumUrl,
+				privacyPolicyUrl: instance.privacyPolicyUrl,
 				disableRegistration: instance.disableRegistration,
 				emailRequiredForSignup: instance.emailRequiredForSignup,
 				enableHcaptcha: instance.enableHcaptcha,
@@ -316,6 +363,8 @@ export default class extends Endpoint<typeof meta, typeof paramDef> {
 				notFoundImageUrl: instance.notFoundImageUrl,
 				infoImageUrl: instance.infoImageUrl,
 				iconUrl: instance.iconUrl,
+				app192IconUrl: instance.app192IconUrl,
+				app512IconUrl: instance.app512IconUrl,
 				backgroundImageUrl: instance.backgroundImageUrl,
 				logoImageUrl: instance.logoImageUrl,
 				defaultLightTheme: instance.defaultLightTheme,
@@ -324,9 +373,11 @@ export default class extends Endpoint<typeof meta, typeof paramDef> {
 				enableServiceWorker: instance.enableServiceWorker,
 				translatorAvailable: instance.deeplAuthKey != null,
 				cacheRemoteFiles: instance.cacheRemoteFiles,
+				cacheRemoteSensitiveFiles: instance.cacheRemoteSensitiveFiles,
 				pinnedUsers: instance.pinnedUsers,
 				hiddenTags: instance.hiddenTags,
 				blockedHosts: instance.blockedHosts,
+				silencedHosts: instance.silencedHosts,
 				sensitiveWords: instance.sensitiveWords,
 				preservedUsernames: instance.preservedUsernames,
 				hcaptchaSecretKey: instance.hcaptchaSecretKey,
@@ -364,7 +415,15 @@ export default class extends Endpoint<typeof meta, typeof paramDef> {
 				enableActiveEmailValidation: instance.enableActiveEmailValidation,
 				enableChartsForRemoteUser: instance.enableChartsForRemoteUser,
 				enableChartsForFederatedInstances: instance.enableChartsForFederatedInstances,
+				enableServerMachineStats: instance.enableServerMachineStats,
+				enableIdenticonGeneration: instance.enableIdenticonGeneration,
 				policies: { ...DEFAULT_POLICIES, ...instance.policies },
+				manifestJsonOverride: instance.manifestJsonOverride,
+				perLocalUserUserTimelineCacheMax: instance.perLocalUserUserTimelineCacheMax,
+				perRemoteUserUserTimelineCacheMax: instance.perRemoteUserUserTimelineCacheMax,
+				perUserHomeTimelineCacheMax: instance.perUserHomeTimelineCacheMax,
+				perUserListTimelineCacheMax: instance.perUserListTimelineCacheMax,
+				notesPerOneAd: instance.notesPerOneAd,
 			};
 		});
 	}

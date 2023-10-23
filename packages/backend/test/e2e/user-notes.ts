@@ -1,13 +1,19 @@
+/*
+ * SPDX-FileCopyrightText: syuilo and other misskey contributors
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
 process.env.NODE_ENV = 'test';
 
 import * as assert from 'assert';
 import { signup, api, post, uploadUrl, startServer } from '../utils.js';
 import type { INestApplicationContext } from '@nestjs/common';
+import type * as misskey from 'misskey-js';
 
 describe('users/notes', () => {
 	let app: INestApplicationContext;
 
-	let alice: any;
+	let alice: misskey.entities.MeSignup;
 	let jpgNote: any;
 	let pngNote: any;
 	let jpgPngNote: any;
@@ -32,23 +38,10 @@ describe('users/notes', () => {
 		await app.close();
 	});
 
-	test('ファイルタイプ指定 (jpg)', async () => {
+	test('withFiles', async () => {
 		const res = await api('/users/notes', {
 			userId: alice.id,
-			fileType: ['image/jpeg'],
-		}, alice);
-
-		assert.strictEqual(res.status, 200);
-		assert.strictEqual(Array.isArray(res.body), true);
-		assert.strictEqual(res.body.length, 2);
-		assert.strictEqual(res.body.some((note: any) => note.id === jpgNote.id), true);
-		assert.strictEqual(res.body.some((note: any) => note.id === jpgPngNote.id), true);
-	});
-
-	test('ファイルタイプ指定 (jpg or png)', async () => {
-		const res = await api('/users/notes', {
-			userId: alice.id,
-			fileType: ['image/jpeg', 'image/png'],
+			withFiles: true,
 		}, alice);
 
 		assert.strictEqual(res.status, 200);
