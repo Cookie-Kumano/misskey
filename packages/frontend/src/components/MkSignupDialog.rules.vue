@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: syuilo and other misskey contributors
+SPDX-License-Identifier: AGPL-3.0-only
+-->
+
 <template>
 <div>
 	<div :class="$style.banner">
@@ -9,7 +14,10 @@
 				<MkInfo warn>{{ i18n.ts.invitationRequiredToRegister }}</MkInfo>
 			</div>
 
-			<div style="text-align: center;">{{ i18n.ts.pleaseConfirmBelowBeforeSignup }}</div>
+			<div style="text-align: center;">
+				<div>{{ i18n.ts.pleaseConfirmBelowBeforeSignup }}</div>
+				<div style="font-weight: bold; margin-top: 0.5em;">{{ i18n.ts.beSureToReadThisAsItIsImportant }}</div>
+			</div>
 
 			<MkFolder v-if="availableServerRules" :defaultOpen="true">
 				<template #label>{{ i18n.ts.serverRules }}</template>
@@ -19,16 +27,18 @@
 					<li v-for="item in instance.serverRules" :class="$style.rule"><div :class="$style.ruleText" v-html="item"></div></li>
 				</ol>
 
-				<MkSwitch v-model="agreeServerRules" style="margin-top: 16px;">{{ i18n.ts.agree }}</MkSwitch>
+				<MkSwitch :modelValue="agreeServerRules" style="margin-top: 16px;" @update:modelValue="updateAgreeServerRules">{{ i18n.ts.agree }}</MkSwitch>
 			</MkFolder>
 
-			<MkFolder v-if="availableTos" :defaultOpen="true">
-				<template #label>{{ i18n.ts.termsOfService }}</template>
-				<template #suffix><i v-if="agreeTos" class="ti ti-check" style="color: var(--success)"></i></template>
+			<MkFolder v-if="availableTos || availablePrivacyPolicy" :defaultOpen="true">
+				<template #label>{{ tosPrivacyPolicyLabel }}</template>
+				<template #suffix><i v-if="agreeTosAndPrivacyPolicy" class="ti ti-check" style="color: var(--success)"></i></template>
+				<div class="_gaps_s">
+					<div v-if="availableTos"><a :href="instance.tosUrl" class="_link" target="_blank">{{ i18n.ts.termsOfService }} <i class="ti ti-external-link"></i></a></div>
+					<div v-if="availablePrivacyPolicy"><a :href="instance.privacyPolicyUrl" class="_link" target="_blank">{{ i18n.ts.privacyPolicy }} <i class="ti ti-external-link"></i></a></div>
+				</div>
 
-				<a :href="instance.tosUrl" class="_link" target="_blank">{{ i18n.ts.termsOfService }} <i class="ti ti-external-link"></i></a>
-
-				<MkSwitch v-model="agreeTos" style="margin-top: 16px;">{{ i18n.ts.agree }}</MkSwitch>
+				<MkSwitch :modelValue="agreeTosAndPrivacyPolicy" style="margin-top: 16px;" @update:modelValue="updateAgreeTosAndPrivacyPolicy">{{ i18n.ts.agree }}</MkSwitch>
 			</MkFolder>
 
 			<MkFolder :defaultOpen="true">
@@ -37,7 +47,7 @@
 
 				<a href="https://misskey-hub.net/docs/notes.html" class="_link" target="_blank">{{ i18n.ts.basicNotesBeforeCreateAccount }} <i class="ti ti-external-link"></i></a>
 
-				<MkSwitch v-model="agreeNote" style="margin-top: 16px;" data-cy-signup-rules-notes-agree>{{ i18n.ts.agree }}</MkSwitch>
+				<MkSwitch :modelValue="agreeNote" style="margin-top: 16px;" data-cy-signup-rules-notes-agree @update:modelValue="updateAgreeNote">{{ i18n.ts.agree }}</MkSwitch>
 			</MkFolder>
 
 			<div v-if="!agreed" style="text-align: center;">{{ i18n.ts.pleaseAgreeAllToContinue }}</div>
@@ -52,29 +62,87 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
-import { instance } from '@/instance';
-import { i18n } from '@/i18n';
+import { computed, onMounted, ref, watch } from 'vue';
+import { instance } from '@/instance.js';
+import { i18n } from '@/i18n.js';
 import MkButton from '@/components/MkButton.vue';
 import MkFolder from '@/components/MkFolder.vue';
 import MkSwitch from '@/components/MkSwitch.vue';
 import MkInfo from '@/components/MkInfo.vue';
+import * as os from '@/os.js';
 
 const availableServerRules = instance.serverRules.length > 0;
-const availableTos = instance.tosUrl != null;
+const availableTos = instance.tosUrl != null && instance.tosUrl !== '';
+const availablePrivacyPolicy = instance.privacyPolicyUrl != null && instance.privacyPolicyUrl !== '';
 
 const agreeServerRules = ref(false);
-const agreeTos = ref(false);
+const agreeTosAndPrivacyPolicy = ref(false);
 const agreeNote = ref(false);
 
 const agreed = computed(() => {
-	return (!availableServerRules || agreeServerRules.value) && (!availableTos || agreeTos.value) && agreeNote.value;
+	return (!availableServerRules || agreeServerRules.value) && ((!availableTos && !availablePrivacyPolicy) || agreeTosAndPrivacyPolicy.value) && agreeNote.value;
 });
 
 const emit = defineEmits<{
 	(ev: 'cancel'): void;
 	(ev: 'done'): void;
 }>();
+
+const tosPrivacyPolicyLabel = computed(() => {
+	if (availableTos && availablePrivacyPolicy) {
+		return i18n.ts.tosAndPrivacyPolicy;
+	} else if (availableTos) {
+		return i18n.ts.termsOfService;
+	} else if (availablePrivacyPolicy) {
+		return i18n.ts.privacyPolicy;
+	} else {
+		return "";
+	}
+});
+
+async function updateAgreeServerRules(v: boolean) {
+	if (v) {
+		const confirm = await os.confirm({
+			type: 'question',
+			title: i18n.ts.doYouAgree,
+			text: i18n.t('iHaveReadXCarefullyAndAgree', { x: i18n.ts.serverRules }),
+		});
+		if (confirm.canceled) return;
+		agreeServerRules.value = true;
+	} else {
+		agreeServerRules.value = false;
+	}
+}
+
+async function updateAgreeTosAndPrivacyPolicy(v: boolean) {
+	if (v) {
+		const confirm = await os.confirm({
+			type: 'question',
+			title: i18n.ts.doYouAgree,
+			text: i18n.t('iHaveReadXCarefullyAndAgree', {
+				x: tosPrivacyPolicyLabel.value,
+			}),
+		});
+		if (confirm.canceled) return;
+		agreeTosAndPrivacyPolicy.value = true;
+	} else {
+		agreeTosAndPrivacyPolicy.value = false;
+	}
+}
+
+async function updateAgreeNote(v: boolean) {
+	if (v) {
+		const confirm = await os.confirm({
+			type: 'question',
+			title: i18n.ts.doYouAgree,
+			text: i18n.t('iHaveReadXCarefullyAndAgree', { x: i18n.ts.basicNotesBeforeCreateAccount }),
+		});
+		if (confirm.canceled) return;
+		agreeNote.value = true;
+	} else {
+		agreeNote.value = false;
+	}
+}
 </script>
 
 <style lang="scss" module>

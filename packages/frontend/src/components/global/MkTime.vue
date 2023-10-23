@@ -1,5 +1,10 @@
+<!--
+SPDX-FileCopyrightText: syuilo and other misskey contributors
+SPDX-License-Identifier: AGPL-3.0-only
+-->
+
 <template>
-<time :title="absolute">
+<time :title="absolute" :class="{ [$style.old1]: colored && (ago > 60 * 60 * 24 * 90), [$style.old2]: colored && (ago > 60 * 60 * 24 * 180) }">
 	<template v-if="invalid">{{ i18n.ts._ago.invalid }}</template>
 	<template v-else-if="mode === 'relative'">{{ relative }}</template>
 	<template v-else-if="mode === 'absolute'">{{ absolute }}</template>
@@ -9,14 +14,15 @@
 
 <script lang="ts" setup>
 import isChromatic from 'chromatic/isChromatic';
-import { onUnmounted } from 'vue';
-import { i18n } from '@/i18n';
-import { dateTimeFormat } from '@/scripts/intl-const';
+import { onMounted, onUnmounted } from 'vue';
+import { i18n } from '@/i18n.js';
+import { dateTimeFormat } from '@/scripts/intl-const.js';
 
 const props = withDefaults(defineProps<{
 	time: Date | string | number | null;
 	origin?: Date | null;
 	mode?: 'relative' | 'absolute' | 'detail';
+	colored?: boolean;
 }>(), {
 	origin: isChromatic() ? new Date('2023-04-01T00:00:00Z') : null,
 	mode: 'relative',
@@ -29,11 +35,12 @@ const invalid = Number.isNaN(_time);
 const absolute = !invalid ? dateTimeFormat.format(_time) : i18n.ts._ago.invalid;
 
 let now = $ref((props.origin ?? new Date()).getTime());
+const ago = $computed(() => (now - _time) / 1000/*ms*/);
+
 const relative = $computed<string>(() => {
 	if (props.mode === 'absolute') return ''; // absoluteではrelativeを使わないので計算しない
 	if (invalid) return i18n.ts._ago.invalid;
 
-	const ago = (now - _time) / 1000/*ms*/;
 	return (
 		ago >= 31536000 ? i18n.t('_ago.yearsAgo', { n: Math.round(ago / 31536000).toString() }) :
 		ago >= 2592000 ? i18n.t('_ago.monthsAgo', { n: Math.round(ago / 2592000).toString() }) :
@@ -47,19 +54,35 @@ const relative = $computed<string>(() => {
 });
 
 let tickId: number;
+let currentInterval: number;
 
 function tick() {
-	now = props.origin ?? (new Date()).getTime();
-	const ago = (now - _time) / 1000/*ms*/;
-	const next = ago < 60 ? 10000 : ago < 3600 ? 60000 : 180000;
+	now = (new Date()).getTime();
+	const nextInterval = ago < 60 ? 10000 : ago < 3600 ? 60000 : 180000;
 
-	tickId = window.setTimeout(tick, next);
+	if (currentInterval !== nextInterval) {
+		if (tickId) window.clearInterval(tickId);
+		currentInterval = nextInterval;
+		tickId = window.setInterval(tick, nextInterval);
+	}
 }
 
-if (props.mode === 'relative' || props.mode === 'detail') {
-	tick();
+if (!invalid && props.origin === null && (props.mode === 'relative' || props.mode === 'detail')) {
+	onMounted(() => {
+		tick();
+	});
 	onUnmounted(() => {
-		window.clearTimeout(tickId);
+		if (tickId) window.clearInterval(tickId);
 	});
 }
 </script>
+
+<style lang="scss" module>
+.old1 {
+	color: var(--warn);
+}
+
+.old1.old2 {
+	color: var(--error);
+}
+</style>
