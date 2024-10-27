@@ -29,7 +29,7 @@ import { ref, computed } from 'vue';
 import * as Misskey from 'misskey-js';
 import MkButton from '@/components/MkButton.vue';
 import MkLink from '@/components/MkLink.vue';
-import { version } from '@/config.js';
+import { version } from '@@/js/config.js';
 import { misskeyApi } from '@/scripts/misskey-api.js';
 import { unisonReload } from '@/scripts/unison-reload.js';
 import { i18n } from '@/i18n.js';
@@ -83,6 +83,6 @@ definePageMetadata(() => ({
 	vertical-align: bottom;
 	height: 128px;
 	margin-bottom: 24px;
-  border-radius: var(--radius);
+  border-radius: var(--MI-radius);
 }
 </style>

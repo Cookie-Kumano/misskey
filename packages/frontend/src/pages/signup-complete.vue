@@ -5,7 +5,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 
 <template>
 <div>
-	<MkAnimBg style="position: fixed; top: 0;"/>
+	<!-- <MkAnimBg style="position: fixed; top: 0;"/> -->
 	<div :class="$style.formContainer">
 		<form :class="$style.form" class="_panel" @submit.prevent="submit()">
 			<div :class="$style.banner">
@@ -27,7 +27,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 <script lang="ts" setup>
 import { ref } from 'vue';
 import MkButton from '@/components/MkButton.vue';
-import MkAnimBg from '@/components/MkAnimBg.vue';
+// import MkAnimBg from '@/components/MkAnimBg.vue';
 import { login } from '@/account.js';
 import { i18n } from '@/i18n.js';
 import * as os from '@/os.js';
@@ -71,7 +71,7 @@ place-content: center;
 .form {
 	position: relative;
 	z-index: 10;
-	border-radius: var(--radius);
+	border-radius: var(--MI-radius);
 	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 	overflow: clip;
 	max-width: 500px;
@@ -81,7 +81,7 @@ place-content: center;
 	padding: 16px;
 	text-align: center;
 	font-size: 26px;
-	background-color: var(--accentedBg);
-	color: var(--accent);
+	background-color: var(--MI_THEME-accentedBg);
+	color: var(--MI_THEME-accent);
 }
 </style>

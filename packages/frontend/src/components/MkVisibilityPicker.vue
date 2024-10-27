@@ -4,7 +4,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 -->
 
 <template>
-<MkModal ref="modal" v-slot="{ type }" :zPriority="'high'" :src="src" @click="modal?.close()" @closed="emit('closed')">
+<MkModal ref="modal" v-slot="{ type }" :zPriority="'high'" :src="src" @click="modal?.close()" @closed="emit('closed')" @esc="modal?.close()">
 	<div class="_popup" :class="{ [$style.root]: true, [$style.asDrawer]: type === 'drawer' }">
 		<div :class="[$style.label, $style.item]">
 			{{ i18n.ts.visibility }}
@@ -82,7 +82,7 @@ function choose(visibility: typeof Misskey.noteVisibilities[number]): void {
 	&.asDrawer {
 		padding: 12px 0 max(env(safe-area-inset-bottom, 0px), 12px) 0;
 		width: 100%;
-		border-radius: 6px;
+		border-radius: var(--MI-radius);
 		border-bottom-right-radius: 0;
 		border-bottom-left-radius: 0;
 
@@ -124,7 +124,7 @@ function choose(visibility: typeof Misskey.noteVisibilities[number]): void {
 	}
 
 	&.active {
-		color: var(--accent);
+		color: var(--MI_THEME-accent);
 	}
 }
 

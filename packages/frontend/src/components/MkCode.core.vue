@@ -77,7 +77,7 @@ watch(() => props.lang, (to) => {
 	margin: .5em 0;
 	overflow: auto;
 	border-radius: 8px;
-	border: 1px solid var(--divider);
+	border: 1px solid var(--MI_THEME-divider);
 	font-family: Consolas, Monaco, Andale Mono, Ubuntu Mono, monospace;
 
 	color: var(--shiki-fallback);
@@ -121,7 +121,7 @@ watch(() => props.lang, (to) => {
 	& :global(.shiki) {
 		padding: 12px;
 		margin: 0;
-		border-radius: 6px;
+		border-radius: var(--MI-radius);
 		border: none;
 		min-height: 130px;
 		pointer-events: none;

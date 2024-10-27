@@ -11,6 +11,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 	:type="type"
 	:name="name"
 	:value="value"
+	:disabled="disabled"
 	@click="emit('click', $event)"
 	@mousedown="onMousedown"
 >
@@ -55,6 +56,7 @@ const props = defineProps<{
 	asLike?: boolean;
 	name?: string;
 	value?: string;
+	disabled?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -127,8 +129,8 @@ function onMousedown(evt: MouseEvent): void {
 	font-size: 95%;
 	box-shadow: none;
 	text-decoration: none;
-	background: var(--buttonBg);
-	border-radius: var(--radius);
+	background: var(--MI_THEME-buttonBg);
+	border-radius: var(--MI-radius);
 	overflow: clip;
 	box-sizing: border-box;
 	transition: background 0.1s ease;
@@ -138,11 +140,11 @@ function onMousedown(evt: MouseEvent): void {
 	}
 
 	&:not(:disabled):hover {
-		background: var(--buttonHoverBg);
+		background: var(--MI_THEME-buttonHoverBg);
 	}
 
 	&:not(:disabled):active {
-		background: var(--buttonHoverBg);
+		background: var(--MI_THEME-buttonHoverBg);
 	}
 
 	&.small {
@@ -160,20 +162,20 @@ function onMousedown(evt: MouseEvent): void {
 	}
 
 	&.rounded {
-		border-radius: 6px;
+		border-radius: var(--MI-radius);
 	}
 
 	&.primary {
 		font-weight: bold;
-		color: var(--fgOnAccent) !important;
-		background: var(--accent);
+		color: var(--MI_THEME-fgOnAccent) !important;
+		background: var(--MI_THEME-accent);
 
 		&:not(:disabled):hover {
-			background: var(--X8);
+			background: hsl(from var(--MI_THEME-accent) h s calc(l + 5));
 		}
 
 		&:not(:disabled):active {
-			background: var(--X8);
+			background: hsl(from var(--MI_THEME-accent) h s calc(l + 5));
 		}
 	}
 
@@ -214,19 +216,20 @@ function onMousedown(evt: MouseEvent): void {
 
 	&.gradate {
 		font-weight: bold;
-		color: var(--fgOnAccent) !important;
-		background: linear-gradient(90deg, var(--buttonGradateA), var(--buttonGradateB));
+		color: var(--MI_THEME-fgOnAccent) !important;
+		background: linear-gradient(90deg, var(--MI_THEME-buttonGradateA), var(--MI_THEME-buttonGradateB));
 
 		&:not(:disabled):hover {
-			background: linear-gradient(90deg, var(--X8), var(--X8));
+			background: linear-gradient(90deg, hsl(from var(--MI_THEME-accent) h s calc(l + 5)), hsl(from var(--MI_THEME-accent) h s calc(l + 5)));
 		}
 
 		&:not(:disabled):active {
-			background: linear-gradient(90deg, var(--X8), var(--X8));
+			background: linear-gradient(90deg, hsl(from var(--MI_THEME-accent) h s calc(l + 5)), hsl(from var(--MI_THEME-accent) h s calc(l + 5)));
 		}
 	}
 
 	&.danger {
+		font-weight: bold;
 		color: #ff2a2a;
 
 		&.primary {
@@ -244,11 +247,10 @@ function onMousedown(evt: MouseEvent): void {
 	}
 
 	&:disabled {
-		opacity: 0.7;
+		opacity: 0.5;
 	}
 
 	&:focus-visible {
-		outline: solid 2px var(--focus);
 		outline-offset: 2px;
 	}
 
@@ -270,7 +272,7 @@ function onMousedown(evt: MouseEvent): void {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	border-radius: 6px;
+	border-radius: var(--MI-radius);
 	overflow: clip;
 	pointer-events: none;
 }
