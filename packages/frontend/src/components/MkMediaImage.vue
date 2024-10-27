@@ -185,7 +185,7 @@ function showMenu(ev: MouseEvent) {
 .hide {
 	display: block;
 	position: absolute;
-	border-radius: 6px;
+	border-radius: var(--MI-radius);
 	background-color: var(--MI_THEME-fg);
 	color: var(--MI_THEME-accentLighten);
 	font-size: 12px;
@@ -260,7 +260,7 @@ html[data-color-scheme=light] .visible {
 .indicator {
 	/* Hardcode to black because either --MI_THEME-bg or --MI_THEME-fg makes it hard to read in dark/light mode */
 	background-color: black;
-	border-radius: 6px;
+	border-radius: var(--MI-radius);
 	color: var(--MI_THEME-accentLighten);
 	display: inline-block;
 	font-weight: bold;

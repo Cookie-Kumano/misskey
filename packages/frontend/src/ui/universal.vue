@@ -413,7 +413,7 @@ $widgets-hide-threshold: 1090px;
 	width: 100%;
 	max-width: 60px;
 	margin: auto;
-	border-radius: 6px;
+	border-radius: var(--MI-radius);
 	background: var(--MI_THEME-panel);
 	color: var(--MI_THEME-fg);
 

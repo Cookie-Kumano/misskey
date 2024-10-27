@@ -83,6 +83,6 @@ definePageMetadata(() => ({
 	vertical-align: bottom;
 	height: 128px;
 	margin-bottom: 24px;
-  border-radius: var(--radius);
+  border-radius: var(--MI-radius);
 }
 </style>

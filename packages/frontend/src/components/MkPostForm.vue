@@ -1153,7 +1153,7 @@ defineExpose({
 	padding: 0 12px;
 	line-height: 34px;
 	font-weight: bold;
-	border-radius: 6px;
+	border-radius: var(--MI-radius);
 	min-width: 90px;
 	box-sizing: border-box;
 	color: var(--MI_THEME-fgOnAccent);
@@ -1163,7 +1163,7 @@ defineExpose({
 .headerRightItem {
 	margin: 0;
 	padding: 8px;
-	border-radius: 6px;
+	border-radius: var(--MI-radius);
 
 	&:hover {
 		background: var(--MI_THEME-X5);
@@ -1306,7 +1306,7 @@ html[data-color-scheme=light] .preview {
 	padding: 4px 6px;
 	font-size: .9em;
 	color: var(--MI_THEME-warn);
-	border-radius: 6px;
+	border-radius: var(--MI-radius);
 	min-width: 1.6em;
 	text-align: center;
 
@@ -1346,7 +1346,7 @@ html[data-color-scheme=light] .preview {
 	font-size: 1em;
 	width: auto;
 	height: 100%;
-	border-radius: 6px;
+	border-radius: var(--MI-radius);
 
 	&:hover {
 		background: var(--MI_THEME-X5);

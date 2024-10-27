@@ -116,7 +116,7 @@ const zIndex = os.claimZIndex('high');
   display: block;
   background: transparent;
   border: none;
-  border-radius: 4px;
+  border-radius: var(--MI-radius);
   overflow: hidden;
   grid-column: 2/3;
   grid-row: 2/3;

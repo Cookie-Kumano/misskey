@@ -28,7 +28,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 		>
 			<template v-if="page === 0">
 				<div :class="$style.centerPage">
-					<MkAnimBg style="position: absolute; top: 0;" :scale="1.5"/>
+					<!-- <MkAnimBg style="position: absolute; top: 0;" :scale="1.5"/> -->
 					<MkSpacer :marginMin="20" :marginMax="28">
 						<div class="_gaps" style="text-align: center;">
 							<i class="ti ti-confetti" style="display: block; margin: auto; font-size: 3em; color: var(--MI_THEME-accent);"></i>
@@ -123,7 +123,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 			</template>
 			<template v-else-if="page === 6">
 				<div :class="$style.centerPage">
-					<MkAnimBg style="position: absolute; top: 0;" :scale="1.5"/>
+					<!-- <MkAnimBg style="position: absolute; top: 0;" :scale="1.5"/> -->
 					<MkSpacer :marginMin="20" :marginMax="28">
 						<div class="_gaps" style="text-align: center;">
 							<i class="ti ti-check" style="display: block; margin: auto; font-size: 3em; color: var(--MI_THEME-accent);"></i>
@@ -155,7 +155,7 @@ import XNote from '@/components/MkTutorialDialog.Note.vue';
 import XTimeline from '@/components/MkTutorialDialog.Timeline.vue';
 import XPostNote from '@/components/MkTutorialDialog.PostNote.vue';
 import XSensitive from '@/components/MkTutorialDialog.Sensitive.vue';
-import MkAnimBg from '@/components/MkAnimBg.vue';
+// import MkAnimBg from '@/components/MkAnimBg.vue';
 import { i18n } from '@/i18n.js';
 import { instance } from '@/instance.js';
 import { host } from '@@/js/config.js';

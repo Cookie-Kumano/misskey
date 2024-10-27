@@ -370,7 +370,7 @@ onUnmounted(() => {
 						color: #fff;
 						background: rgba(0, 0, 0, 0.7);
 						font-size: 0.7em;
-						border-radius: 6px;
+						border-radius: var(--MI-radius);
 					}
 
 					> .actions {
@@ -381,7 +381,7 @@ onUnmounted(() => {
 						backdrop-filter: var(--MI-blur, blur(8px));
 						background: rgba(0, 0, 0, 0.2);
 						padding: 8px;
-						border-radius: 24px;
+						border-radius: var(--MI-radius);
 
 						> .menu {
 							vertical-align: bottom;
@@ -434,7 +434,7 @@ onUnmounted(() => {
 								color: #fff;
 								-webkit-backdrop-filter: var(--MI-blur, blur(8px));
 								backdrop-filter: var(--MI-blur, blur(8px));
-								border-radius: 6px;
+								border-radius: var(--MI-radius);
 								padding: 4px 8px;
 								font-size: 80%;
 							}

@@ -224,7 +224,7 @@
 		}
 
 		button {
-			border-radius: 6px;
+			border-radius: var(--MI-radius);
 			padding: 0px 12px 0px 12px;
 			border: none;
 			cursor: pointer;
@@ -292,7 +292,7 @@
 			margin-bottom: 2rem;
 			padding: 0.5rem 1rem;
 			width: 40rem;
-			border-radius: 10px;
+			border-radius: var(--MI-radius);
 			justify-content: center;
 			margin: auto;
 		}

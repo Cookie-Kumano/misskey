@@ -454,7 +454,7 @@ onBeforeUnmount(() => {
 		> .menu {
 			padding: 12px 0 max(env(safe-area-inset-bottom, 0px), 12px) 0;
 			width: 100%;
-			border-radius: 24px;
+			border-radius: var(--MI-radius);
 			border-bottom-right-radius: 0;
 			border-bottom-left-radius: 0;
 
@@ -520,7 +520,7 @@ onBeforeUnmount(() => {
 		margin: auto;
 		width: calc(100% - 16px);
 		height: 100%;
-		border-radius: 6px;
+		border-radius: var(--MI-radius);
 	}
 
 	&:focus-visible {

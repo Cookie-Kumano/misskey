@@ -170,7 +170,7 @@ onBeforeUnmount(() => {
 	padding: 0;
 	height: 31px;
 	font-size: 16px;
-	border-radius: var(--radius);
+	border-radius: var(--MI-radius);
 	background: #fff;
 
 	&.full {

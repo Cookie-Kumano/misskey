@@ -152,7 +152,7 @@ function more() {
 		left: 0;
 		right: 0;
 		bottom: 0;
-		border-radius: 6px;
+		border-radius: var(--MI-radius);
 		background: linear-gradient(90deg, var(--MI_THEME-buttonGradateA), var(--MI_THEME-buttonGradateB));
 	}
 
@@ -239,7 +239,7 @@ function more() {
 			left: 0;
 			right: 0;
 			bottom: 0;
-			border-radius: 6px;
+			border-radius: var(--MI-radius);
 			background: var(--MI_THEME-accentedBg);
 		}
 	}

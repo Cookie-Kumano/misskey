@@ -175,7 +175,7 @@ if (!mock) {
 	margin: 2px;
 	padding: 0 6px;
 	font-size: 1.5em;
-	border-radius: 6px;
+	border-radius: var(--MI-radius);
 	align-items: center;
 	justify-content: center;
 
@@ -194,7 +194,7 @@ if (!mock) {
 	&.small {
 		height: 32px;
 		font-size: 1em;
-		border-radius: 4px;
+		border-radius: var(--MI-radius);
 
 		> .count {
 			font-size: 0.9em;

@@ -600,7 +600,7 @@ function loadConversation() {
 	width: 28px;
 	height: 28px;
 	margin: 0 8px 0 0;
-	border-radius: 6px;
+	border-radius: var(--MI-radius);
 }
 
 .renoteText {
@@ -672,7 +672,7 @@ function loadConversation() {
 	font-size: 80%;
 	line-height: 1;
 	border: solid 0.5px var(--MI_THEME-divider);
-	border-radius: 4px;
+	border-radius: var(--MI-radius);
 }
 
 .noteHeaderInfo {
@@ -805,7 +805,7 @@ function loadConversation() {
 .reactionTab {
 	padding: 4px 6px;
 	border: solid 1px var(--MI_THEME-divider);
-	border-radius: 6px;
+	border-radius: var(--MI-radius);
 }
 
 .reactionTabActive {

@@ -275,7 +275,7 @@ rt {
 
 ._textButton {
 	@extend ._button;
-	color: var(--MI_THEME-accent);
+	color: var(--MI_THEME-accentDarken);
 
 	&:focus-visible {
 		outline-offset: 2px;
@@ -365,7 +365,7 @@ rt {
 	padding: 2px 3px;
 	color: var(--MI_THEME-accent);
 	border: solid 1px var(--MI_THEME-accent);
-	border-radius: 4px;
+	border-radius: var(--MI-radius);
 	vertical-align: top;
 }
 
@@ -375,7 +375,7 @@ rt {
 	padding: 2px 3px;
 	color: var(--MI_THEME-warn);
 	border: solid 1px var(--MI_THEME-warn);
-	border-radius: 4px;
+	border-radius: var(--MI-radius);
 	vertical-align: top;
 }
 
@@ -415,7 +415,7 @@ rt {
 		vertical-align: bottom;
 		height: 128px;
 		margin-bottom: 16px;
-		border-radius: var(--radius);
+		border-radius: var(--MI-radius);
 	}
 }
 
@@ -442,7 +442,7 @@ rt {
 	padding: 7px;
 	background: #8C4F26;
 	box-shadow: 0 6px 16px #0007, 0 0 1px 1px #693410, inset 0 0 2px 1px #ce8a5c;
-	border-radius: 10px;
+	border-radius: var(--MI-radius);
 
 	--MI_THEME-bg: #F1E8DC;
 	--MI_THEME-fg: #693410;
@@ -464,7 +464,7 @@ html[data-color-scheme=dark] ._woodenFrame {
 	margin-top: 8px;
 	background: var(--MI_THEME-bg);
 	box-shadow: 0 0 2px 1px #ce8a5c, inset 0 0 1px 1px #693410;
-	border-radius: 6px;
+	border-radius: var(--MI-radius);
 	color: var(--MI_THEME-fg);
 
 	&:first-child {

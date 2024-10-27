@@ -59,7 +59,7 @@ defineProps<{
 				width: 100%;
 				box-sizing: border-box;
 				padding: 9px 16px 9px 8px;
-				border-radius: 6px;
+				border-radius: var(--MI-radius);
 				font-size: 0.9em;
 
 				&:hover {
@@ -145,7 +145,7 @@ defineProps<{
 						height: 60px;
 						aspect-ratio: 1;
 						background: var(--MI_THEME-panel);
-						border-radius: 6px;
+						border-radius: var(--MI-radius);
 					}
 
 					> .text {

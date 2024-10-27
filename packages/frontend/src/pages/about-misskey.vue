@@ -483,7 +483,7 @@ definePageMetadata(() => ({
 				display: block;
 				width: 80px;
 				margin: 0 auto;
-				border-radius: 6px;
+				border-radius: var(--MI-radius);
 				position: relative;
 				z-index: 1;
 			}
@@ -533,7 +533,7 @@ definePageMetadata(() => ({
 	align-items: center;
 	padding: 12px;
 	background: var(--MI_THEME-buttonBg);
-	border-radius: 6px;
+	border-radius: var(--MI-radius);
 
 	&:hover {
 		text-decoration: none;
@@ -566,7 +566,7 @@ definePageMetadata(() => ({
 	align-items: center;
 	padding: 12px;
 	background: var(--MI_THEME-buttonBg);
-	border-radius: 6px;
+	border-radius: var(--MI-radius);
 }
 
 .patronIcon {
