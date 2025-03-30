@@ -45,15 +45,17 @@ SPDX-License-Identifier: AGPL-3.0-only
 
 <script lang="ts" setup>
 import { onMounted, onUnmounted, nextTick, ref, shallowRef, watch, computed, toRefs } from 'vue';
+import type { InputHTMLAttributes } from 'vue';
 import { debounce } from 'throttle-debounce';
 import MkButton from '@/components/MkButton.vue';
 import { useInterval } from '@@/js/use-interval.js';
 import { i18n } from '@/i18n.js';
-import { Autocomplete, SuggestionType } from '@/scripts/autocomplete.js';
+import { Autocomplete } from '@/scripts/autocomplete.js';
+import type { SuggestionType } from '@/scripts/autocomplete.js';
 
 const props = defineProps<{
 	modelValue: string | number | null;
-	type?: 'text' | 'number' | 'password' | 'email' | 'url' | 'date' | 'time' | 'search' | 'datetime-local';
+	type?: InputHTMLAttributes['type'];
 	required?: boolean;
 	readonly?: boolean;
 	disabled?: boolean;
@@ -64,8 +66,8 @@ const props = defineProps<{
 	mfmAutocomplete?: boolean | SuggestionType[],
 	autocapitalize?: string;
 	spellcheck?: boolean;
-	inputmode?: 'none' | 'text' | 'search' | 'email' | 'url' | 'numeric' | 'tel' | 'decimal';
-	step?: any;
+	inputmode?: InputHTMLAttributes['inputmode'];
+	step?: InputHTMLAttributes['step'];
 	datalist?: string[];
 	min?: number;
 	max?: number;
