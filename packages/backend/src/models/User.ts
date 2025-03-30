@@ -184,12 +184,6 @@ export class MiUser {
 	})
 	public isCat: boolean;
 
-	@Column('boolean', {
-		default: false,
-		comment: 'Whether the User is the root.',
-	})
-	public isRoot: boolean;
-
 	@Index()
 	@Column('boolean', {
 		default: true,
@@ -201,6 +195,23 @@ export class MiUser {
 		default: false,
 	})
 	public isHibernated: boolean;
+
+	@Column('boolean', {
+		default: false,
+	})
+	public requireSigninToViewContents: boolean;
+
+	// in sec, マイナスで相対時間
+	@Column('integer', {
+		nullable: true,
+	})
+	public makeNotesFollowersOnlyBefore: number | null;
+
+	// in sec, マイナスで相対時間
+	@Column('integer', {
+		nullable: true,
+	})
+	public makeNotesHiddenBefore: number | null;
 
 	// アカウントが削除されたかどうかのフラグだが、完全に削除される際は物理削除なので実質削除されるまでの「削除が進行しているかどうか」のフラグ
 	@Column('boolean', {
@@ -271,24 +282,24 @@ export class MiUser {
 export type MiLocalUser = MiUser & {
 	host: null;
 	uri: null;
-}
+};
 
 export type MiPartialLocalUser = Partial<MiUser> & {
 	id: MiUser['id'];
 	host: null;
 	uri: null;
-}
+};
 
 export type MiRemoteUser = MiUser & {
 	host: string;
 	uri: string;
-}
+};
 
 export type MiPartialRemoteUser = Partial<MiUser> & {
 	id: MiUser['id'];
 	host: string;
 	uri: string;
-}
+};
 
 export const localUsernameSchema = { type: 'string', pattern: /^\w{1,20}$/.toString().slice(1, -1) } as const;
 export const passwordSchema = { type: 'string', minLength: 1 } as const;
