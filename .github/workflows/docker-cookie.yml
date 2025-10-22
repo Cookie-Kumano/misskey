@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - cookie
+      - cookie-dev
   workflow_dispatch:
 
 env:
