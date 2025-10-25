@@ -10,6 +10,7 @@ on:
 env:
   IMAGE_NAME: misskey-maikaze
   REGISTRY: ghcr.io
+  REGISTRY_IMAGE: cookie-kumano/misskey-maikaze
 
 jobs:
   build:
@@ -98,7 +99,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{ env.REGISTRY_IMAGE }}
           tags: |
             type=sha,format=long
             type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'cookie') }}
