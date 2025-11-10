@@ -487,8 +487,6 @@ defineExpose({
 
 .newBg1 {
 	height: 100%;
-	-webkit-backdrop-filter: var(--MI-blur, blur(2px));
-	backdrop-filter: var(--MI-blur, blur(2px));
 	mask-image: linear-gradient( /* 疑似Easing Linear Gradients */
 		to top,
 		rgb(0 0 0 / 0%) 0%,
@@ -504,8 +502,6 @@ defineExpose({
 
 .newBg2 {
 	height: 75%;
-	-webkit-backdrop-filter: var(--MI-blur, blur(4px));
-	backdrop-filter: var(--MI-blur, blur(4px));
 	mask-image: linear-gradient( /* 疑似Easing Linear Gradients */
 		to top,
 		rgb(0 0 0 / 0%) 0%,

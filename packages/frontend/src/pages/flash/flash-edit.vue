@@ -478,11 +478,3 @@ definePage(() => ({
 	title: flash.value ? `${i18n.ts._play.edit}: ${flash.value.title}` : i18n.ts._play.new,
 }));
 </script>
-
-<style lang="scss" module>
-.footer {
-	backdrop-filter: var(--MI-blur, blur(15px));
-	background: color(from var(--MI_THEME-bg) srgb r g b / 0.5);
-	border-top: solid .5px var(--MI_THEME-divider);
-}
-</style>

@@ -232,7 +232,6 @@ function menuEdit() {
 		z-index: -1;
 		inset: 0;
 		content: "";
-		backdrop-filter: blur(8px);
 		mask-image: linear-gradient(
 			to top,
 			rgb(0 0 0 / 0%) 0%,
@@ -252,7 +251,6 @@ function menuEdit() {
 		inset: 0;
 		bottom: 25%;
 		content: "";
-		backdrop-filter: blur(16px);
 		mask-image: linear-gradient(
 			to top,
 			rgb(0 0 0 / 0%) 0%,
@@ -282,7 +280,6 @@ function menuEdit() {
 		z-index: -1;
 		inset: -30px 0 0 0;
 		content: "";
-		backdrop-filter: blur(8px);
 		mask-image: linear-gradient(
 			to bottom,
 			rgb(0 0 0 / 0%) 0%,
@@ -303,7 +300,6 @@ function menuEdit() {
 		inset: 0;
 		top: 25%;
 		content: "";
-		backdrop-filter: blur(16px);
 		mask-image: linear-gradient(
 			to bottom,
 			rgb(0 0 0 / 0%) 0%,

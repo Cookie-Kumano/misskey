@@ -1314,7 +1314,6 @@ definePage(() => ({
 	right: 0;
 	bottom: 0;
 	z-index: 100;
-	backdrop-filter: blur(4px);
 }
 
 .readyGo_ready,

@@ -307,8 +307,6 @@ onMounted(async () => {
 	padding: 12px;
 	border-top: solid 0.5px var(--MI_THEME-divider);
 	background: color(from var(--MI_THEME-bg) srgb r g b / 0.5);
-	-webkit-backdrop-filter: var(--MI-blur, blur(15px));
-	backdrop-filter: var(--MI-blur, blur(15px));
 }
 
 .systemWebhook {

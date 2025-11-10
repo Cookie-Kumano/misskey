@@ -318,7 +318,6 @@ defineExpose({
 <style lang="scss">
 .pswp__bg {
 	background: var(--MI_THEME-modalBg);
-	backdrop-filter: var(--MI-modalBgFilter);
 }
 
 .pswp__alt-text-container {

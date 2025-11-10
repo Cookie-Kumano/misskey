@@ -415,8 +415,6 @@ onDeactivated(disposeBannerParallaxResizeObserver);
 						position: absolute;
 						top: 12px;
 						right: 12px;
-						-webkit-backdrop-filter: var(--MI-blur, blur(8px));
-						backdrop-filter: var(--MI-blur, blur(8px));
 						background: rgba(0, 0, 0, 0.2);
 						padding: 8px;
 						border-radius: var(--MI-radius);
@@ -470,8 +468,6 @@ onDeactivated(disposeBannerParallaxResizeObserver);
 							> .add-note-button {
 								background: rgba(0, 0, 0, 0.2);
 								color: #fff;
-								-webkit-backdrop-filter: var(--MI-blur, blur(8px));
-								backdrop-filter: var(--MI-blur, blur(8px));
 								border-radius: var(--MI-radius);
 								padding: 4px 8px;
 								font-size: 80%;
