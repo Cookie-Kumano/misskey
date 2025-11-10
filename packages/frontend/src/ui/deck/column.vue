@@ -374,8 +374,6 @@ function onDrop(ev) {
 	&.withWallpaper {
 		&.naked {
 			background: color(from var(--MI_THEME-bg) srgb r g b / 0.75) !important;
-			-webkit-backdrop-filter: var(--MI-blur, blur(10px));
-			backdrop-filter: var(--MI-blur, blur(10px));
 
 			> .header {
 				color: light-dark(#000000bf, #ffffffbf);

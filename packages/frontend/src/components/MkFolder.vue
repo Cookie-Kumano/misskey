@@ -241,8 +241,6 @@ watch(opened, (isOpened) => {
 	box-sizing: border-box;
 	padding: 9px 12px 9px 12px;
 	background: var(--MI_THEME-folderHeaderBg);
-	-webkit-backdrop-filter: var(--MI-blur, blur(15px));
-	backdrop-filter: var(--MI-blur, blur(15px));
 	border-radius: var(--MI-radius);
 	transition: border-radius 0.3s;
 
@@ -335,16 +333,12 @@ watch(opened, (isOpened) => {
 
 .inBodyHeader {
 	background: color(from var(--MI_THEME-panel) srgb r g b / 0.75);
-	-webkit-backdrop-filter: var(--MI-blur, blur(15px));
-	backdrop-filter: var(--MI-blur, blur(15px));
 	border-bottom: solid 0.5px var(--MI_THEME-divider);
 }
 
 .inBodyFooter {
 	padding: 12px;
 	background: color(from var(--MI_THEME-bg) srgb r g b / 0.5);
-	-webkit-backdrop-filter: var(--MI-blur, blur(15px));
-	backdrop-filter: var(--MI-blur, blur(15px));
 	background-size: auto auto;
 	background-image: repeating-linear-gradient(135deg, transparent, transparent 5px, var(--MI_THEME-panel) 5px, var(--MI_THEME-panel) 10px);
 	border-radius: 0 0 6px 6px;

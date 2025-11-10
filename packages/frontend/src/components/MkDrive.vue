@@ -746,8 +746,6 @@ onBeforeUnmount(() => {
 	overflow: auto;
 	font-size: 0.9em;
 	background: color(from var(--MI_THEME-bg) srgb r g b / 0.75);
-	-webkit-backdrop-filter: var(--MI-blur, blur(15px));
-	backdrop-filter: var(--MI-blur, blur(15px));
 	border-bottom: solid 0.5px var(--MI_THEME-divider);
 }
 
@@ -820,8 +818,6 @@ onBeforeUnmount(() => {
 .date {
 	padding: 8px 16px;
 	font-size: 90%;
-	-webkit-backdrop-filter: var(--MI-blur, blur(8px));
-	backdrop-filter: var(--MI-blur, blur(8px));
 	background-color: color(from var(--MI_THEME-bg) srgb r g b / 0.85);
 }
 
@@ -832,8 +828,6 @@ onBeforeUnmount(() => {
 .footer {
 	padding: 8px 16px;
 	font-size: 90%;
-	-webkit-backdrop-filter: var(--MI-blur, blur(8px));
-	backdrop-filter: var(--MI-blur, blur(8px));
 	background-color: color(from var(--MI_THEME-bg) srgb r g b / 0.85);
 }
 

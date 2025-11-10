@@ -510,8 +510,6 @@ defineExpose({
 .bg {
 	&.bgTransparent {
 		background: transparent;
-		-webkit-backdrop-filter: none;
-		backdrop-filter: none;
 	}
 }
 </style>
