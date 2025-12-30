@@ -241,8 +241,8 @@ function showMenu(ev: MouseEvent) {
 	padding: 5px 8px;
 	text-align: center;
 	cursor: pointer;
-	top: 12px;
-	right: 12px;
+	top: 0;
+	right: 0;
 }
 
 .hiddenTextWrapper {
@@ -272,15 +272,14 @@ html[data-color-scheme=light] .visible {
 .menu {
 	display: block;
 	position: absolute;
-	border-radius: 999px;
 	background-color: rgba(0, 0, 0, 0.3);
 	color: #fff;
 	font-size: 0.8em;
 	width: 28px;
 	height: 28px;
 	text-align: center;
-	bottom: 10px;
-	right: 10px;
+	bottom: 0;
+	right: 0;
 }
 
 .imageContainer {
