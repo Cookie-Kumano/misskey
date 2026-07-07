@@ -315,7 +315,7 @@ defineExpose({
 
 .media {
 	overflow: hidden; // clipにするとバグる
-	border-radius: 8px;
+	border-radius: var(--MI-radius);
 }
 
 @container (min-width: 500px) {

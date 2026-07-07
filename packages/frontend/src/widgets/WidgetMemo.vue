@@ -110,7 +110,7 @@ defineExpose<WidgetComponentExpose>({
 	padding: 0 10px;
 	height: 28px;
 	outline: none;
-	border-radius: 4px;
+	border-radius: var(--MI-radius);
 
 	&:disabled {
 		opacity: 0.7;

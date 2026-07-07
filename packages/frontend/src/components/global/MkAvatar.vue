@@ -193,10 +193,10 @@ watch(() => props.user.avatarBlurhash, () => {
 }
 
 .square {
-	border-radius: 20%;
+	border-radius: var(--MI-radius);
 
 	> .inner {
-		border-radius: 20%;
+		border-radius: var(--MI-radius);
 	}
 }
 

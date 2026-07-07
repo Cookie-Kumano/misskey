@@ -204,7 +204,7 @@ const collapsed = ref(appearNote.value.cw == null && isLong);
 	width: 28px;
 	height: 28px;
 	margin: 0 8px 0 0;
-	border-radius: 6px;
+	border-radius: var(--MI-radius);
 }
 
 .renoteText {
@@ -282,7 +282,7 @@ const collapsed = ref(appearNote.value.cw == null && isLong);
 	font-size: 80%;
 	line-height: 1;
 	border: solid 0.5px var(--MI_THEME-divider);
-	border-radius: 4px;
+	border-radius: var(--MI-radius);
 }
 
 .noteHeaderInfo {
@@ -300,7 +300,7 @@ const collapsed = ref(appearNote.value.cw == null && isLong);
 .noteHeaderInstanceIcon {
 	width: 32px;
 	height: 32px;
-	border-radius: 4px;
+	border-radius: var(--MI-radius);
 }
 
 .noteHeaderUsername {

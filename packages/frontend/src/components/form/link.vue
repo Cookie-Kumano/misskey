@@ -62,7 +62,7 @@ defineProps<{
 	box-sizing: border-box;
 	padding: 10px 14px;
 	background: var(--MI_THEME-folderHeaderBg);
-	border-radius: 6px;
+	border-radius: var(--MI-radius);
 	font-size: 0.9em;
 
 	&:hover {

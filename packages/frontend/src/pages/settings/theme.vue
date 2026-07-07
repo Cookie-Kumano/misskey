@@ -425,7 +425,7 @@ definePage(() => ({
 
 <style lang="scss" scoped>
 .rfqxtzch {
-	border-radius: 6px;
+	border-radius: var(--MI-radius);
 
 	> .toggle {
 		position: relative;

@@ -192,7 +192,7 @@ onUnmounted(() => {
 	color: var(--MI_THEME-fg);
 	background: var(--MI_THEME-panel);
 	border: solid 1px var(--MI_THEME-panel);
-	border-radius: 6px;
+	border-radius: var(--MI-radius);
 	outline: none;
 	box-shadow: none;
 	box-sizing: border-box;

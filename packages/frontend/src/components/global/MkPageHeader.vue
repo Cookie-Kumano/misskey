@@ -222,7 +222,7 @@ onUnmounted(() => {
 	width: calc(var(--height) - 8px);
 	box-sizing: border-box;
 	position: relative;
-	border-radius: 5px;
+	border-radius: var(--MI-radius);
 
 	&:hover {
 		background: rgba(0, 0, 0, 0.05);

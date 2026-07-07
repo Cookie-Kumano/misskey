@@ -317,7 +317,7 @@ onUnmounted(() => {
 	top: 8px;
 	left: 8px;
 	padding: 6px 10px;
-	border-radius: 6px;
+	border-radius: var(--MI-radius);
 	font-size: 85%;
 }
 

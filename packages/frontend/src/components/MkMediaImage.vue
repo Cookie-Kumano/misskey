@@ -237,11 +237,11 @@ function onContextmenu(ev: PointerEvent) {
 .hide {
 	display: block;
 	position: absolute;
-	background-color: rgba(0, 0, 0, 0.3);
+	background-color: var(--MI_THEME-fg);
 	-webkit-backdrop-filter: var(--MI-blur, blur(15px));
 	backdrop-filter: var(--MI-blur, blur(15px));
-	border-radius: 0 0 0 9px;
-	color: #fff;
+	border-radius: var(--MI-radius);
+	color: var(--MI_THEME-accentLighten);
 	font-size: 12px;
 	opacity: .5;
 	padding: 5px 8px;
@@ -314,8 +314,8 @@ html[data-color-scheme=light] .visible {
 .indicator {
 	/* Hardcode to black because either --MI_THEME-bg or --MI_THEME-fg makes it hard to read in dark/light mode */
 	background-color: black;
-	border-radius: 6px;
-	color: hsl(from var(--MI_THEME-accent) h s calc(l + 10));
+	border-radius: var(--MI-radius);
+	color: var(--MI_THEME-accentLighten);
 	display: inline-block;
 	font-weight: bold;
 	font-size: 0.8em;

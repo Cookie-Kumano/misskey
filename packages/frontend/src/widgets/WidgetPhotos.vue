@@ -124,7 +124,7 @@ defineExpose<WidgetComponentExpose>({
 		background-size: cover;
 		background-clip: content-box;
 		border: solid 2px transparent;
-		border-radius: 4px;
+		border-radius: var(--MI-radius);
 	}
 }
 </style>

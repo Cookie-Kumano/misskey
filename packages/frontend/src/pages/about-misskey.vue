@@ -28,7 +28,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 				</div>
 				<FormSection>
 					<div class="_gaps_s">
-						<FormLink to="https://github.com/misskey-dev/misskey" external>
+						<FormLink to="https://github.com/Cookie-Kumano/misskey" external>
 							<template #icon><i class="ti ti-code"></i></template>
 							{{ i18n.ts._aboutMisskey.source }} ({{ i18n.ts._aboutMisskey.original }})
 							<template #suffix>GitHub</template>
@@ -533,7 +533,7 @@ definePage(() => ({
 				display: block;
 				width: 80px;
 				margin: 0 auto;
-				border-radius: 16px;
+				border-radius: var(--MI-radius);
 				position: relative;
 				z-index: 1;
 			}
@@ -587,7 +587,7 @@ definePage(() => ({
 	align-items: center;
 	padding: 12px;
 	background: var(--MI_THEME-buttonBg);
-	border-radius: 6px;
+	border-radius: var(--MI-radius);
 
 	&:hover {
 		text-decoration: none;
@@ -620,7 +620,7 @@ definePage(() => ({
 	align-items: center;
 	padding: 12px;
 	background: var(--MI_THEME-buttonBg);
-	border-radius: 6px;
+	border-radius: var(--MI-radius);
 }
 
 .patronIcon {

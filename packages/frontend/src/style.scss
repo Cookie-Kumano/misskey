@@ -7,7 +7,7 @@
  */
 
 :root {
-	--MI-radius: 12px;
+	--MI-radius: 4px;
 	--MI-marginFull: 16px;
 	--MI-marginHalf: 10px;
 
@@ -25,7 +25,7 @@
 html {
 	overflow: auto;
 	overflow-wrap: break-word;
-	font-family: 'Hiragino Maru Gothic Pro', "BIZ UDGothic", Roboto, HelveticaNeue, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	font-family: 'Hiragino Kaku Gothic Pro', "BIZ UDGothic", Roboto, HelveticaNeue, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 	font-size: 14px;
 	line-height: 1.35;
 	text-size-adjust: 100%;
@@ -289,7 +289,7 @@ rt {
 }
 
 ._shadow {
-	box-shadow: 0px 4px 32px var(--MI_THEME-shadow) !important;
+	box-shadow: 0 4px 6px var(--MI_THEME-shadow) !important;
 }
 
 ._button {
@@ -350,7 +350,7 @@ rt {
 
 ._textButton {
 	@extend ._button;
-	color: var(--MI_THEME-accent);
+	color: var(--MI_THEME-accentDarken);
 
 	&:focus-visible {
 		outline-offset: 2px;
@@ -440,7 +440,7 @@ rt {
 	padding: 2px 3px;
 	color: var(--MI_THEME-accent);
 	border: solid 1px var(--MI_THEME-accent);
-	border-radius: 4px;
+	border-radius: var(--MI-radius);
 	vertical-align: top;
 }
 
@@ -450,7 +450,7 @@ rt {
 	padding: 2px 3px;
 	color: var(--MI_THEME-warn);
 	border: solid 1px var(--MI_THEME-warn);
-	border-radius: 4px;
+	border-radius: var(--MI-radius);
 	vertical-align: top;
 }
 
@@ -509,7 +509,7 @@ rt {
 	padding: 7px;
 	background: #8C4F26;
 	box-shadow: 0 6px 16px #0007, 0 0 1px 1px #693410, inset 0 0 2px 1px #ce8a5c;
-	border-radius: 10px;
+	border-radius: var(--MI-radius);
 
 	--MI_THEME-bg: #F1E8DC;
 	--MI_THEME-fg: #693410;
@@ -531,7 +531,7 @@ html[data-color-scheme=dark] ._woodenFrame {
 	margin-top: 8px;
 	background: var(--MI_THEME-bg);
 	box-shadow: 0 0 2px 1px #ce8a5c, inset 0 0 1px 1px #693410;
-	border-radius: 6px;
+	border-radius: var(--MI-radius);
 	color: var(--MI_THEME-fg);
 
 	&:first-child {

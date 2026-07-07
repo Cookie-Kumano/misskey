@@ -89,6 +89,6 @@ definePage(() => ({
 	display: block;
 	width: 20px;
 	height: 20px;
-	border-radius: 4px;
+	border-radius: var(--MI-radius);
 }
 </style>

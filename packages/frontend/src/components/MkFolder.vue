@@ -244,7 +244,7 @@ watch(opened, (isOpened) => {
 	background: var(--MI_THEME-folderHeaderBg);
 	-webkit-backdrop-filter: var(--MI-blur, blur(15px));
 	backdrop-filter: var(--MI-blur, blur(15px));
-	border-radius: 6px;
+	border-radius: var(--MI-radius);
 	transition: border-radius 0.3s;
 
 	&:hover {
@@ -262,7 +262,7 @@ watch(opened, (isOpened) => {
 	}
 
 	&.opened {
-		border-radius: 6px 6px 0 0;
+		border-radius: var(--MI-radius) var(--MI-radius) 0 0;
 	}
 }
 

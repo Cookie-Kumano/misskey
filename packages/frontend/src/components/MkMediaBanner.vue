@@ -48,7 +48,7 @@ async function reveal() {
 <style lang="scss" module>
 .root {
 	width: 100%;
-	border-radius: 4px;
+	border-radius: var(--MI-radius);
 	margin-top: 4px;
 	overflow: clip;
 }

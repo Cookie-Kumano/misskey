@@ -14,7 +14,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 			style="border: none; max-width: 320px; width: 100%; height: 100%; max-height: 80px;"
 		></iframe>
 	</div>
-	<div v-if="props.provider == 'testcaptcha'" style="background: #eee; border: solid 1px #888; padding: 8px; color: #000; max-width: 320px; display: flex; gap: 10px; align-items: center; box-shadow: 2px 2px 6px #0004; border-radius: 4px;">
+	<div v-if="props.provider == 'testcaptcha'" style="background: #eee; border: solid 1px #888; padding: 8px; color: #000; max-width: 320px; display: flex; gap: 10px; align-items: center; box-shadow: 2px 2px 6px #0004; border-radius: var(--MI-radius);">
 		<img src="/client-assets/testcaptcha.png" style="width: 60px; height: 60px; "/>
 		<div v-if="testcaptchaPassed">
 			<div style="color: green;">Test captcha passed!</div>

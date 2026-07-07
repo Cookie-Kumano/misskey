@@ -259,7 +259,7 @@ definePage(() => ({
 					margin: auto;
 					width: 42px;
 					height: 42px;
-					border-radius: 4px;
+					border-radius: var(--MI-radius);
 					box-shadow: 0 2px 4px rgb(0 0 0 / 30%);
 					transition: transform 0.15s ease;
 				}

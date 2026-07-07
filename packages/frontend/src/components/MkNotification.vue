@@ -295,7 +295,7 @@ function getActualReactedUsersCount(notification: Misskey.entities.Notification)
 }
 
 .icon_app {
-	border-radius: 6px;
+	border-radius: var(--MI-radius);
 }
 
 .subIcon {

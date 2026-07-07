@@ -261,7 +261,7 @@ export const store = markRaw(new Pizzax('base', {
 	},
 	useBlurEffectForModal: {
 		where: 'device',
-		default: DEFAULT_DEVICE_KIND === 'desktop',
+		default: false,
 	},
 	useBlurEffect: {
 		where: 'device',
@@ -289,7 +289,7 @@ export const store = markRaw(new Pizzax('base', {
 	},
 	instanceTicker: {
 		where: 'device',
-		default: 'remote' as 'none' | 'remote' | 'always',
+		default: 'none' as 'none' | 'none' | 'none',
 	},
 	emojiPickerScale: {
 		where: 'device',
@@ -313,7 +313,7 @@ export const store = markRaw(new Pizzax('base', {
 	},
 	squareAvatars: {
 		where: 'device',
-		default: false,
+		default: true,
 	},
 	showAvatarDecorations: {
 		where: 'device',
