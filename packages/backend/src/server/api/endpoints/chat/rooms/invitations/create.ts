@@ -8,8 +8,8 @@ import ms from 'ms';
 import { Endpoint } from '@/server/api/endpoint-base.js';
 import { DI } from '@/di-symbols.js';
 import { ApiError } from '@/server/api/error.js';
-import { ChatService } from '@/core/ChatService.js';
-import { ChatEntityService } from '@/core/entities/ChatEntityService.js';
+// import { ChatService } from '@/core/ChatService.js';
+// import { ChatEntityService } from '@/core/entities/ChatEntityService.js';
 
 export const meta = {
 	tags: ['chat'],
@@ -52,18 +52,24 @@ export const paramDef = {
 @Injectable()
 export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-disable-line import/no-default-export
 	constructor(
-		private chatService: ChatService,
-		private chatEntityService: ChatEntityService,
+		// private chatService: ChatService,
+		// private chatEntityService: ChatEntityService,
 	) {
 		super(meta, paramDef, async (ps, me) => {
-			await this.chatService.checkChatAvailability(me.id, 'write');
+			throw new ApiError({
+				message: 'This endpoint is disabled.',
+				code: 'ENDPOINT_DISABLED',
+				id: '',
+			});
 
-			const room = await this.chatService.findMyRoomById(me.id, ps.roomId);
-			if (room == null) {
-				throw new ApiError(meta.errors.noSuchRoom);
-			}
-			const invitation = await this.chatService.createRoomInvitation(me.id, room.id, ps.userId);
-			return await this.chatEntityService.packRoomInvitation(invitation, me);
+			// await this.chatService.checkChatAvailability(me.id, 'write');
+
+			// const room = await this.chatService.findMyRoomById(me.id, ps.roomId);
+			// if (room == null) {
+			// 	throw new ApiError(meta.errors.noSuchRoom);
+			// }
+			// const invitation = await this.chatService.createRoomInvitation(me.id, room.id, ps.userId);
+			// return await this.chatEntityService.packRoomInvitation(invitation, me);
 		});
 	}
 }

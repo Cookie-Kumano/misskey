@@ -9,7 +9,7 @@ import { Endpoint } from '@/server/api/endpoint-base.js';
 import { GetterService } from '@/server/api/GetterService.js';
 import { DI } from '@/di-symbols.js';
 import { ApiError } from '@/server/api/error.js';
-import { ChatService } from '@/core/ChatService.js';
+// import { ChatService } from '@/core/ChatService.js';
 import type { DriveFilesRepository, MiUser } from '@/models/_.js';
 
 export const meta = {
@@ -82,42 +82,47 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 		private driveFilesRepository: DriveFilesRepository,
 
 		private getterService: GetterService,
-		private chatService: ChatService,
+		// private chatService: ChatService,
 	) {
 		super(meta, paramDef, async (ps, me) => {
-			await this.chatService.checkChatAvailability(me.id, 'write');
-
-			let file = null;
-			if (ps.fileId != null) {
-				file = await this.driveFilesRepository.findOneBy({
-					id: ps.fileId,
-					userId: me.id,
-				});
-
-				if (file == null) {
-					throw new ApiError(meta.errors.noSuchFile);
-				}
-			}
-
-			// テキストが無いかつ添付ファイルも無かったらエラー
-			if (ps.text == null && file == null) {
-				throw new ApiError(meta.errors.contentRequired);
-			}
-
-			// Myself
-			if (ps.toUserId === me.id) {
-				throw new ApiError(meta.errors.recipientIsYourself);
-			}
-
-			const toUser = await this.getterService.getUser(ps.toUserId).catch(err => {
-				if (err.id === '15348ddd-432d-49c2-8a5a-8069753becff') throw new ApiError(meta.errors.noSuchUser);
-				throw err;
+			throw new ApiError({
+				message: 'This endpoint is disabled.',
+				code: 'ENDPOINT_DISABLED',
+				id: '',
 			});
+			// await this.chatService.checkChatAvailability(me.id, 'write');
 
-			return await this.chatService.createMessageToUser(me, toUser, {
-				text: ps.text,
-				file: file,
-			});
+			// let file = null;
+			// if (ps.fileId != null) {
+			// 	file = await this.driveFilesRepository.findOneBy({
+			// 		id: ps.fileId,
+			// 		userId: me.id,
+			// 	});
+
+			// 	if (file == null) {
+			// 		throw new ApiError(meta.errors.noSuchFile);
+			// 	}
+			// }
+
+			// // テキストが無いかつ添付ファイルも無かったらエラー
+			// if (ps.text == null && file == null) {
+			// 	throw new ApiError(meta.errors.contentRequired);
+			// }
+
+			// // Myself
+			// if (ps.toUserId === me.id) {
+			// 	throw new ApiError(meta.errors.recipientIsYourself);
+			// }
+
+			// const toUser = await this.getterService.getUser(ps.toUserId).catch(err => {
+			// 	if (err.id === '15348ddd-432d-49c2-8a5a-8069753becff') throw new ApiError(meta.errors.noSuchUser);
+			// 	throw err;
+			// });
+
+			// return await this.chatService.createMessageToUser(me, toUser, {
+			// 	text: ps.text,
+			// 	file: file,
+			// });
 		});
 	}
 }

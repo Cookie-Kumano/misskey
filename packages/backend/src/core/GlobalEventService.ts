@@ -20,7 +20,7 @@ import type { MiPage } from '@/models/Page.js';
 import type { MiWebhook } from '@/models/Webhook.js';
 import type { MiSystemWebhook } from '@/models/SystemWebhook.js';
 import type { MiMeta } from '@/models/Meta.js';
-import { MiAvatarDecoration, MiChatMessage, MiChatRoom, MiReversiGame, MiRole, MiRoleAssignment } from '@/models/_.js';
+import { MiAvatarDecoration, MiReversiGame, MiRole, MiRoleAssignment } from '@/models/_.js';
 import type { Packed } from '@/misc/json-schema.js';
 import { DI } from '@/di-symbols.js';
 import type { Config } from '@/config.js';
@@ -158,20 +158,20 @@ export interface AdminEventTypes {
 	};
 }
 
-export interface ChatEventTypes {
-	message: Packed<'ChatMessageLite'>;
-	deleted: Packed<'ChatMessageLite'>['id'];
-	react: {
-		reaction: string;
-		user?: Packed<'UserLite'>;
-		messageId: MiChatMessage['id'];
-	};
-	unreact: {
-		reaction: string;
-		user?: Packed<'UserLite'>;
-		messageId: MiChatMessage['id'];
-	};
-}
+// export interface ChatEventTypes {
+// 	message: Packed<'ChatMessageLite'>;
+// 	deleted: Packed<'ChatMessageLite'>['id'];
+// 	react: {
+// 		reaction: string;
+// 		user?: Packed<'UserLite'>;
+// 		messageId: MiChatMessage['id'];
+// 	};
+// 	unreact: {
+// 		reaction: string;
+// 		user?: Packed<'UserLite'>;
+// 		messageId: MiChatMessage['id'];
+// 	};
+// }
 
 export interface ReversiEventTypes {
 	matched: {
@@ -307,14 +307,14 @@ export type GlobalEvents = {
 		name: 'notesStream';
 		payload: Serialized<Packed<'Note'>>;
 	};
-	chatUser: {
-		name: `chatUserStream:${MiUser['id']}-${MiUser['id']}`;
-		payload: EventTypesToEventPayload<ChatEventTypes>;
-	};
-	chatRoom: {
-		name: `chatRoomStream:${MiChatRoom['id']}`;
-		payload: EventTypesToEventPayload<ChatEventTypes>;
-	};
+	// chatUser: {
+	// 	name: `chatUserStream:${MiUser['id']}-${MiUser['id']}`;
+	// 	payload: EventTypesToEventPayload<ChatEventTypes>;
+	// };
+	// chatRoom: {
+	// 	name: `chatRoomStream:${MiChatRoom['id']}`;
+	// 	payload: EventTypesToEventPayload<ChatEventTypes>;
+	// };
 	reversi: {
 		name: `reversiStream:${MiUser['id']}`;
 		payload: EventTypesToEventPayload<ReversiEventTypes>;
@@ -416,15 +416,15 @@ export class GlobalEventService {
 		this.publish(`adminStream:${userId}`, type, typeof value === 'undefined' ? null : value);
 	}
 
-	@bindThis
-	public publishChatUserStream<K extends keyof ChatEventTypes>(fromUserId: MiUser['id'], toUserId: MiUser['id'], type: K, value?: ChatEventTypes[K]): void {
-		this.publish(`chatUserStream:${fromUserId}-${toUserId}`, type, typeof value === 'undefined' ? null : value);
-	}
+	// @bindThis
+	// public publishChatUserStream<K extends keyof ChatEventTypes>(fromUserId: MiUser['id'], toUserId: MiUser['id'], type: K, value?: ChatEventTypes[K]): void {
+	// 	this.publish(`chatUserStream:${fromUserId}-${toUserId}`, type, typeof value === 'undefined' ? null : value);
+	// }
 
-	@bindThis
-	public publishChatRoomStream<K extends keyof ChatEventTypes>(toRoomId: MiChatRoom['id'], type: K, value?: ChatEventTypes[K]): void {
-		this.publish(`chatRoomStream:${toRoomId}`, type, typeof value === 'undefined' ? null : value);
-	}
+	// @bindThis
+	// public publishChatRoomStream<K extends keyof ChatEventTypes>(toRoomId: MiChatRoom['id'], type: K, value?: ChatEventTypes[K]): void {
+	// 	this.publish(`chatRoomStream:${toRoomId}`, type, typeof value === 'undefined' ? null : value);
+	// }
 
 	@bindThis
 	public publishReversiStream<K extends keyof ReversiEventTypes>(userId: MiUser['id'], type: K, value?: ReversiEventTypes[K]): void {

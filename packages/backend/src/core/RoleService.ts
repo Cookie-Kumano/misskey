@@ -110,7 +110,7 @@ export const DEFAULT_POLICIES: RolePolicies = {
 	canImportFollowing: false,
 	canImportMuting: false,
 	canImportUserLists: false,
-	chatAvailability: 'available',
+	chatAvailability: 'unavailable',
 	uploadableFileTypes: [
 		'text/*',
 		'application/json',
@@ -395,11 +395,11 @@ export class RoleService implements OnApplicationShutdown, OnModuleInit {
 			return aggregate(policies.map(policy => policy.useDefault ? basePolicies[name] : policy.value));
 		}
 
-		function aggregateChatAvailability(vs: RolePolicies['chatAvailability'][]) {
-			if (vs.some(v => v === 'available')) return 'available';
-			if (vs.some(v => v === 'readonly')) return 'readonly';
-			return 'unavailable';
-		}
+		// function aggregateChatAvailability(vs: RolePolicies['chatAvailability'][]) {
+		// 	if (vs.some(v => v === 'available')) return 'available';
+		// 	if (vs.some(v => v === 'readonly')) return 'readonly';
+		// 	return 'unavailable';
+		// }
 
 		const serverMaxFileSizeMb = Math.floor(this.config.maxFileSize / (1024 * 1024));
 
@@ -438,7 +438,7 @@ export class RoleService implements OnApplicationShutdown, OnModuleInit {
 			canImportFollowing: calc('canImportFollowing', vs => vs.some(v => v === true)),
 			canImportMuting: calc('canImportMuting', vs => vs.some(v => v === true)),
 			canImportUserLists: calc('canImportUserLists', vs => vs.some(v => v === true)),
-			chatAvailability: calc('chatAvailability', aggregateChatAvailability),
+			chatAvailability: 'unavailable',
 			uploadableFileTypes: calc('uploadableFileTypes', vs => {
 				const set = new Set<string>();
 				for (const v of vs) {

@@ -27,7 +27,7 @@ export type Keys = (
 	'themeId' |
 	'themeCachedVersion' |
 	'customCss' |
-	'chatMessageDrafts' |
+	// 'chatMessageDrafts' |
 	'scratchpad' |
 	'debug' |
 	'preferences' |
