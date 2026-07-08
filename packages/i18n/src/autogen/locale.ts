@@ -3173,7 +3173,7 @@ export interface Locale extends ILocale {
      */
     "contact": string;
     /**
-     * システムのデフォルトのフォントを使う
+     * システムのデフォルトのフォントを使う（ヒラギノ優先）
      */
     "useSystemFont": string;
     /**
@@ -10314,27 +10314,27 @@ export interface Locale extends ILocale {
         };
         "_placeholders": {
             /**
-             * いまどうしてる？
+             * 我が精鋭艦隊が母港に戻りましたぁ～
              */
             "a": string;
             /**
-             * 何かありましたか？
+             * 郵便でーす……なーんてね
              */
             "b": string;
             /**
-             * 何をお考えですか？
+             * 改造した艦はでかいぞう……なんてね
              */
             "c": string;
             /**
-             * 言いたいことは？
+             * 華麗に舞うわよ～！
              */
             "d": string;
             /**
-             * ここに書いてください
+             * 舞風はカツレツとかがいいな～
              */
             "e": string;
             /**
-             * あなたが書くのを待っています...
+             * ポォ～ン！
              */
             "f": string;
         };

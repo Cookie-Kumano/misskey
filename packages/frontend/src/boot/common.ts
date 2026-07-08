@@ -6,8 +6,8 @@
 import { watch, version as vueVersion } from 'vue';
 import { compareVersions } from 'compare-versions';
 import { version, lang, apiUrl, isSafeMode } from '@@/js/config.js';
-import defaultLightTheme from '@@/themes/l-light.json5';
-import defaultDarkTheme from '@@/themes/d-green-lime.json5';
+import defaultLightTheme from '@@/themes/l-maikaze.json5';
+import defaultDarkTheme from '@@/themes/d-maikaze.json5';
 import { storeBootloaderErrors } from '@@/js/store-boot-errors';
 import type { App } from 'vue';
 import widgets from '@/widgets/index.js';
@@ -197,7 +197,7 @@ export async function common(createVue: () => Promise<App<Element>>) {
 
 	watch(prefer.r.useBlurEffectForModal, v => {
 		window.document.documentElement.style.setProperty('--MI-modalBgFilter', v ? 'blur(4px)' : 'none');
-	}, { immediate: true });
+	}, { immediate: false });
 
 	watch(prefer.r.useBlurEffect, v => {
 		if (v) {
@@ -205,7 +205,7 @@ export async function common(createVue: () => Promise<App<Element>>) {
 		} else {
 			window.document.documentElement.style.setProperty('--MI-blur', 'none');
 		}
-	}, { immediate: true });
+	}, { immediate: false });
 
 	// Keep screen on
 	const onVisibilityChange = () => window.document.addEventListener('visibilitychange', () => {
