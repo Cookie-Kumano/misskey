@@ -119,7 +119,6 @@ async function reveal(file: Misskey.entities.DriveFile) {
 	box-sizing: border-box;
 	color: #fff;
 	background: rgba(0, 0, 0, 0.5);
-	backdrop-filter: blur(5px);
 	cursor: pointer;
 }
 </style>
