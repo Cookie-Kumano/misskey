@@ -2185,6 +2185,10 @@ export interface Locale extends ILocale {
      */
     "limitTo": ParameterizedString<"x">;
     /**
+     * 画面幅が広いときはメディアリストを横並びで表示する
+     */
+    "showMediaListByGridInWideArea": string;
+    /**
      * フォロー申請はありません
      */
     "noFollowRequests": string;
@@ -3021,6 +3025,14 @@ export interface Locale extends ILocale {
      */
     "confirmToUnclipAlreadyClippedNote": ParameterizedString<"name">;
     /**
+     * このアンテナから削除
+     */
+    "removeFromAntenna": string;
+    /**
+     * 「{name}」からこのノートを削除しますか？
+     */
+    "removeNoteFromAntennaConfirm": ParameterizedString<"name">;
+    /**
      * パブリック
      */
     "public": string;
@@ -3161,7 +3173,7 @@ export interface Locale extends ILocale {
      */
     "contact": string;
     /**
-     * システムのデフォルトのフォントを使う
+     * システムのデフォルトのフォントを使う（ヒラギノ優先）
      */
     "useSystemFont": string;
     /**
@@ -4877,6 +4889,10 @@ export interface Locale extends ILocale {
      */
     "unnotifyNotes": string;
     /**
+     * 投稿通知を設定したユーザー
+     */
+    "notifyUsers": string;
+    /**
      * 認証
      */
     "authentication": string;
@@ -5643,6 +5659,42 @@ export interface Locale extends ILocale {
      * 設定項目はありません
      */
     "nothingToConfigure": string;
+    /**
+     * リノート先のチャンネルを見る
+     */
+    "viewRenotedChannel": string;
+    /**
+     * テーマのプレビュー中
+     */
+    "previewingTheme": string;
+    /**
+     * 元に戻す
+     */
+    "previewingThemeRestore": string;
+    /**
+     * アクセストークン
+     */
+    "accessToken": string;
+    /**
+     * 絵文字パレットを選択
+     */
+    "chooseEmojiPalette": string;
+    /**
+     * 絵文字パレットに追加
+     */
+    "addToEmojiPalette": string;
+    /**
+     * この絵文字はすでにこの絵文字パレットに含まれています。追加しなおしますか？
+     */
+    "emojiPaletteAlreadyAddedConfirm": string;
+    /**
+     * 末尾に追加
+     */
+    "append": string;
+    /**
+     * 先頭に追加
+     */
+    "prepend": string;
     "_imageEditing": {
         "_vars": {
             /**
@@ -8106,6 +8158,10 @@ export interface Locale extends ILocale {
              */
             "maxFileSize_caption": string;
             /**
+             * サーバー全体の最大ファイルサイズ設定は {max} です。これより大きいファイルをアップロードできるようにするには、Misskeyの設定ファイルからこの設定を緩和してください。
+             */
+            "maxFileSize_caption2": ParameterizedString<"max">;
+            /**
              * ファイルにNSFWを常に付与
              */
             "alwaysMarkNsfw": string;
@@ -8169,6 +8225,10 @@ export interface Locale extends ILocale {
              * 翻訳機能の利用
              */
             "canUseTranslator": string;
+            /**
+             * チャンネルの作成
+             */
+            "canCreateChannel": string;
             /**
              * アイコンデコレーションの最大取付個数
              */
@@ -9885,7 +9945,7 @@ export interface Locale extends ILocale {
          */
         "clicker": string;
         /**
-         * 今日誕生日のユーザー
+         * もうすぐ誕生日のユーザー
          */
         "birthdayFollowings": string;
         /**
@@ -10023,6 +10083,12 @@ export interface Locale extends ILocale {
              * 逆方向にスクロール
              */
             "reverse": string;
+        };
+        "_birthdayFollowings": {
+            /**
+             * 期間
+             */
+            "period": string;
         };
     };
     "_cw": {
@@ -10248,27 +10314,27 @@ export interface Locale extends ILocale {
         };
         "_placeholders": {
             /**
-             * いまどうしてる？
+             * 我が精鋭艦隊が母港に戻りましたぁ～
              */
             "a": string;
             /**
-             * 何かありましたか？
+             * 郵便でーす……なーんてね
              */
             "b": string;
             /**
-             * 何をお考えですか？
+             * 改造した艦はでかいぞう……なんてね
              */
             "c": string;
             /**
-             * 言いたいことは？
+             * 華麗に舞うわよ～！
              */
             "d": string;
             /**
-             * ここに書いてください
+             * 舞風はカツレツとかがいいな～
              */
             "e": string;
             /**
-             * あなたが書くのを待っています...
+             * ポォ～ン！
              */
             "f": string;
         };
@@ -12511,6 +12577,14 @@ export interface Locale extends ILocale {
          * 例: misskey.example.com
          */
         "serverHostPlaceholder": string;
+        /**
+         * 投稿日時from
+         */
+        "postFrom": string;
+        /**
+         * 投稿日時to
+         */
+        "postTo": string;
     };
     "_serverSetupWizard": {
         /**
@@ -13099,25 +13173,17 @@ export interface Locale extends ILocale {
              */
             "centerY": string;
             /**
-             * スムージング
+             * 密度
              */
-            "zoomLinesSmoothing": string;
+            "density": string;
             /**
-             * スムージングと集中線の幅の設定は併用できません。
+             * 線の影の太さ
              */
-            "zoomLinesSmoothingDescription": string;
-            /**
-             * 集中線の幅
-             */
-            "zoomLinesThreshold": string;
+            "zoomLinesOutlineThickness": string;
             /**
              * 中心径
              */
             "zoomLinesMaskSize": string;
-            /**
-             * 黒色にする
-             */
-            "zoomLinesBlack": string;
             /**
              * 円形
              */

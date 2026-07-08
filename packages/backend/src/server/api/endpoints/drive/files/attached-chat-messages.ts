@@ -5,12 +5,13 @@
 
 import { Inject, Injectable } from '@nestjs/common';
 import { Endpoint } from '@/server/api/endpoint-base.js';
-import type { DriveFilesRepository, ChatMessagesRepository } from '@/models/_.js';
+// import type { DriveFilesRepository, ChatMessagesRepository } from '@/models/_.js';
+import type { DriveFilesRepository } from '@/models/_.js';
 import { QueryService } from '@/core/QueryService.js';
 import { DI } from '@/di-symbols.js';
 import { RoleService } from '@/core/RoleService.js';
-import { ChatEntityService } from '@/core/entities/ChatEntityService.js';
-import { ChatService } from '@/core/ChatService.js';
+// import { ChatEntityService } from '@/core/entities/ChatEntityService.js';
+// import { ChatService } from '@/core/ChatService.js';
 import { ApiError } from '../../../error.js';
 
 export const meta = {
@@ -58,36 +59,42 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 		@Inject(DI.driveFilesRepository)
 		private driveFilesRepository: DriveFilesRepository,
 
-		@Inject(DI.chatMessagesRepository)
-		private chatMessagesRepository: ChatMessagesRepository,
+		// @Inject(DI.chatMessagesRepository)
+		// private chatMessagesRepository: ChatMessagesRepository,
 
-		private chatService: ChatService,
-		private chatEntityService: ChatEntityService,
+		// private chatService: ChatService,
+		// private chatEntityService: ChatEntityService,
 		private queryService: QueryService,
 		private roleService: RoleService,
 	) {
 		super(meta, paramDef, async (ps, me) => {
-			const isModerator = await this.roleService.isModerator(me);
-
-			if (!isModerator) {
-				await this.chatService.checkChatAvailability(me.id, 'read');
-			}
-
-			const file = await this.driveFilesRepository.findOneBy({
-				id: ps.fileId,
-				userId: isModerator ? undefined : me.id,
+			throw new ApiError({
+				message: 'This endpoint is disabled.',
+				code: 'ENDPOINT_DISABLED',
+				id: '',
 			});
 
-			if (file == null) {
-				throw new ApiError(meta.errors.noSuchFile);
-			}
+			// const isModerator = await this.roleService.isModerator(me);
 
-			const query = this.queryService.makePaginationQuery(this.chatMessagesRepository.createQueryBuilder('message'), ps.sinceId, ps.untilId, ps.sinceDate, ps.untilDate);
-			query.andWhere('message.fileId = :fileId', { fileId: file.id });
+			// if (!isModerator) {
+			// 	// await this.chatService.checkChatAvailability(me.id, 'read');
+			// }
 
-			const messages = await query.limit(ps.limit).getMany();
+			// const file = await this.driveFilesRepository.findOneBy({
+			// 	id: ps.fileId,
+			// 	userId: isModerator ? undefined : me.id,
+			// });
 
-			return await this.chatEntityService.packMessagesDetailed(messages, me);
+			// if (file == null) {
+			// 	throw new ApiError(meta.errors.noSuchFile);
+			// }
+
+			// const query = this.queryService.makePaginationQuery(this.chatMessagesRepository.createQueryBuilder('message'), ps.sinceId, ps.untilId, ps.sinceDate, ps.untilDate);
+			// query.andWhere('message.fileId = :fileId', { fileId: file.id });
+
+			// const messages = await query.limit(ps.limit).getMany();
+
+			// return await this.chatEntityService.packMessagesDetailed(messages, me);
 		});
 	}
 }

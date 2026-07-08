@@ -9,7 +9,7 @@ import { Endpoint } from '@/server/api/endpoint-base.js';
 import { GetterService } from '@/server/api/GetterService.js';
 import { DI } from '@/di-symbols.js';
 import { ApiError } from '@/server/api/error.js';
-import { ChatService } from '@/core/ChatService.js';
+// import { ChatService } from '@/core/ChatService.js';
 import type { DriveFilesRepository, MiUser } from '@/models/_.js';
 
 export const meta = {
@@ -70,37 +70,43 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 		private driveFilesRepository: DriveFilesRepository,
 
 		private getterService: GetterService,
-		private chatService: ChatService,
+		// private chatService: ChatService,
 	) {
 		super(meta, paramDef, async (ps, me) => {
-			await this.chatService.checkChatAvailability(me.id, 'write');
-
-			const room = await this.chatService.findRoomById(ps.toRoomId);
-			if (room == null) {
-				throw new ApiError(meta.errors.noSuchRoom);
-			}
-
-			let file = null;
-			if (ps.fileId != null) {
-				file = await this.driveFilesRepository.findOneBy({
-					id: ps.fileId,
-					userId: me.id,
-				});
-
-				if (file == null) {
-					throw new ApiError(meta.errors.noSuchFile);
-				}
-			}
-
-			// テキストが無いかつ添付ファイルも無かったらエラー
-			if (ps.text == null && file == null) {
-				throw new ApiError(meta.errors.contentRequired);
-			}
-
-			return await this.chatService.createMessageToRoom(me, room, {
-				text: ps.text,
-				file: file,
+			throw new ApiError({
+				message: 'This endpoint is disabled.',
+				code: 'ENDPOINT_DISABLED',
+				id: '',
 			});
+
+			// await this.chatService.checkChatAvailability(me.id, 'write');
+
+			// const room = await this.chatService.findRoomById(ps.toRoomId);
+			// if (room == null) {
+			// 	throw new ApiError(meta.errors.noSuchRoom);
+			// }
+
+			// let file = null;
+			// if (ps.fileId != null) {
+			// 	file = await this.driveFilesRepository.findOneBy({
+			// 		id: ps.fileId,
+			// 		userId: me.id,
+			// 	});
+
+			// 	if (file == null) {
+			// 		throw new ApiError(meta.errors.noSuchFile);
+			// 	}
+			// }
+
+			// // テキストが無いかつ添付ファイルも無かったらエラー
+			// if (ps.text == null && file == null) {
+			// 	throw new ApiError(meta.errors.contentRequired);
+			// }
+
+			// return await this.chatService.createMessageToRoom(me, room, {
+			// 	text: ps.text,
+			// 	file: file,
+			// });
 		});
 	}
 }

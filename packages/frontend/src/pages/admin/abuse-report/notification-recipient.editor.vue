@@ -37,8 +37,8 @@ SPDX-License-Identifier: AGPL-3.0-only
 							<template #label>{{ i18n.ts._abuseReport._notificationRecipient.notifiedWebhook }}</template>
 						</MkSelect>
 						<MkButton rounded :class="$style.systemWebhookEditButton" @click="onEditSystemWebhookClicked">
-							<span v-if="systemWebhookId === null" class="ti ti-plus" style="line-height: normal"/>
-							<span v-else class="ti ti-settings" style="line-height: normal"/>
+							<span v-if="systemWebhookId === null" class="ti ti-plus" style="line-height: normal"></span>
+							<span v-else class="ti ti-settings" style="line-height: normal"></span>
 						</MkButton>
 					</div>
 				</div>
@@ -307,6 +307,8 @@ onMounted(async () => {
 	padding: 12px;
 	border-top: solid 0.5px var(--MI_THEME-divider);
 	background: color(from var(--MI_THEME-bg) srgb r g b / 0.5);
+	-webkit-backdrop-filter: var(--MI-blur, blur(15px));
+	backdrop-filter: var(--MI-blur, blur(15px));
 }
 
 .systemWebhook {

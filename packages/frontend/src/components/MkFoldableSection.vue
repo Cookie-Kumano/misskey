@@ -34,7 +34,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 import { onBeforeUnmount, onMounted, ref, useTemplateRef, watch } from 'vue';
 import { miLocalStorage } from '@/local-storage.js';
 import { prefer } from '@/preferences.js';
-import { globalEvents } from '@/events.js';
+import { themeManager } from '@/theme.js';
 import { getBgColor } from '@/utility/get-bg-color.js';
 
 const miLocalStoragePrefix = 'ui:folder:' as const;
@@ -92,11 +92,11 @@ function updateBgColor() {
 
 onMounted(() => {
 	updateBgColor();
-	globalEvents.on('themeChanging', updateBgColor);
+	themeManager.on('themeChanging', updateBgColor);
 });
 
 onBeforeUnmount(() => {
-	globalEvents.off('themeChanging', updateBgColor);
+	themeManager.off('themeChanging', updateBgColor);
 });
 </script>
 
@@ -120,6 +120,8 @@ onBeforeUnmount(() => {
 	z-index: 10;
 	position: sticky;
 	top: var(--MI-stickyTop, 0px);
+	-webkit-backdrop-filter: var(--MI-blur, blur(8px));
+	backdrop-filter: var(--MI-blur, blur(20px));
 	background-color: color(from v-bind("parentBg ?? 'var(--bg)'") srgb r g b / 0.85);
 }
 

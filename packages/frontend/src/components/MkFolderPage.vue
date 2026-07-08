@@ -130,6 +130,8 @@ function onClosed() {
 	display: flex;
 	align-items: center;
 	background: color(from var(--MI_THEME-panel) srgb r g b / 0.75);
+	-webkit-backdrop-filter: var(--MI-blur, blur(15px));
+	backdrop-filter: var(--MI-blur, blur(15px));
 	border-bottom: solid 0.5px var(--MI_THEME-divider);
 }
 

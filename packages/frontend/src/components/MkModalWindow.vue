@@ -105,6 +105,8 @@ defineExpose({
 	display: flex;
 	flex-shrink: 0;
 	background: var(--MI_THEME-windowHeader);
+	-webkit-backdrop-filter: var(--MI-blur, blur(15px));
+	backdrop-filter: var(--MI-blur, blur(15px));
 }
 
 .headerButton {

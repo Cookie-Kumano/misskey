@@ -715,7 +715,7 @@ function onMouseUp(ev: MouseEvent) {
 	}
 }
 
-function onContextMenu(ev: MouseEvent) {
+function onContextMenu(ev: PointerEvent) {
 	const cellAddress = getCellAddress(ev.target as HTMLElement);
 	if (_DEV_) {
 		console.log(`[grid][context-menu] button: ${ev.button}, cell: ${cellAddress.row}x${cellAddress.col}`);
@@ -1298,6 +1298,8 @@ onMounted(() => {
     z-index: 1;
     left: 0;
 		top: 0;
+		-webkit-backdrop-filter: var(--MI-blur, blur(8px));
+		backdrop-filter: var(--MI-blur, blur(20px));
 		background: color(from var(--MI_THEME-bg) srgb r g b / 0.5);
 
 		.mk_grid_tr {

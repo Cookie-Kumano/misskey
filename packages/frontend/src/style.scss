@@ -25,7 +25,7 @@
 html {
 	overflow: auto;
 	overflow-wrap: break-word;
-	font-family: 'Hiragino Kaku Gothic Pro', "BIZ UDGothic", Roboto, HelveticaNeue, Arial, sans-serif;
+	font-family: 'Hiragino Kaku Gothic Pro', "BIZ UDGothic", Roboto, HelveticaNeue, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 	font-size: 14px;
 	line-height: 1.35;
 	text-size-adjust: 100%;
@@ -284,6 +284,8 @@ rt {
 	width: 100%;
 	height: 100%;
 	background: var(--MI_THEME-modalBg);
+	-webkit-backdrop-filter: var(--MI-modalBgFilter);
+	backdrop-filter: var(--MI-modalBgFilter);
 }
 
 ._shadow {
@@ -422,6 +424,8 @@ rt {
 
 ._acrylic {
 	background: color(from var(--MI_THEME-panel) srgb r g b / 0.5);
+	-webkit-backdrop-filter: var(--MI-blur, blur(15px));
+	backdrop-filter: var(--MI-blur, blur(15px));
 }
 
 ._formLinksGrid {

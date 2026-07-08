@@ -17,8 +17,8 @@ export const page = (loader: AsyncComponentLoader) => defineAsyncComponent({
 	errorComponent: MkError,
 });
 
-function chatPage(...args: Parameters<typeof page>) {
-	return $i?.policies.chatAvailability !== 'unavailable' ? page(...args) : page(() => import('@/pages/not-found.vue'));
+function chatPage() {
+	return page(() => import('@/pages/not-found.vue'));
 }
 
 export const ROUTE_DEF = [{
@@ -54,19 +54,19 @@ export const ROUTE_DEF = [{
 	component: page(() => import('@/pages/clip.vue')),
 }, {
 	path: '/chat',
-	component: chatPage(() => import('@/pages/chat/home.vue')),
+	component: chatPage(),
 	loginRequired: true,
 }, {
 	path: '/chat/user/:userId',
-	component: chatPage(() => import('@/pages/chat/room.vue')),
+	component: chatPage(),
 	loginRequired: true,
 }, {
 	path: '/chat/room/:roomId',
-	component: chatPage(() => import('@/pages/chat/room.vue')),
+	component: chatPage(),
 	loginRequired: true,
 }, {
 	path: '/chat/messages/:messageId',
-	component: chatPage(() => import('@/pages/chat/message.vue')),
+	component: chatPage(),
 	loginRequired: true,
 }, {
 	path: '/instance-info/:host',

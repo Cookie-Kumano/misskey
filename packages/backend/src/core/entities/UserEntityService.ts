@@ -47,10 +47,11 @@ import { IdService } from '@/core/IdService.js';
 import type { AnnouncementService } from '@/core/AnnouncementService.js';
 import type { CustomEmojiService } from '@/core/CustomEmojiService.js';
 import { AvatarDecorationService } from '@/core/AvatarDecorationService.js';
-import { ChatService } from '@/core/ChatService.js';
+// import { ChatService } from '@/core/ChatService.js';
 import type { OnModuleInit } from '@nestjs/common';
 import type { NoteEntityService } from './NoteEntityService.js';
 import type { PageEntityService } from './PageEntityService.js';
+import { toArray } from '@/misc/prelude/array.js';
 
 const Ajv = _Ajv.default;
 const ajv = new Ajv();
@@ -93,7 +94,7 @@ export class UserEntityService implements OnModuleInit {
 	private federatedInstanceService: FederatedInstanceService;
 	private idService: IdService;
 	private avatarDecorationService: AvatarDecorationService;
-	private chatService: ChatService;
+	// private chatService: ChatService;
 
 	constructor(
 		private moduleRef: ModuleRef,
@@ -149,7 +150,7 @@ export class UserEntityService implements OnModuleInit {
 		this.federatedInstanceService = this.moduleRef.get('FederatedInstanceService');
 		this.idService = this.moduleRef.get('IdService');
 		this.avatarDecorationService = this.moduleRef.get('AvatarDecorationService');
-		this.chatService = this.moduleRef.get('ChatService');
+		// this.chatService = this.moduleRef.get('ChatService');
 	}
 
 	//#region Validators
@@ -527,10 +528,10 @@ export class UserEntityService implements OnModuleInit {
 				url: profile!.url,
 				uri: user.uri,
 				movedTo: user.movedToUri ? this.apPersonService.resolvePerson(user.movedToUri).then(user => user.id).catch(() => null) : null,
-				alsoKnownAs: user.alsoKnownAs
-					? Promise.all(user.alsoKnownAs.map(uri => this.apPersonService.fetchPerson(uri).then(user => user?.id).catch(() => null)))
-						.then(xs => xs.length === 0 ? null : xs.filter(x => x != null))
-					: null,
+				alsoKnownAs: user.alsoKnownAs ?
+					Promise.all(toArray(user.alsoKnownAs).map(uri => this.apPersonService.fetchPerson(uri).then(user => user?.id).catch(() => null)))
+				.then(xs => xs.length === 0 ? null : xs.filter(x => x != null))
+				: null,
 				createdAt: this.idService.parse(user.id).date.toISOString(),
 				updatedAt: user.updatedAt ? user.updatedAt.toISOString() : null,
 				lastFetchedAt: user.lastFetchedAt ? user.lastFetchedAt.toISOString() : null,
@@ -601,7 +602,7 @@ export class UserEntityService implements OnModuleInit {
 				hideOnlineStatus: user.hideOnlineStatus,
 				hasUnreadSpecifiedNotes: false, // 後方互換性のため
 				hasUnreadMentions: false, // 後方互換性のため
-				hasUnreadChatMessages: this.chatService.hasUnreadMessages(user.id),
+				// hasUnreadChatMessages: this.chatService.hasUnreadMessages(user.id),
 				hasUnreadAnnouncement: unreadAnnouncements!.length > 0,
 				unreadAnnouncements,
 				hasUnreadAntenna: this.getHasUnreadAntenna(user.id),
@@ -720,7 +721,7 @@ export class UserEntityService implements OnModuleInit {
 				me,
 				{
 					...options,
-					userProfile: profilesMap.get(u.id),
+					userProfile: profilesMap?.get(u.id),
 					userRelations: userRelations,
 					userMemos: userMemos,
 					pinNotes: pinNotes,

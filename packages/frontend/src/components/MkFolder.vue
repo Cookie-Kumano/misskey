@@ -100,6 +100,7 @@ import { nextTick, onMounted, ref, useTemplateRef, watch } from 'vue';
 import { prefer } from '@/preferences.js';
 import { getBgColor } from '@/utility/get-bg-color.js';
 import { pageFolderTeleportCount, popup } from '@/os.js';
+import { themeManager } from '@/theme.js';
 import MkFolderPage from '@/components/MkFolderPage.vue';
 import { deviceKind } from '@/utility/device-kind.js';
 
@@ -169,7 +170,7 @@ function afterLeave(el: Element) {
 let pageId = pageFolderTeleportCount.value;
 pageFolderTeleportCount.value += 1000;
 
-async function toggle(ev: MouseEvent) {
+async function toggle(ev: PointerEvent) {
 	if (asPage && !opened.value) {
 		pageId++;
 		const { dispose } = await popup(MkFolderPage, {
@@ -192,9 +193,9 @@ async function toggle(ev: MouseEvent) {
 }
 
 onMounted(() => {
-	const computedStyle = getComputedStyle(window.document.documentElement);
+	const themeValue = themeManager.currentCompiledTheme!;
 	const parentBg = getBgColor(rootEl.value?.parentElement) ?? 'transparent';
-	const myBg = computedStyle.getPropertyValue('--MI_THEME-panel');
+	const myBg = themeValue.panel;
 	bgSame.value = parentBg === myBg;
 });
 
@@ -241,6 +242,8 @@ watch(opened, (isOpened) => {
 	box-sizing: border-box;
 	padding: 9px 12px 9px 12px;
 	background: var(--MI_THEME-folderHeaderBg);
+	-webkit-backdrop-filter: var(--MI-blur, blur(15px));
+	backdrop-filter: var(--MI-blur, blur(15px));
 	border-radius: var(--MI-radius);
 	transition: border-radius 0.3s;
 
@@ -333,12 +336,16 @@ watch(opened, (isOpened) => {
 
 .inBodyHeader {
 	background: color(from var(--MI_THEME-panel) srgb r g b / 0.75);
+	-webkit-backdrop-filter: var(--MI-blur, blur(15px));
+	backdrop-filter: var(--MI-blur, blur(15px));
 	border-bottom: solid 0.5px var(--MI_THEME-divider);
 }
 
 .inBodyFooter {
 	padding: 12px;
 	background: color(from var(--MI_THEME-bg) srgb r g b / 0.5);
+	-webkit-backdrop-filter: var(--MI-blur, blur(15px));
+	backdrop-filter: var(--MI-blur, blur(15px));
 	background-size: auto auto;
 	background-image: repeating-linear-gradient(135deg, transparent, transparent 5px, var(--MI_THEME-panel) 5px, var(--MI_THEME-panel) 10px);
 	border-radius: 0 0 6px 6px;

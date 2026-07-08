@@ -4,7 +4,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 -->
 
 <template>
-<MkModal ref="modal" :zPriority="'middle'" :preferType="'dialog'" @closed="$emit('closed')" @click="onBgClick">
+<MkModal ref="modal" :zPriority="'middle'" :preferType="'dialog'" @closed="emit('closed')" @click="onBgClick">
 	<div ref="rootEl" :class="$style.root">
 		<div :class="$style.header">
 			<span :class="$style.icon">
@@ -42,6 +42,10 @@ import { updateCurrentAccountPartial } from '@/accounts.js';
 
 const props = defineProps<{
 	announcement: Misskey.entities.Announcement;
+}>();
+
+const emit = defineEmits<{
+	(ev: 'closed'): void;
 }>();
 
 const rootEl = useTemplateRef('rootEl');
@@ -146,6 +150,7 @@ onMounted(() => {
 	position: sticky;
 	bottom: 0;
 	left: -32px;
+	backdrop-filter: var(--MI-blur, blur(15px));
 	background: color(from var(--MI_THEME-bg) srgb r g b / 0.5);
 	margin: 0 -32px;
 	padding: 24px 32px;

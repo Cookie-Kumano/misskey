@@ -4,7 +4,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 -->
 
 <template>
-<div ref="rootEl" :class="[$style.root, reversed ? '_pageScrollableReversed' : '_pageScrollable']">
+<div ref="rootEl" :class="reversed ? '_pageScrollableReversed' : '_pageScrollable'">
 	<MkStickyContainer>
 		<template #header>
 			<MkPageHeader v-if="prefer.s.showPageTabBarBottom && (props.tabs?.length ?? 0) > 0" v-bind="pageHeaderPropsWithoutTabs"/>
@@ -81,6 +81,8 @@ defineExpose({
 
 .footerTabs {
 	background: color(from var(--MI_THEME-pageHeaderBg) srgb r g b / 0.75);
+	-webkit-backdrop-filter: var(--MI-blur, blur(15px));
+	backdrop-filter: var(--MI-blur, blur(15px));
 	border-top: solid 0.5px var(--MI_THEME-divider);
 }
 </style>

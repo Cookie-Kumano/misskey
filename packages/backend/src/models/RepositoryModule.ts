@@ -79,11 +79,11 @@ import {
 	MiUserPublickey,
 	MiUserSecurityKey,
 	MiWebhook,
-	MiChatMessage,
-	MiChatRoom,
-	MiChatRoomMembership,
-	MiChatRoomInvitation,
-	MiChatApproval,
+	// MiChatMessage,
+	// MiChatRoom,
+	// MiChatRoomMembership,
+	// MiChatRoomInvitation,
+	// MiChatApproval,
 } from './_.js';
 import type { Provider } from '@nestjs/common';
 import type { DataSource } from 'typeorm';
@@ -502,35 +502,35 @@ const $userMemosRepository: Provider = {
 	inject: [DI.db],
 };
 
-const $chatMessagesRepository: Provider = {
-	provide: DI.chatMessagesRepository,
-	useFactory: (db: DataSource) => db.getRepository(MiChatMessage).extend(miRepository as MiRepository<MiChatMessage>),
-	inject: [DI.db],
-};
+// const $chatMessagesRepository: Provider = {
+// 	provide: DI.chatMessagesRepository,
+// 	useFactory: (db: DataSource) => db.getRepository(MiChatMessage).extend(miRepository as MiRepository<MiChatMessage>),
+// 	inject: [DI.db],
+// };
 
-const $chatRoomsRepository: Provider = {
-	provide: DI.chatRoomsRepository,
-	useFactory: (db: DataSource) => db.getRepository(MiChatRoom).extend(miRepository as MiRepository<MiChatRoom>),
-	inject: [DI.db],
-};
+// const $chatRoomsRepository: Provider = {
+// 	provide: DI.chatRoomsRepository,
+// 	useFactory: (db: DataSource) => db.getRepository(MiChatRoom).extend(miRepository as MiRepository<MiChatRoom>),
+// 	inject: [DI.db],
+// };
 
-const $chatRoomMembershipsRepository: Provider = {
-	provide: DI.chatRoomMembershipsRepository,
-	useFactory: (db: DataSource) => db.getRepository(MiChatRoomMembership).extend(miRepository as MiRepository<MiChatRoomMembership>),
-	inject: [DI.db],
-};
+// const $chatRoomMembershipsRepository: Provider = {
+// 	provide: DI.chatRoomMembershipsRepository,
+// 	useFactory: (db: DataSource) => db.getRepository(MiChatRoomMembership).extend(miRepository as MiRepository<MiChatRoomMembership>),
+// 	inject: [DI.db],
+// };
 
-const $chatRoomInvitationsRepository: Provider = {
-	provide: DI.chatRoomInvitationsRepository,
-	useFactory: (db: DataSource) => db.getRepository(MiChatRoomInvitation).extend(miRepository as MiRepository<MiChatRoomInvitation>),
-	inject: [DI.db],
-};
+// const $chatRoomInvitationsRepository: Provider = {
+// 	provide: DI.chatRoomInvitationsRepository,
+// 	useFactory: (db: DataSource) => db.getRepository(MiChatRoomInvitation).extend(miRepository as MiRepository<MiChatRoomInvitation>),
+// 	inject: [DI.db],
+// };
 
-const $chatApprovalsRepository: Provider = {
-	provide: DI.chatApprovalsRepository,
-	useFactory: (db: DataSource) => db.getRepository(MiChatApproval).extend(miRepository as MiRepository<MiChatApproval>),
-	inject: [DI.db],
-};
+// const $chatApprovalsRepository: Provider = {
+// 	provide: DI.chatApprovalsRepository,
+// 	useFactory: (db: DataSource) => db.getRepository(MiChatApproval).extend(miRepository as MiRepository<MiChatApproval>),
+// 	inject: [DI.db],
+// };
 
 const $bubbleGameRecordsRepository: Provider = {
 	provide: DI.bubbleGameRecordsRepository,
@@ -616,11 +616,11 @@ const $reversiGamesRepository: Provider = {
 		$flashsRepository,
 		$flashLikesRepository,
 		$userMemosRepository,
-		$chatMessagesRepository,
-		$chatRoomsRepository,
-		$chatRoomMembershipsRepository,
-		$chatRoomInvitationsRepository,
-		$chatApprovalsRepository,
+		// $chatMessagesRepository,
+		// $chatRoomsRepository,
+		// $chatRoomMembershipsRepository,
+		// $chatRoomInvitationsRepository,
+		// $chatApprovalsRepository,
 		$bubbleGameRecordsRepository,
 		$reversiGamesRepository,
 	],
@@ -694,11 +694,11 @@ const $reversiGamesRepository: Provider = {
 		$flashsRepository,
 		$flashLikesRepository,
 		$userMemosRepository,
-		$chatMessagesRepository,
-		$chatRoomsRepository,
-		$chatRoomMembershipsRepository,
-		$chatRoomInvitationsRepository,
-		$chatApprovalsRepository,
+		// $chatMessagesRepository,
+		// $chatRoomsRepository,
+		// $chatRoomMembershipsRepository,
+		// $chatRoomInvitationsRepository,
+		// $chatApprovalsRepository,
 		$bubbleGameRecordsRepository,
 		$reversiGamesRepository,
 	],

@@ -171,12 +171,6 @@ router.useListener('replace', ({ fullPath }) => {
 			width: 100%;
 			height: 100%;
 		}
-
-		.tabContent {
-			position: relative;
-			width: 100%;
-			height: 100%;
-		}
 	}
 
 	&:not(:first-child) {
@@ -193,6 +187,8 @@ router.useListener('replace', ({ fullPath }) => {
 			width: 100%;
 			height: 100%;
 			background: #0003;
+			-webkit-backdrop-filter: var(--MI-blur, blur(3px));
+			backdrop-filter: var(--MI-blur, blur(3px));
 		}
 
 		.tabFg {
@@ -207,11 +203,15 @@ router.useListener('replace', ({ fullPath }) => {
 
 		.tabContent {
 			flex: 1;
-			width: 100%;
-			height: 100%;
-			background: var(--MI_THEME-bg);
 		}
 	}
+}
+
+.tabContent {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	background: var(--MI_THEME-bg);
 }
 
 .tabMenu {

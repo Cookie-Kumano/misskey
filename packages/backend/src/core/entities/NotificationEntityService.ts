@@ -16,7 +16,7 @@ import { bindThis } from '@/decorators.js';
 import { FilterUnionByProperty, groupedNotificationTypes } from '@/types.js';
 import { CacheService } from '@/core/CacheService.js';
 import { RoleEntityService } from './RoleEntityService.js';
-import { ChatEntityService } from './ChatEntityService.js';
+// import { ChatEntityService } from './ChatEntityService.js';
 import type { OnModuleInit } from '@nestjs/common';
 import type { UserEntityService } from './UserEntityService.js';
 import type { NoteEntityService } from './NoteEntityService.js';
@@ -39,7 +39,7 @@ export class NotificationEntityService implements OnModuleInit {
 	private userEntityService: UserEntityService;
 	private noteEntityService: NoteEntityService;
 	private roleEntityService: RoleEntityService;
-	private chatEntityService: ChatEntityService;
+	// private chatEntityService: ChatEntityService;
 
 	constructor(
 		private moduleRef: ModuleRef,
@@ -61,7 +61,7 @@ export class NotificationEntityService implements OnModuleInit {
 		this.userEntityService = this.moduleRef.get('UserEntityService');
 		this.noteEntityService = this.moduleRef.get('NoteEntityService');
 		this.roleEntityService = this.moduleRef.get('RoleEntityService');
-		this.chatEntityService = this.moduleRef.get('ChatEntityService');
+		// this.chatEntityService = this.moduleRef.get('ChatEntityService');
 	}
 
 	/**
@@ -156,12 +156,12 @@ export class NotificationEntityService implements OnModuleInit {
 			return null;
 		}
 
-		const needsChatRoomInvitation = notification.type === 'chatRoomInvitationReceived';
-		const chatRoomInvitation = needsChatRoomInvitation ? await this.chatEntityService.packRoomInvitation(notification.invitationId, { id: meId }).catch(() => null) : undefined;
+		// const needsChatRoomInvitation = notification.type === 'chatRoomInvitationReceived';
+		// const chatRoomInvitation = needsChatRoomInvitation ? await this.chatEntityService.packRoomInvitation(notification.invitationId, { id: meId }).catch(() => null) : undefined;
 		// if the invitation has been deleted, don't show this notification
-		if (needsChatRoomInvitation && !chatRoomInvitation) {
-			return null;
-		}
+		// if (needsChatRoomInvitation && !chatRoomInvitation) {
+			// return null;
+		// }
 
 		return await awaitAll({
 			id: notification.id,
@@ -176,9 +176,9 @@ export class NotificationEntityService implements OnModuleInit {
 			...(notification.type === 'roleAssigned' ? {
 				role: role,
 			} : {}),
-			...(notification.type === 'chatRoomInvitationReceived' ? {
-				invitation: chatRoomInvitation,
-			} : {}),
+			// ...(notification.type === 'chatRoomInvitationReceived' ? {
+			// 	invitation: chatRoomInvitation,
+			// } : {}),
 			...(notification.type === 'followRequestAccepted' ? {
 				message: notification.message,
 			} : {}),
@@ -210,7 +210,15 @@ export class NotificationEntityService implements OnModuleInit {
 		const noteIds = validNotifications.map(x => 'noteId' in x ? x.noteId : null).filter(x => x != null);
 		const notes = noteIds.length > 0 ? await this.notesRepository.find({
 			where: { id: In(noteIds) },
-			relations: ['user', 'reply', 'reply.user', 'renote', 'renote.user'],
+			relations: {
+				user: true,
+				reply: {
+					user: true,
+				},
+				renote: {
+					user: true,
+				},
+			},
 		}) : [];
 		const packedNotesArray = await this.noteEntityService.packMany(notes, { id: meId }, {
 			detail: true,
