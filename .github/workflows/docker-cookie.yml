@@ -20,6 +20,9 @@ jobs:
         platform:
           - linux/amd64
           - linux/arm64
+        target:
+          - backend
+          - frontend
         include:
           - target: backend
             dockerfile: Dockerfile.backend
@@ -80,7 +83,7 @@ jobs:
         run: |
           mkdir -p /tmp/digests
           digest="${{ steps.build.outputs.digest }}"
-          touch "/tmp/digests/${digest#sha256:}-${{ env.TARGET }}"
+          touch "/tmp/digests/${digest#sha256:}"
 
       - name: Upload digest
         uses: actions/upload-artifact@v4
