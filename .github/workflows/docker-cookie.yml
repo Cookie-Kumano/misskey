@@ -20,16 +20,6 @@ jobs:
         platform:
           - linux/amd64
           - linux/arm64
-        target:
-          - backend
-          - frontend
-        include:
-          - target: backend
-            dockerfile: Dockerfile.backend
-            final_stage: backend-final
-          - target: frontend
-            dockerfile: Dockerfile.frontend
-            final_stage: frontend-final
     permissions:
       contents: read
       packages: write
@@ -38,9 +28,7 @@ jobs:
       - name: Prepare
         run: |
           platform=${{ matrix.platform }}
-          target=${{ matrix.target }}
           echo "PLATFORM_PAIR=${platform//\//-}" >> $GITHUB_ENV
-          echo "TARGET=$target" >> $GITHUB_ENV
 
       - name: Checkout repository
         uses: actions/checkout@v4.3.0
@@ -52,7 +40,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.REGISTRY_IMAGE }}-${{ matrix.target }}
+          images: ${{ env.REGISTRY }}/${{ env.REGISTRY_IMAGE }}
           tags: |
             type=sha,format=long
             type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'cookie') }}
@@ -69,13 +57,13 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: ./${{ matrix.dockerfile }}
-          target: ${{ matrix.final_stage }}
+          file: ./Dockerfile.cookie
+          target: runner
           push: true
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          outputs: type=image,name=${{ env.REGISTRY }}/${{ env.REGISTRY_IMAGE }}-${{ matrix.target }},push-by-digest=true,name-canonical=true,push=true
+          outputs: type=image,name=${{ env.REGISTRY }}/${{ env.REGISTRY_IMAGE }},push-by-digest=true,name-canonical=true,push=true
           platforms: ${{ matrix.platform }}
           provenance: false
 
@@ -88,7 +76,7 @@ jobs:
       - name: Upload digest
         uses: actions/upload-artifact@v4
         with:
-          name: digests-${{ env.PLATFORM_PAIR }}-${{ env.TARGET }}
+          name: digests-${{ env.PLATFORM_PAIR }}
           path: /tmp/digests/*
           if-no-files-found: error
           retention-days: 1
@@ -97,35 +85,31 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - build
-    strategy:
-      matrix:
-        include:
-          - target: backend
-            dockerfile: Dockerfile.backend
-            final_stage: backend-final
-          - target: frontend
-            dockerfile: Dockerfile.frontend
-            final_stage: frontend-final
+    permissions:
+      contents: read
+      packages: write
+
     steps:
       - name: Download digests
         uses: actions/download-artifact@v4
         with:
           path: /tmp/digests
-          pattern: digests-*-${{ matrix.target }}
+          pattern: digests-*
           merge-multiple: true
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
+
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.REGISTRY_IMAGE }}-${{ matrix.target }}
+          images: ${{ env.REGISTRY }}/${{ env.REGISTRY_IMAGE }}
           tags: |
             type=sha,format=long
             type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'cookie') }}
 
-      - name: Login to GitHub Container Registry
+      - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
@@ -138,4 +122,4 @@ jobs:
           TAGS_ARGS=$(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON")
 
           docker buildx imagetools create $TAGS_ARGS \
-            $(printf '${{ env.REGISTRY }}/${{ env.REGISTRY_IMAGE }}-${{ matrix.target }}@sha256:%s ' *)
+            $(printf '${{ env.REGISTRY }}/${{ env.REGISTRY_IMAGE }}@sha256:%s ' *)
