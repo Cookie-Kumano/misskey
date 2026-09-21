@@ -37,6 +37,7 @@ export class ApiCallService implements OnApplicationShutdown {
 	private logger: Logger;
 	private userIpHistories: Map<MiUser['id'], Set<string>>;
 	private userIpHistoriesClearIntervalId: NodeJS.Timeout;
+	private Sentry: typeof import('@sentry/node') | null = null;
 
 	constructor(
 		@Inject(DI.meta)
@@ -60,6 +61,12 @@ export class ApiCallService implements OnApplicationShutdown {
 		this.userIpHistoriesClearIntervalId = setInterval(() => {
 			this.userIpHistories.clear();
 		}, 1000 * 60 * 60);
+
+		if (this.config.sentryForBackend) {
+			import('@sentry/node').then((Sentry) => {
+				this.Sentry = Sentry;
+			});
+		}
 	}
 
 	#sendApiError(reply: FastifyReply, err: ApiError): void {

@@ -139,7 +139,7 @@ watch(() => props.lang, (to) => {
 	& :global(.shiki) {
 		padding: 12px;
 		margin: 0;
-		border-radius: 6px;
+		border-radius: var(--MI-radius);
 		border: none;
 		min-height: 130px;
 		pointer-events: none;

@@ -198,7 +198,7 @@ export async function common(createVue: () => Promise<App<Element>>) {
 
 	watch(prefer.r.useBlurEffectForModal, v => {
 		window.document.documentElement.style.setProperty('--MI-modalBgFilter', v ? 'blur(4px)' : 'none');
-	}, { immediate: true });
+	}, { immediate: false });
 
 	watch(prefer.r.useBlurEffect, v => {
 		if (v) {
@@ -206,7 +206,7 @@ export async function common(createVue: () => Promise<App<Element>>) {
 		} else {
 			window.document.documentElement.style.setProperty('--MI-blur', 'none');
 		}
-	}, { immediate: true });
+	}, { immediate: false });
 
 	// Keep screen on
 	const onVisibilityChange = () => window.document.addEventListener('visibilitychange', () => {

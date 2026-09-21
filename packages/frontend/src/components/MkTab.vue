@@ -49,7 +49,7 @@ function update(key: T['key']) {
 .tabButton {
 	flex: 1;
 	padding: 10px 8px;
-	border-radius: 999px;
+	border-radius: var(--MI-radius);
 
 	&:disabled {
 		opacity: 1 !important;

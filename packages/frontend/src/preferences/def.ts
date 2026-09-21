@@ -244,13 +244,13 @@ export const PREF_DEF = definePreferences({
 		default: 'auto' as 'auto' | 'popup' | 'drawer',
 	},
 	useBlurEffectForModal: {
-		default: true,
+		default: false,
 	},
 	useBlurEffect: {
-		default: true,
+		default: false,
 	},
 	useStickyIcons: {
-		default: true,
+		default: false,
 	},
 	enableHighQualityImagePlaceholders: {
 		default: true,
@@ -283,7 +283,7 @@ export const PREF_DEF = definePreferences({
 		default: 'auto' as 'auto' | 'popup' | 'drawer',
 	},
 	squareAvatars: {
-		default: false,
+		default: true,
 	},
 	showAvatarDecorations: {
 		default: true,
@@ -470,7 +470,7 @@ export const PREF_DEF = definePreferences({
 		default: 0.5,
 	},
 	'sound.notUseSound': {
-		default: false,
+		default: true,
 	},
 	'sound.useSoundOnlyWhenActive': {
 		default: false,

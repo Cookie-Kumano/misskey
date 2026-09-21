@@ -51,6 +51,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 <script lang="ts" setup>
 import { computed } from 'vue';
 import { isLink } from '@@/js/is-link.js';
+import { getUploadName } from '@/composables/use-uploader.js';
 import type { UploaderItem } from '@/composables/use-uploader.js';
 import { getUploadName } from '@/composables/use-uploader.js';
 import { i18n } from '@/i18n.js';

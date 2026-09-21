@@ -253,7 +253,7 @@ definePage(() => ({
 .uiInspectorType {
 	display: inline-block;
 	border: hidden;
-	border-radius: 10px;
+	border-radius: var(--MI-radius);
 	background-color: var(--MI_THEME-panelHighlight);
 	padding: 2px 8px;
 	font-size: 12px;

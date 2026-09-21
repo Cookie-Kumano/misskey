@@ -206,4 +206,21 @@ defineExpose<MediaComponentExposes>({
 	top: 0;
 	right: 0;
 }
+
+@container (max-width: 300px) {
+	.videoControls {
+		grid-template-areas:
+			"left . right"
+			"seekbar seekbar seekbar";
+		grid-template-columns: auto 1fr auto;
+	}
+
+	.controlsTime {
+		display: none;
+	}
+
+	.controlsVolume {
+		display: none;
+	}
+}
 </style>

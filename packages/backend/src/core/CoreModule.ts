@@ -75,7 +75,7 @@ import { ClipService } from './ClipService.js';
 import { FeaturedService } from './FeaturedService.js';
 import { FanoutTimelineService } from './FanoutTimelineService.js';
 import { ChannelFollowingService } from './ChannelFollowingService.js';
-import { ChatService } from './ChatService.js';
+// import { ChatService } from './ChatService.js';
 import { RegistryApiService } from './RegistryApiService.js';
 import { ReversiService } from './ReversiService.js';
 import { PageService } from './PageService.js';
@@ -102,7 +102,7 @@ import { AppEntityService } from './entities/AppEntityService.js';
 import { AuthSessionEntityService } from './entities/AuthSessionEntityService.js';
 import { BlockingEntityService } from './entities/BlockingEntityService.js';
 import { ChannelEntityService } from './entities/ChannelEntityService.js';
-import { ChatEntityService } from './entities/ChatEntityService.js';
+// import { ChatEntityService } from './entities/ChatEntityService.js';
 import { ClipEntityService } from './entities/ClipEntityService.js';
 import { DriveFileEntityService } from './entities/DriveFileEntityService.js';
 import { DriveFolderEntityService } from './entities/DriveFolderEntityService.js';
@@ -255,7 +255,7 @@ const $AppEntityService: Provider = { provide: 'AppEntityService', useExisting: 
 const $AuthSessionEntityService: Provider = { provide: 'AuthSessionEntityService', useExisting: AuthSessionEntityService };
 const $BlockingEntityService: Provider = { provide: 'BlockingEntityService', useExisting: BlockingEntityService };
 const $ChannelEntityService: Provider = { provide: 'ChannelEntityService', useExisting: ChannelEntityService };
-const $ChatEntityService: Provider = { provide: 'ChatEntityService', useExisting: ChatEntityService };
+// const $ChatEntityService: Provider = { provide: 'ChatEntityService', useExisting: ChatEntityService };
 const $ClipEntityService: Provider = { provide: 'ClipEntityService', useExisting: ClipEntityService };
 const $DriveFileEntityService: Provider = { provide: 'DriveFileEntityService', useExisting: DriveFileEntityService };
 const $DriveFolderEntityService: Provider = { provide: 'DriveFolderEntityService', useExisting: DriveFolderEntityService };
@@ -408,7 +408,7 @@ const $ApQuestionService: Provider = { provide: 'ApQuestionService', useExisting
 		AuthSessionEntityService,
 		BlockingEntityService,
 		ChannelEntityService,
-		ChatEntityService,
+		// ChatEntityService,
 		ClipEntityService,
 		DriveFileEntityService,
 		DriveFolderEntityService,
@@ -559,7 +559,7 @@ const $ApQuestionService: Provider = { provide: 'ApQuestionService', useExisting
 		$AuthSessionEntityService,
 		$BlockingEntityService,
 		$ChannelEntityService,
-		$ChatEntityService,
+		// $ChatEntityService,
 		$ClipEntityService,
 		$DriveFileEntityService,
 		$DriveFolderEntityService,
@@ -709,7 +709,7 @@ const $ApQuestionService: Provider = { provide: 'ApQuestionService', useExisting
 		AuthSessionEntityService,
 		BlockingEntityService,
 		ChannelEntityService,
-		ChatEntityService,
+		// ChatEntityService,
 		ClipEntityService,
 		DriveFileEntityService,
 		DriveFolderEntityService,
@@ -858,7 +858,7 @@ const $ApQuestionService: Provider = { provide: 'ApQuestionService', useExisting
 		$AuthSessionEntityService,
 		$BlockingEntityService,
 		$ChannelEntityService,
-		$ChatEntityService,
+		// $ChatEntityService,
 		$ClipEntityService,
 		$DriveFileEntityService,
 		$DriveFolderEntityService,

@@ -73,7 +73,7 @@ function goToDeck() {
 	width: 100%;
 	max-width: 60px;
 	margin: auto;
-	border-radius: 100%;
+	border-radius: var(--MI-radius);
 	background: var(--MI_THEME-panel);
 	color: var(--MI_THEME-fg);
 	right: var(--MI-margin);

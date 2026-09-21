@@ -171,7 +171,7 @@ async function specifyHostAndOpenRemote(options: OpenOnRemoteOptions): Promise<v
 	width: 64px;
 	font-size: 24px;
 	line-height: 64px;
-	border-radius: 50%;
+	border-radius: var(--MI-radius);
 }
 
 .instanceManualSelectButton {

@@ -624,7 +624,7 @@ definePage(() => ({
 			> .suspended, > .silenced, > .moderator {
 				display: inline-block;
 				border: solid 1px;
-				border-radius: 6px;
+				border-radius: var(--MI-radius);
 				padding: 2px 6px;
 				font-size: 85%;
 			}
@@ -702,7 +702,7 @@ definePage(() => ({
 .announcementItem {
 	display: flex;
 	padding: 8px 12px;
-	border-radius: 6px;
+	border-radius: var(--MI-radius);
 	cursor: pointer;
 }
 </style>

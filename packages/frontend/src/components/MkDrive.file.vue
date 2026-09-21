@@ -89,7 +89,7 @@ function onDragend() {
 	position: relative;
 	padding: 8px 0 0 0;
 	min-height: 180px;
-	border-radius: 8px;
+	border-radius: var(--MI-radius);
 	cursor: pointer;
 
 	&:hover {

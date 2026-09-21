@@ -295,7 +295,7 @@ onUnmounted(() => {
 	place-items: center;
 	background: transparent;
 	border: solid 2px var(--MI_THEME-divider);
-	border-radius: 6px;
+	border-radius: var(--MI-radius);
 	overflow: clip;
 	cursor: pointer;
 }

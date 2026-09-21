@@ -209,6 +209,7 @@ html[data-color-scheme=light] .visible {
 	background-color: rgba(0, 0, 0, 0.3);
 	-webkit-backdrop-filter: var(--MI-blur, blur(15px));
 	backdrop-filter: var(--MI-blur, blur(15px));
+	border-radius: 9px 0 0 0;
 	color: #fff;
 	font-size: 0.8em;
 	width: 28px;
@@ -251,8 +252,8 @@ html[data-color-scheme=light] .visible {
 .indicator {
 	/* Hardcode to black because either --MI_THEME-bg or --MI_THEME-fg makes it hard to read in dark/light mode */
 	background-color: black;
-	border-radius: 6px;
-	color: hsl(from var(--MI_THEME-accent) h s calc(l + 10));
+	border-radius: var(--MI-radius);
+	color: var(--MI_THEME-accentLighten);
 	display: inline-block;
 	font-weight: bold;
 	font-size: 0.8em;

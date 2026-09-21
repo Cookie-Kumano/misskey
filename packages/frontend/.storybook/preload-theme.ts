@@ -9,6 +9,8 @@ import JSON5 from 'json5';
 const keys = [
 	'_dark',
 	'_light',
+  'd-maikaze',
+  'l-maikaze',
 	'l-light',
 	'l-coffee',
 	'l-apricot',

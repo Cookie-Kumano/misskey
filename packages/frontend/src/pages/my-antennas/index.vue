@@ -67,7 +67,7 @@ onActivated(() => {
 	display: block;
 	padding: 16px;
 	border: solid 1px var(--MI_THEME-divider);
-	border-radius: 6px;
+	border-radius: var(--MI-radius);
 
 	&:hover {
 		border: solid 1px var(--MI_THEME-accent);

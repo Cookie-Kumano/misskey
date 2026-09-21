@@ -62,7 +62,7 @@ const avatarUrl = computed(() => prefer.s.disableShowingAnimatedImages || prefer
 	object-fit: cover;
 	margin: 0 0.2em 0 0;
 	vertical-align: bottom;
-	border-radius: 100%;
+	border-radius: var(--MI-radius);
 }
 
 .host {

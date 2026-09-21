@@ -292,7 +292,7 @@ function onMousedown(ev: MouseEvent | TouchEvent) {
 		padding: 0px 4px;
 		background: var(--MI_THEME-panel);
 		border: solid 1px var(--MI_THEME-panel);
-		border-radius: 6px;
+		border-radius: var(--MI-radius);
 
 		&.disabled {
 			pointer-events: none;
