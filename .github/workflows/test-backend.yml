@@ -59,7 +59,6 @@ jobs:
     - name: Setup pnpm
       uses: pnpm/action-setup@v6.0.9
     - name: Install FFmpeg
-      if: steps.cache-ffmpeg.outputs.cache-hit != 'true' || github.event.inputs.force_ffmpeg_cache_update == true
       run: |
         sudo apt update
         sudo apt install -y ffmpeg

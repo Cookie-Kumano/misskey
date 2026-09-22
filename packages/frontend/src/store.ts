@@ -118,14 +118,6 @@ export const store = markRaw(new Pizzax('base', {
 		where: 'device',
 		default: true,
 	},
-	dropAndFusion: {
-		where: 'device',
-		default: {
-			bgmVolume: 0.25,
-			sfxVolume: 1,
-		},
-	},
-	//#endregion
 }));
 
 // TODO: 他のタブと永続化されたstateを同期

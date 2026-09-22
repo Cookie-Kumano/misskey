@@ -68,6 +68,7 @@ export async function mainBoot() {
 		const { dispose } = popup(defineAsyncComponent(() => import('@/components/MkUpdated.vue')), {}, {
 			closed: () => dispose(),
 		});
+	}
 
 	try {
 		if (prefer.s.enableSeasonalScreenEffect) {

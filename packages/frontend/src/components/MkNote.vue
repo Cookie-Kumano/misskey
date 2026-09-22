@@ -324,7 +324,6 @@ function emitUpdReaction(emoji: string, delta: number) {
 		emit('reaction', emoji);
 	}
 }
-/* eslint-enable no-redeclare */
 
 // キーボードショートカットマップ
 const keymap = {

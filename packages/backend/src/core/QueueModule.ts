@@ -53,12 +53,6 @@ const $postScheduledNote: Provider = {
 	inject: [DI.config],
 };
 
-const $postScheduledNote: Provider = {
-	provide: 'queue:postScheduledNote',
-	useFactory: (config: Config) => new Bull.Queue(QUEUE.POST_SCHEDULED_NOTE, baseQueueOptions(config, QUEUE.POST_SCHEDULED_NOTE)),
-	inject: [DI.config],
-};
-
 const $deliver: Provider = {
 	provide: 'queue:deliver',
 	useFactory: (config: Config) => createQueue<DeliverJobData>(QUEUE.DELIVER, config),
