@@ -52,14 +52,6 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				code: 'ENDPOINT_DISABLED',
 				id: '',
 			});
-
-			// await this.chatService.checkChatAvailability(me.id, 'read');
-
-			if (!await this.chatService.hasPermissionToViewRoomInfo(me.id, room)) {
-				throw new ApiError(meta.errors.noSuchRoom);
-			}
-
-			return this.chatEntityService.packRoom(room, me);
 		});
 	}
 }
