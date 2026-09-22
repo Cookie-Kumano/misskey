@@ -31,8 +31,8 @@ import { DriveChannel } from '@/server/api/stream/channels/drive.js';
 import { ServerStatsChannel } from '@/server/api/stream/channels/server-stats.js';
 import { QueueStatsChannel } from '@/server/api/stream/channels/queue-stats.js';
 import { AdminChannel } from '@/server/api/stream/channels/admin.js';
-import { ChatUserChannel } from '@/server/api/stream/channels/chat-user.js';
-import { ChatRoomChannel } from '@/server/api/stream/channels/chat-room.js';
+// import { ChatUserChannel } from '@/server/api/stream/channels/chat-user.js';
+// import { ChatRoomChannel } from '@/server/api/stream/channels/chat-room.js';
 import { ReversiChannel } from '@/server/api/stream/channels/reversi.js';
 import { ReversiGameChannel } from '@/server/api/stream/channels/reversi-game.js';
 import type { ChannelRequest } from './channel.js';
@@ -334,8 +334,8 @@ export default class Connection {
 			case 'serverStats': return ServerStatsChannel;
 			case 'queueStats': return QueueStatsChannel;
 			case 'admin': return AdminChannel;
-			case 'chatUser': return ChatUserChannel;
-			case 'chatRoom': return ChatRoomChannel;
+			// case 'chatUser': return ChatUserChannel;
+			// case 'chatRoom': return ChatRoomChannel;
 			case 'reversi': return ReversiChannel;
 			case 'reversiGame': return ReversiGameChannel;
 
