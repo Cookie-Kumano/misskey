@@ -41,21 +41,10 @@
 // 		return true;
 // 	}
 
-// 	@bindThis
-// 	private async onEvent(data: GlobalEvents['chatUser']['payload']) {
-// 		this.send(data.type, data.body);
-// 	}
+// // 		this.subscriber.on(`chatUserStream:${this.user.id}-${this.otherId}`, this.onEvent);
 
-// 	@bindThis
-// 	public onMessage(type: string, body: any) {
-// 		switch (type) {
-// 			case 'read':
-// 				if (this.otherId) {
-// 					this.chatService.readUserChatMessage(this.user!.id, this.otherId);
-// 				}
-// 				break;
-// 		}
-// 	}
+// // 		return true;
+// // 	}
 
 // 	@bindThis
 // 	public dispose() {

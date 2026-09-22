@@ -52,21 +52,11 @@
 // 		return true;
 // 	}
 
-// 	@bindThis
-// 	private async onEvent(data: GlobalEvents['chatRoom']['payload']) {
-// 		this.send(data.type, data.body);
-// 	}
+// // 		this.roomId = params.roomId;
 
-// 	@bindThis
-// 	public onMessage(type: string, body: any) {
-// 		switch (type) {
-// 			case 'read':
-// 				if (this.roomId) {
-// 					this.chatService.readRoomChatMessage(this.user!.id, this.roomId);
-// 				}
-// 				break;
-// 		}
-// 	}
+// // 		const room = await this.chatRoomsRepository.findOneBy({
+// // 			id: this.roomId,
+// // 		});
 
 // 	@bindThis
 // 	public dispose() {

@@ -224,11 +224,53 @@ if ($i) {
 }
 .transition_notification_enterFrom {
 	opacity: 0;
-	transform: translateX(250px);
+	transform: translateX(var(--notificationSlideOffset, 250px));
 }
 .transition_notification_leaveTo {
 	opacity: 0;
-	transform: translateX(-250px);
+	transform: translateX(calc(-1 * var(--notificationSlideOffset, 250px)));
+}
+
+.menuDrawerBg {
+	z-index: 1001;
+}
+
+.menuDrawer {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1001;
+	height: 100dvh;
+}
+
+.widgetsDrawerBg {
+	z-index: 1001;
+}
+
+.widgetsDrawer {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1001;
+	width: 310px;
+	height: 100dvh;
+	padding: var(--MI-margin) var(--MI-margin) calc(var(--MI-margin) + env(safe-area-inset-bottom, 0px)) !important;
+	box-sizing: border-box;
+	overflow: auto;
+	overscroll-behavior: contain;
+	background: var(--MI_THEME-bg);
+}
+
+.widgetsCloseButton {
+	padding: 8px;
+	display: block;
+	margin: 0 auto;
+}
+
+@media (min-width: 370px) {
+	.widgetsCloseButton {
+		display: none;
+	}
 }
 
 .menuDrawerBg {
@@ -279,6 +321,16 @@ if ($i) {
 	padding: 0 var(--MI-margin);
 	pointer-events: none;
 	display: flex;
+
+	&.notificationsPosition_rightTop,
+	&.notificationsPosition_rightBottom {
+		--notificationSlideOffset: 250px;
+	}
+
+	&.notificationsPosition_leftTop,
+	&.notificationsPosition_leftBottom {
+		--notificationSlideOffset: -250px;
+	}
 
 	&.notificationsPosition_leftTop {
 		top: var(--MI-margin);

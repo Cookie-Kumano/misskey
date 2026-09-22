@@ -214,7 +214,7 @@ export const PREF_DEF = definePreferences({
 		default: false,
 	},
 	animation: {
-		default: prefersReducedMotion,
+		default: !prefersReducedMotion,
 	},
 	animatedMfm: {
 		default: !prefersReducedMotion,
@@ -329,9 +329,6 @@ export const PREF_DEF = definePreferences({
 	},
 	notificationStackAxis: {
 		default: 'horizontal' as 'vertical' | 'horizontal',
-	},
-	enableCondensedLine: {
-		default: true,
 	},
 	keepScreenOn: {
 		default: false,
