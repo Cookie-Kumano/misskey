@@ -57,29 +57,29 @@
 // 		// userは削除されている可能性があるのでnull許容
 // 		const reactions: { user: Packed<'UserLite'> | null; reaction: string; }[] = [];
 
-		for (const record of message.reactions) {
-			const [userId, reaction] = record.split('/');
-			reactions.push({
-				user: packedUsers?.get(userId) ?? (await this.userEntityService.pack(userId).catch(() => null)),
-				reaction,
-			});
-		}
+// 	for (const record of message.reactions) {
+// 		const [userId, reaction] = record.split('/');
+// 		reactions.push({
+// 			user: packedUsers?.get(userId) ?? (await this.userEntityService.pack(userId).catch(() => null)),
+// 			reaction,
+// 		});
+// 	}
 
-		return {
-			id: message.id,
-			createdAt: this.idService.parse(message.id).date.toISOString(),
-			text: message.text,
-			fromUserId: message.fromUserId,
-			fromUser: packedUsers?.get(message.fromUserId) ?? (await this.userEntityService.pack(message.fromUser ?? message.fromUserId, me)),
-			toUserId: message.toUserId,
-			toUser: message.toUserId ? (packedUsers?.get(message.toUserId) ?? (await this.userEntityService.pack(message.toUser ?? message.toUserId, me))) : undefined,
-			toRoomId: message.toRoomId,
-			toRoom: message.toRoomId ? (packedRooms?.get(message.toRoomId) ?? (await this.packRoom(message.toRoom ?? message.toRoomId, me))) : undefined,
-			fileId: message.fileId,
-			file: message.fileId ? (packedFiles?.get(message.fileId) ?? (await this.driveFileEntityService.pack(message.file ?? message.fileId))) : null,
-			reactions: reactions.filter((r): r is { user: Packed<'UserLite'>; reaction: string; } => r.user != null),
-		};
-	}
+// 	return {
+// 		id: message.id,
+// 		createdAt: this.idService.parse(message.id).date.toISOString(),
+// 		text: message.text,
+// 		fromUserId: message.fromUserId,
+// 		fromUser: packedUsers?.get(message.fromUserId) ?? (await this.userEntityService.pack(message.fromUser ?? message.fromUserId, me)),
+// 		toUserId: message.toUserId,
+// 		toUser: message.toUserId ? (packedUsers?.get(message.toUserId) ?? (await this.userEntityService.pack(message.toUser ?? message.toUserId, me))) : undefined,
+// 		toRoomId: message.toRoomId,
+// 		toRoom: message.toRoomId ? (packedRooms?.get(message.toRoomId) ?? (await this.packRoom(message.toRoom ?? message.toRoomId, me))) : undefined,
+// 		fileId: message.fileId,
+// 		file: message.fileId ? (packedFiles?.get(message.fileId) ?? (await this.driveFileEntityService.pack(message.file ?? message.fileId))) : null,
+// 		reactions: reactions.filter((r): r is { user: Packed<'UserLite'>; reaction: string; } => r.user != null),
+// 	};
+// }
 
 // 	@bindThis
 // 	public async packMessagesDetailed(
@@ -137,24 +137,24 @@
 
 // 		const reactions: { reaction: string; }[] = [];
 
-		for (const record of message.reactions) {
-			const [, reaction] = record.split('/');
-			reactions.push({
-				reaction,
-			});
-		}
+// 	for (const record of message.reactions) {
+// 		const [, reaction] = record.split('/');
+// 		reactions.push({
+// 			reaction,
+// 		});
+// 	}
 
-		return {
-			id: message.id,
-			createdAt: this.idService.parse(message.id).date.toISOString(),
-			text: message.text,
-			fromUserId: message.fromUserId,
-			toUserId: message.toUserId!,
-			fileId: message.fileId,
-			file: message.fileId ? (packedFiles?.get(message.fileId) ?? (await this.driveFileEntityService.pack(message.file ?? message.fileId))) : null,
-			reactions,
-		};
-	}
+// 	return {
+// 		id: message.id,
+// 		createdAt: this.idService.parse(message.id).date.toISOString(),
+// 		text: message.text,
+// 		fromUserId: message.fromUserId,
+// 		toUserId: message.toUserId!,
+// 		fileId: message.fileId,
+// 		file: message.fileId ? (packedFiles?.get(message.fileId) ?? (await this.driveFileEntityService.pack(message.file ?? message.fileId))) : null,
+// 		reactions,
+// 	};
+// }
 
 // 	@bindThis
 // 	public async packMessagesLiteFor1on1(
@@ -188,26 +188,26 @@
 // 		// userは削除されている可能性があるのでnull許容
 // 		const reactions: { user: Packed<'UserLite'> | null; reaction: string; }[] = [];
 
-		for (const record of message.reactions) {
-			const [userId, reaction] = record.split('/');
-			reactions.push({
-				user: packedUsers?.get(userId) ?? (await this.userEntityService.pack(userId).catch(() => null)),
-				reaction,
-			});
-		}
+//   for (const record of message.reactions) {
+//     const [userId, reaction] = record.split('/');
+//     reactions.push({
+//       user: packedUsers?.get(userId) ?? (await this.userEntityService.pack(userId).catch(() => null)),
+//       reaction,
+//     });
+//   }
 
-		return {
-			id: message.id,
-			createdAt: this.idService.parse(message.id).date.toISOString(),
-			text: message.text,
-			fromUserId: message.fromUserId,
-			fromUser: packedUsers?.get(message.fromUserId) ?? (await this.userEntityService.pack(message.fromUser ?? message.fromUserId)),
-			toRoomId: message.toRoomId!,
-			fileId: message.fileId,
-			file: message.fileId ? (packedFiles?.get(message.fileId) ?? (await this.driveFileEntityService.pack(message.file ?? message.fileId))) : null,
-			reactions: reactions.filter((r): r is { user: Packed<'UserLite'>; reaction: string; } => r.user != null),
-		};
-	}
+//   return {
+//     id: message.id,
+//     createdAt: this.idService.parse(message.id).date.toISOString(),
+//     text: message.text,
+//     fromUserId: message.fromUserId,
+//     fromUser: packedUsers?.get(message.fromUserId) ?? (await this.userEntityService.pack(message.fromUser ?? message.fromUserId)),
+//     toRoomId: message.toRoomId!,
+//     fileId: message.fileId,
+//     file: message.fileId ? (packedFiles?.get(message.fileId) ?? (await this.driveFileEntityService.pack(message.file ?? message.fileId))) : null,
+//     reactions: reactions.filter((r): r is { user: Packed<'UserLite'>; reaction: string; } => r.user != null),
+//   };
+// }
 
 // 	@bindThis
 // 	public async packMessagesLiteForRoom(
@@ -248,20 +248,20 @@
 // 	): Promise<Packed<'ChatRoom'>> {
 // 		const room = typeof src === 'object' ? src : await this.chatRoomsRepository.findOneByOrFail({ id: src });
 
-		const membership = me && me.id !== room.ownerId ? (options?._hint_?.myMemberships?.get(room.id) ?? (await this.chatRoomMembershipsRepository.findOneBy({ roomId: room.id, userId: me.id }))) : null;
-		const invitation = me && me.id !== room.ownerId ? (options?._hint_?.myInvitations?.get(room.id) ?? (await this.chatRoomInvitationsRepository.findOneBy({ roomId: room.id, userId: me.id }))) : null;
+// 	const membership = me && me.id !== room.ownerId ? (options?._hint_?.myMemberships?.get(room.id) ?? (await this.chatRoomMembershipsRepository.findOneBy({ roomId: room.id, userId: me.id }))) : null;
+// 	const invitation = me && me.id !== room.ownerId ? (options?._hint_?.myInvitations?.get(room.id) ?? (await this.chatRoomInvitationsRepository.findOneBy({ roomId: room.id, userId: me.id }))) : null;
 
-		return {
-			id: room.id,
-			createdAt: this.idService.parse(room.id).date.toISOString(),
-			name: room.name,
-			description: room.description,
-			ownerId: room.ownerId,
-			owner: options?._hint_?.packedOwners.get(room.ownerId) ?? (await this.userEntityService.pack(room.owner ?? room.ownerId, me)),
-			isMuted: membership != null ? membership.isMuted : false,
-			invitationExists: invitation != null,
-		};
-	}
+// 	return {
+// 		id: room.id,
+// 		createdAt: this.idService.parse(room.id).date.toISOString(),
+// 		name: room.name,
+// 		description: room.description,
+// 		ownerId: room.ownerId,
+// 		owner: options?._hint_?.packedOwners.get(room.ownerId) ?? (await this.userEntityService.pack(room.owner ?? room.ownerId, me)),
+// 		isMuted: membership != null ? membership.isMuted : false,
+// 		invitationExists: invitation != null,
+// 	};
+// }
 
 // 	@bindThis
 // 	public async packRooms(
@@ -270,17 +270,17 @@
 // 	) {
 // 		if (rooms.length === 0) return [];
 
-		const _rooms = rooms.filter((room): room is MiChatRoom => typeof room !== 'string');
-		if (_rooms.length !== rooms.length) {
-			_rooms.push(
-				...(await this.chatRoomsRepository.find({
-					where: {
-						id: In(rooms.filter((room): room is string => typeof room === 'string')),
-					},
-					relations: { owner: true },
-				})),
-			);
-		}
+// const _rooms = rooms.filter((room): room is MiChatRoom => typeof room !== 'string');
+// if (_rooms.length !== rooms.length) {
+// 	_rooms.push(
+// 		...(await this.chatRoomsRepository.find({
+// 			where: {
+// 				id: In(rooms.filter((room): room is string => typeof room === 'string')),
+// 			},
+// 			relations: { owner: true },
+// 		})),
+// 	);
+// }
 
 // 		const owners = _rooms.map(x => x.owner ?? x.ownerId);
 
@@ -317,15 +317,15 @@
 // 	): Promise<Packed<'ChatRoomInvitation'>> {
 // 		const invitation = typeof src === 'object' ? src : await this.chatRoomInvitationsRepository.findOneByOrFail({ id: src });
 
-		return {
-			id: invitation.id,
-			createdAt: this.idService.parse(invitation.id).date.toISOString(),
-			roomId: invitation.roomId,
-			room: options?._hint_?.packedRooms.get(invitation.roomId) ?? (await this.packRoom(invitation.room ?? invitation.roomId, me)),
-			userId: invitation.userId,
-			user: options?._hint_?.packedUsers.get(invitation.userId) ?? (await this.userEntityService.pack(invitation.user ?? invitation.userId, me)),
-		};
-	}
+// 	return {
+// 		id: invitation.id,
+// 		createdAt: this.idService.parse(invitation.id).date.toISOString(),
+// 		roomId: invitation.roomId,
+// 		room: options?._hint_?.packedRooms.get(invitation.roomId) ?? (await this.packRoom(invitation.room ?? invitation.roomId, me)),
+// 		userId: invitation.userId,
+// 		user: options?._hint_?.packedUsers.get(invitation.userId) ?? (await this.userEntityService.pack(invitation.user ?? invitation.userId, me)),
+// 	};
+// }
 
 // 	@bindThis
 // 	public async packRoomInvitations(
@@ -352,15 +352,15 @@
 // 	): Promise<Packed<'ChatRoomMembership'>> {
 // 		const membership = typeof src === 'object' ? src : await this.chatRoomMembershipsRepository.findOneByOrFail({ id: src });
 
-		return {
-			id: membership.id,
-			createdAt: this.idService.parse(membership.id).date.toISOString(),
-			userId: membership.userId,
-			user: options?.populateUser ? (options._hint_?.packedUsers.get(membership.userId) ?? (await this.userEntityService.pack(membership.user ?? membership.userId, me))) : undefined,
-			roomId: membership.roomId,
-			room: options?.populateRoom ? (options._hint_?.packedRooms.get(membership.roomId) ?? (await this.packRoom(membership.room ?? membership.roomId, me))) : undefined,
-		};
-	}
+// 	return {
+// 		id: membership.id,
+// 		createdAt: this.idService.parse(membership.id).date.toISOString(),
+// 		userId: membership.userId,
+// 		user: options?.populateUser ? (options._hint_?.packedUsers.get(membership.userId) ?? (await this.userEntityService.pack(membership.user ?? membership.userId, me))) : undefined,
+// 		roomId: membership.roomId,
+// 		room: options?.populateRoom ? (options._hint_?.packedRooms.get(membership.roomId) ?? (await this.packRoom(membership.room ?? membership.roomId, me))) : undefined,
+// 	};
+// }
 
 // 	@bindThis
 // 	public async packRoomMemberships(

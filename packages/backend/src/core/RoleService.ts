@@ -403,8 +403,6 @@ export class RoleService implements OnApplicationShutdown, OnModuleInit {
 
 		const serverMaxFileSizeMb = Math.floor(this.config.maxFileSize / (1024 * 1024));
 
-		const serverMaxFileSizeMb = Math.floor(this.config.maxFileSize / (1024 * 1024));
-
 		return {
 			gtlAvailable: calc('gtlAvailable', vs => vs.some(v => v === true)),
 			ltlAvailable: calc('ltlAvailable', vs => vs.some(v => v === true)),
