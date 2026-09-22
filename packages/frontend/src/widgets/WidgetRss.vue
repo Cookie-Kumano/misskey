@@ -26,7 +26,6 @@ import { url as base } from '@@/js/config.js';
 import { useInterval } from '@@/js/use-interval.js';
 import { tryParseUrl } from '@@/js/url.js';
 import { useWidgetPropsManager } from './widget.js';
-import { i18n } from '@/i18n.js';
 import type { WidgetComponentEmits, WidgetComponentExpose, WidgetComponentProps } from './widget.js';
 import type { FormWithDefault, GetFormResultType } from '@/utility/form.js';
 import { i18n } from '@/i18n.js';
